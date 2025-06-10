@@ -20,13 +20,13 @@ A private web application for journaling with daily mood tracking and analytics.
 - Node.js + Express  
 - MongoDB (for users, entries, and moods)  
 
-## 👥 Team Structure (4 Students)  
-| Task                          | Owner         |  
-|-------------------------------|---------------|  
-| Frontend (Entry Form + Dashboard UI) | Student 1     |  
-| Backend (CRUD APIs)           | Student 2     |  
-| User Authentication           | Student 3     |  
-| Database + Mood Analytics     | Student 4     |  
+## 👥 Task Structure (For All Students)  
+| Task                          |
+|-------------------------------|
+| Frontend (Entry Form + Dashboard UI) | 
+| Backend (CRUD APIs)           |
+| User Authentication           |
+| Database + Mood Analytics     |
 
 ## 🚀 Getting Started  
 ### Installation  
