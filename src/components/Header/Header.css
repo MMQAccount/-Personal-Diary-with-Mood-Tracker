@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: space-between;
     background-color: #796FC1;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     text-align: center;
@@ -30,4 +30,8 @@ img{
     max-width: 400px;
     transition: all 0.3s ease-in-out;
     background-color: #796FC1;
+}
+.homePage >img{
+    padding: 0;
+    border-radius: 0;
 }

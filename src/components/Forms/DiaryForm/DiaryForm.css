@@ -1,0 +1,86 @@
+form {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #4a4a4a;
+}
+
+.mood_input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.range_input {
+  flex-grow: 1;
+  accent-color: #9086ce;
+}
+
+.diary_data {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.diary_data>*{
+  outline: none;
+}
+select.type {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+  font-size: 1rem;
+  color: #aaa;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+input[type="text"],input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+}
+input[type="submit"]{
+  color: #fefefe;
+  background-color: #796FB8;
+}
+
+textarea {
+  padding: 10px;
+  height: 120px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fefefe;
+  resize: vertical;
+}
+
+@media (max-width: 500px) {
+  .mood_input {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  form h1 {
+    font-size: 1.4rem;
+  }
+}
