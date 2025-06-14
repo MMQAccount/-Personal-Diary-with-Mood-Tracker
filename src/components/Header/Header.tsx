@@ -7,7 +7,7 @@ const Header = () =>{
     return(
     <header className='nav_container'>
       <nav>
-        <img src={logo}/>
+        <NavLink className="homePage" to={`/`}><img src={logo}/></NavLink>
         <NavLink className={({ isActive }) => isActive ? 'active' : ''} to={`/diaryPage`}><img src={diary_logo} className="navlink"/></NavLink>
         <NavLink className={({ isActive }) => isActive ? 'active' : ''} to={`/quotesPage`}><WechatWorkOutlined className="navlink"/></NavLink>
         <NavLink className={({ isActive }) => isActive ? 'active' : ''} to={`/statisticsPage`}><LineChartOutlined  className="navlink"/></NavLink>
