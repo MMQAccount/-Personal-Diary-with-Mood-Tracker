@@ -4,6 +4,9 @@ const QuotesPage = () => {
   return (
     <>
       <Quote />
+      <Quote />
+      <Quote />
+      <Quote />
     </>
   );
 };
