@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap');
+
+.signup-container {
+    background: #ffffffec;
+    border-radius: 24px;
+    padding: 20px 40px 20px;
+    width: 420px;
+    box-shadow: 0 10px 30px rgba(123, 44, 191, 0.15);
+    color: #555;
+    text-align: center;
+    animation: slideFadeIn 0.8s ease forwards;
+}
+
+.signup-header h1 {
+    margin: 0 0 10px;
+    font-size: 2.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #7b2cbf, #c084fc);
+}
+
+.signup-header p {
+    margin: 0 0 32px;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: #666;
+}
+
+.signup-form input {
+    width: 96%;
+    padding: 16px 8px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    border: 1.8px solid #aaa;
+    background: #fff;
+    color: #222;
+    box-shadow: inset 0 0 8px #eee;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    caret-color: #796fb8;
+}
+
+.signup-form input::placeholder {
+    color: #999;
+}
+
+.signup-form input:focus {
+    outline: none;
+    border-color: #796fb8;
+    box-shadow: 0 0 8px #796fb8;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.signup-button {
+    background: linear-gradient(135deg, #3d495d, #796FB8);
+    border: none;
+    border-radius: 14px;
+    padding: 16px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 18px #796fb8;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.signup-button:hover {
+    background: linear-gradient(135deg, #796FB8, #3d495d);
+    transform: scale(1.05);
+}
+
+.login-text {
+    margin-top: 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #555;
+}
+
+.login-link {
+    color: #796FB8;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
