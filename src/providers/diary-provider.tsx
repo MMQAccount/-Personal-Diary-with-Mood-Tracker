@@ -10,7 +10,7 @@ const initialDiary: Store.IDiaryItem[] = [
     title: "Deep Reflection",
     notes: "Today I spent hours reading old journal entries. \n\n- Realized how far I've come\n- Missed some friendships\n\n**Conclusion:** growth is slow, but it's happening.",
     state: 2,
-    type: "Reflection",
+    type: "Friends",
     image: "https://example.com/images/reflection.jpg"
   },
   {
@@ -33,7 +33,7 @@ const initialDiary: Store.IDiaryItem[] = [
     title: "Quiet Victory",
     notes: "Finally finished that stubborn article I've been working on. The words just *flowed* today.\n\nResult:\n\n- **2,500** words written\n- Dozens of edits\n\nFeeling proud and relieved!",
     state: 4,
-    type: "Creativity",
+    type: "Work",
     image: "https://example.com/images/writing.jpg"
   },
   {
@@ -49,7 +49,7 @@ const initialDiary: Store.IDiaryItem[] = [
     title: "Evening Walk",
     notes: "Took a long walk as the sun set. The park was calm, birds chirping. I felt a sense of peace:\n\n> _Walking clears the mind._\n\nReturned with a fresh perspective and motivation to journal.",
     state: 3,
-    type: "Self-care",
+    type: "School",
   },
   {
     id: 12,
