@@ -3,24 +3,19 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Input } from 'antd';
 import Diary from '../../components/Diary/Diary';
 import { useNavigate } from 'react-router-dom';
+import { DiaryContext } from '../../providers/diary-provider';
+import { useContext } from 'react';
 
 
 const DiaryPage = () => {
   const navigate = useNavigate();
-    const diary: Store.IDiaryItem[] = [
-        {
-            id:65,
-            title: "A Peaceful Evening 🌅",
-            notes: `## Today was a calm and peaceful day. I spent the afternoon walking through the park, enjoying the soft breeze and the sound of birds.I feel **grateful** for these small moments.> "Happiness is not something ready-made. It comes from your own actions." — Dalai Lama ![Sunset](https://example.com/sunset.jpg)`,
-            state: 3
-        }
-    ];
   function handelChangeInput(e: React.ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     if (value === 'input') navigate('/diaryForm');
     else if (value === 'voice') navigate('/diaryVoice');
     else if (value === 'image') navigate('/diaryImage');
   }
+  const { diary } = useContext(DiaryContext);
 
   return (
     <div className="diary_container">
@@ -46,15 +41,16 @@ const DiaryPage = () => {
           <option value="image">image 🖼️</option>
         </select>
       </div>
-       {
+      {
         Boolean(diary.length)
           ? diary.map(d => (
             <Diary
-            key={d.id}
-            title={d.title}
-            notes={d.notes}
-            state={d.state}
-            image={d.image}
+              id={d.id}
+              title={d.title}
+              notes={d.notes}
+              state={d.state}
+              image={d.image}
+              type={d.type}
             />
           ))
           : <h3>Can't Find Any Diary</h3>

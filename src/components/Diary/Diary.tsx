@@ -1,31 +1,43 @@
-import { EditOutlined } from '@ant-design/icons';
-import './Diary.css';
-import ReactMarkdown from 'react-markdown';
+import { EditOutlined } from "@ant-design/icons";
+import "./Diary.css";
+import ReactMarkdown from "react-markdown";
+import { Link, useNavigate } from "react-router-dom";
 
 interface IProps {
+  id: number;
   title: string;
   notes: string;
   state: number;
   image?: string;
+  type: string;
 }
 
-const Diary = ({ title, notes, state, image }: IProps) => {
-  const emojis = ['😔', '😐', '🙂', '☺️', '😄'];
-
+const Diary = ({ id, title, notes, state, image, type }: IProps) => {
+  const emojis = ["😔", "😐", "🙂", "☺️", "😄"];
+  const navigate = useNavigate();
   return (
-    <div className="container">
-      <div className="diary_content">
-        <EditOutlined className="edit_icon" />
-        <div>
-          <h3>{title}</h3>
-          <ReactMarkdown>{notes}</ReactMarkdown>
+    <Link to={`/dispalyDiary/${id}`} className="diary_content">
+      <div className="container">
+        <div className="diary_content">
+          <div className="left_content">
+            <Link to={`/DiaryEditPage/${id}`}>
+              <EditOutlined className="edit_icon" />
+            </Link>
+            <div>
+              <h3>{title.charAt(0).toUpperCase() + type.slice(1)}</h3>
+              <ReactMarkdown>{notes.toLocaleUpperCase()}</ReactMarkdown>
+            </div>
+          </div>
+          <div className="state_type">
+            <h1>{emojis[state]}</h1>
+            <h2>{type}</h2>
+          </div>
         </div>
-        <h1>{emojis[state]}</h1>
+        <div className="imgcontainer">
+          {image ? <img src={image} alt="" /> : null}
+        </div>
       </div>
-      <div className="imgcontainer">
-        {image?.length ? <img src={image} alt="" /> : null}
-      </div>
-    </div>
+    </Link>
   );
 };
 

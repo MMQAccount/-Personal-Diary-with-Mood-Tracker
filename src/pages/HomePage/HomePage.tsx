@@ -1,7 +1,7 @@
 import './HomePage.css';
 import logo from '../../assets/logo.webp';
 const HomePage = () => {
-    return(
+    return (
         <div className='container_diary'>
             <div className="left_div">
                 <h1>reflecty</h1>
