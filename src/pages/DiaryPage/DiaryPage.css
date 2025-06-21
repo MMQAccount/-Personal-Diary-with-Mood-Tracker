@@ -1,11 +1,12 @@
-.diary_container{
+.diary_container {
     width: 100%;
     height: 100vh;
     background-color: #edf2fa;
     color: #c2c9d4;
 }
-.diary_type{
-    appearance: none; 
+
+.diary_type {
+    appearance: none;
     background-color: #ffffff;
     width: 50px;
     height: 50px;
@@ -21,10 +22,12 @@
     border: none;
     box-shadow: 1px 1px 1px gray;
 }
-option{
+
+option {
     outline: none;
 }
-.search_container{
+
+.search_container {
     padding-top: 10px;
     height: 50px;
     width: 50%;
@@ -34,18 +37,22 @@ option{
     gap: 30px;
     margin-bottom: 30px;
 }
-.input_wrapper{
+
+.input_wrapper {
     width: 35px;
     transition: width 0.4s ease;
 }
+
 .input_wrapper:focus-within {
     width: 500px;
 }
-.search_input{
+
+.search_input {
     margin-top: 5px;
     background-color: inherit;
     border: none;
 }
-.icon{
+
+.icon {
     color: #747e94;
 }
