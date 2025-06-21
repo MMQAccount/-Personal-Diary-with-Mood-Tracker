@@ -30,7 +30,7 @@ const DiaryDetailsPage = () => {
     <div className="diary_content_container">
       <div className="content">
           <h1>{diaryEx?.title}</h1>
-        <h1>{emojis[diaryEx?.state]}</h1>
+        <h1>{diaryEx?.state ? emojis[diaryEx.state] : ""}</h1>
       </div>
       <ReactMarkdown>{diaryEx?.notes}</ReactMarkdown>
        <div className="imgcontainer">

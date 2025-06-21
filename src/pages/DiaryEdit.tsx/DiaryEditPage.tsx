@@ -25,7 +25,7 @@ const DiaryEditPage = () => {
         title: d.title,
         notes: d.notes,
         type: d.type,
-        image: d.image,
+        image: d.image ?? '',
         state: d.state,
       });
       setMoodValue(d.state);

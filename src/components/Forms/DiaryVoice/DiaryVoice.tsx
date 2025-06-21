@@ -14,8 +14,11 @@ const DiaryVoice = () => {
         browserSupportsSpeechRecognition,
     } = useSpeechRecognition();
     useEffect(() => {
-        setForm(prev => ({ ...prev, notes: transcript }));
-    }, [transcript]);
+        if (listening) {
+            setForm(prev => ({ ...prev, notes: transcript }));
+        }
+        }, [transcript, listening]);
+
 
     if (!browserSupportsSpeechRecognition) {
         return <span>Your browser does not support speech recognition.</span>;
@@ -65,11 +68,11 @@ const DiaryVoice = () => {
                     <option value="Friends">Friends 👥</option>
                 </select>
                 <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} />
-                <textarea name="notes" id="data" placeholder="Your speech will appear here..." value={transcript}></textarea>
+                <textarea name="notes" id="data" placeholder="Your speech will appear here..." value={form.notes} onChange={handleFormChange}></textarea>
                 <div className="record_buttons">
                     <button
                         type="button"
-                        onClick={() => SpeechRecognition.startListening({ continuous: true })}
+                        onClick={() => SpeechRecognition.startListening({ continuous: false })}
                     >
                         Record
                     </button><span>Listening: {listening ? "🟢" : "🔴"}</span>

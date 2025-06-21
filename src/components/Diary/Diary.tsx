@@ -25,7 +25,7 @@ const Diary = ({ id, title, notes, state, image, type }: IProps) => {
             </Link>
             <div>
               <h3>{title.charAt(0).toUpperCase() + type.slice(1)}</h3>
-              <ReactMarkdown>{notes.toLocaleUpperCase()}</ReactMarkdown>
+              <ReactMarkdown>{notes}</ReactMarkdown>
             </div>
           </div>
           <div className="state_type">
