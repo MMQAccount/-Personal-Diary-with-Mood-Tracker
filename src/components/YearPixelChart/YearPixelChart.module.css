@@ -1,0 +1,28 @@
+.legendRow {
+  display: flex;
+  justify-content: space-around; 
+  margin-bottom: 50px;
+  margin-top: 10px;
+  flex-wrap: nowrap; 
+  font-size: 0.9rem;
+  color: #374151;
+  width: 100%; 
+  box-sizing: border-box;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1; 
+  justify-content: center; 
+  min-width: 0; 
+}
+
+.legendColorBox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  flex-shrink: 0; 
+}
