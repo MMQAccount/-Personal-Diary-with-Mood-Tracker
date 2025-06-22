@@ -56,3 +56,11 @@ option {
 .icon {
     color: #747e94;
 }
+
+.diarys {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-left: -15px;
+}

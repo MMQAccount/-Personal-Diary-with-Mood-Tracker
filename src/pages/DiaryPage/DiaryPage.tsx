@@ -41,20 +41,22 @@ const DiaryPage = () => {
           <option value="image">image 🖼️</option>
         </select>
       </div>
-      {
-        Boolean(diary.length)
-          ? diary.map(d => (
-            <Diary
-              id={d.id}
-              title={d.title}
-              notes={d.notes}
-              state={d.state}
-              image={d.image}
-              type={d.type}
-            />
-          ))
-          : <h3>Can't Find Any Diary</h3>
-      }
+      <div className='diarys'>
+        {
+          Boolean(diary.length)
+            ? diary.map(d => (
+              <Diary
+                id={d.id}
+                title={d.title}
+                notes={d.notes}
+                state={d.state}
+                image={d.image}
+                type={d.type}
+              />
+            ))
+            : <h3>Can't Find Any Diary</h3>
+        }
+      </div>
     </div>
   );
 }

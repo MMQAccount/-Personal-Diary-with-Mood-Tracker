@@ -17,7 +17,7 @@ const DiaryVoice = () => {
         if (listening) {
             setForm(prev => ({ ...prev, notes: transcript }));
         }
-        }, [transcript, listening]);
+    }, [transcript, listening]);
 
 
     if (!browserSupportsSpeechRecognition) {
@@ -56,19 +56,20 @@ const DiaryVoice = () => {
                         setMoodValue(parseInt(e.target.value));
                         handleFormChange(e);
                     }}
+                    required
                 />
                 <h1>{emojis[moodValue]}</h1>
             </div>
             <div className='diary_data'>
-                <select name="type" id="type" className='type' defaultValue={""} onChange={handleFormChange}>
+                <select name="type" id="type" className='type' defaultValue={""} onChange={handleFormChange} required>
                     <option value="" hidden>Select Community</option>
                     <option value="Family">Family 👨‍👩‍👧‍👦</option>
                     <option value="Work">Work 🏢</option>
                     <option value="School">School 🏫</option>
                     <option value="Friends">Friends 👥</option>
                 </select>
-                <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} />
-                <textarea name="notes" id="data" placeholder="Your speech will appear here..." value={form.notes} onChange={handleFormChange}></textarea>
+                <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} required />
+                <textarea name="notes" id="data" placeholder="Your speech will appear here..." value={form.notes} onChange={handleFormChange} required></textarea>
                 <div className="record_buttons">
                     <button
                         type="button"

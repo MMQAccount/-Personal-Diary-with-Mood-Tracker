@@ -2,6 +2,7 @@ import { EditOutlined } from "@ant-design/icons";
 import "./Diary.css";
 import ReactMarkdown from "react-markdown";
 import { Link, useNavigate } from "react-router-dom";
+import Markdown from "react-markdown";
 
 interface IProps {
   id: number;
@@ -16,16 +17,19 @@ const Diary = ({ id, title, notes, state, image, type }: IProps) => {
   const emojis = ["😔", "😐", "🙂", "☺️", "😄"];
   const navigate = useNavigate();
   return (
-    <Link to={`/dispalyDiary/${id}`} className="diary_content">
-      <div className="container">
+    <div className="container">
+      <Link to={`/dispalyDiary/${id}`} className="diary_content">
         <div className="diary_content">
-          <div className="left_content">
+          <div className="top_content">
+            <h3>{title.charAt(0).toUpperCase() + title.slice(1)}</h3>
             <Link to={`/DiaryEditPage/${id}`}>
               <EditOutlined className="edit_icon" />
             </Link>
-            <div>
-              <h3>{title.charAt(0).toUpperCase() + type.slice(1)}</h3>
-              <ReactMarkdown>{notes}</ReactMarkdown>
+          </div>
+          <div className="diary_notes">
+            <Markdown>{notes}</Markdown>
+            <div className="imgcontainer">
+              {image ? <img src={image} alt="" /> : null}
             </div>
           </div>
           <div className="state_type">
@@ -33,11 +37,8 @@ const Diary = ({ id, title, notes, state, image, type }: IProps) => {
             <h2>{type}</h2>
           </div>
         </div>
-        <div className="imgcontainer">
-          {image ? <img src={image} alt="" /> : null}
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
