@@ -4,4 +4,5 @@ interface IQuote {
   author: string;
   background: string;
   color: string;
+  isFav: boolean;
 }

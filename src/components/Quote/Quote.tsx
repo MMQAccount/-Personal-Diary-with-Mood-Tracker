@@ -1,3 +1,4 @@
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import "./quote.css";
 interface IProps {
   quoteData: IQuote;
@@ -12,6 +13,10 @@ const Quote = (props: IProps) => {
         <div className="quote">
           <h2>{props.quoteData.quote}</h2>
           <p>{props.quoteData.author}</p>
+          <button className="favQuoteButton">
+            <HeartOutlined />
+            {/* <HeartFilled /> */}
+          </button>
         </div>
       </div>
     </div>
