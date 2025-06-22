@@ -43,7 +43,7 @@ const DiaryEditPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newDiary: Store.IDiaryItem = { id: Number(params.id), ...form };
-    updateDiary(Number(params.id) ,newDiary);
+    updateDiary(Number(params.id), newDiary);
     navigate('/diaryPage');
   };
 

@@ -46,6 +46,7 @@ const DiaryPage = () => {
           Boolean(diary.length)
             ? diary.map(d => (
               <Diary
+                key={d.id}
                 id={d.id}
                 title={d.title}
                 notes={d.notes}
