@@ -7,30 +7,35 @@ import StatisticsPage from './pages/StatisticsPage/StatisticsPage'
 import DiaryForm from './components/Forms/DiaryForm/DiaryForm'
 import DiaryVoice from './components/Forms/DiaryVoice/DiaryVoice'
 import DiaryImage from './components/Forms/DiaryImage/DiaryImage'
+import DiaryProvider from './providers/diary-provider';
+import DiaryDetailsPage from './pages/DiaryDetails/DiaryDetails'
+import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
+
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route 
+        <DiaryProvider>
+          <Header />
+          <Routes>
+            <Route
               path={`/`}
               element={<HomePage />}
-          />
-          <Route 
+            />
+            <Route
               path={`/diaryPage`}
               element={<DiaryPage />}
-          />
-          <Route 
+            />
+            <Route
               path={`/diaryForm`}
               element={<DiaryForm />}
-          />
-          <Route 
+            />
+            <Route
               path={`/diaryVoice`}
               element={<DiaryVoice />}
-          />
-          <Route 
+            />
+            <Route
               path={`/diaryImage`}
               element={<DiaryImage />}
           />
@@ -39,6 +44,18 @@ function App() {
               element={<StatisticsPage />}
           />
         </Routes>
+
+            />
+            <Route
+              path={`/dispalyDiary/:id`}
+              element={<DiaryDetailsPage />}
+            />
+            <Route
+              path={`/DiaryEditPage/:id`}
+              element={<DiaryEditPage />}
+            />
+          </Routes>
+        </DiaryProvider>
       </BrowserRouter>
     </>
   )

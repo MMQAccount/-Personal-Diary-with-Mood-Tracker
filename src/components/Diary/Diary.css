@@ -1,40 +1,75 @@
-.diary_content{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+.diary_content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
 }
-div.container{
-    background-color: white;
-    width: 90%;
-    margin: 10px auto;
-    height: fit-content;
-    border-radius: 10px;
-    padding: 5px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    color:#545f7b;
+
+div.container {
+  background-color: white;
+  width: 90%;
+  margin: 10px auto;
+  height: fit-content;
+  border-radius: 10px;
+  padding: 5px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #545f7b;
 }
-.edit_icon{
-    font-size: 20px;
+
+.edit_icon {
+  font-size: 20px;
+  color: #545f7b;
 }
-.edit_icon:hover{
-    box-shadow: 1px 1px 5px gray;
-    cursor: pointer;
+
+.edit_icon:hover {
+  box-shadow: 1px 1px 5px gray;
+  cursor: pointer;
 }
-h1{
-    font-size: 40px;
+
+h1 {
+  font-size: 40px;
 }
-.imgcontainer>img{
-    width: 300px;
-    height: auto;
-    border-radius: 15px;
+
+.imgcontainer>img {
+  width: 600px;
+  height: auto;
+  border-radius: 15px;
 }
-.imgcontainer{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
+
+.imgcontainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.diary_content,
+.edit_icon {
+  text-decoration: none;
+}
+
+.left_content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10%;
+}
+
+.diary_content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.state_type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 10px;
 }

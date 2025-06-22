@@ -9,6 +9,10 @@ form {
   color: #333;
 }
 
+span {
+  color: #8e8e8e;
+}
+
 form h1 {
   text-align: center;
   margin-bottom: 20px;
@@ -34,16 +38,18 @@ form h1 {
   flex-direction: column;
   gap: 15px;
 }
-.diary_data>*{
+
+.diary_data>* {
   outline: none;
 }
+
 select.type {
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
   background-color: #fefefe;
   font-size: 1rem;
-  color: #aaa;
+  color: #8e8e8e;
 }
 
 input::placeholder,
@@ -52,14 +58,17 @@ textarea::placeholder {
   font-style: italic;
 }
 
-input[type="text"],input {
+input[type="text"],
+input {
   padding: 10px;
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   background-color: #fefefe;
+  color: #8e8e8e;
 }
-input[type="submit"]{
+
+input[type="submit"] {
   color: #fefefe;
   background-color: #796FB8;
 }
@@ -72,6 +81,7 @@ textarea {
   border: 1px solid #ccc;
   background-color: #fefefe;
   resize: vertical;
+  color: #8e8e8e;
 }
 
 @media (max-width: 500px) {
@@ -83,4 +93,33 @@ textarea {
   form h1 {
     font-size: 1.4rem;
   }
+}
+
+.record_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 8px 0;
+  flex-wrap: wrap;
+}
+
+.record_buttons button {
+  padding: 6px 12px;
+  background-color: transparent;
+  color: #796FB8;
+  border: 1px solid #796FB8;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.record_buttons button:hover {
+  background-color: #796fb836;
+}
+
+button,
+select,
+input[type="submit"] {
+  cursor: pointer;
 }
