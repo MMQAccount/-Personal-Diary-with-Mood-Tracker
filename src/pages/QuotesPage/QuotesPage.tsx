@@ -70,10 +70,24 @@ const QuotesPage = () => {
     }
   };
 
+  const toggleFavorite = (id: number) => {
+    setQuotes((prevQuotes) =>
+      prevQuotes.map((quote) =>
+        quote.id === id ? { ...quote, isFav: !quote.isFav } : quote
+      )
+    );
+  };
+
   return (
     <div className="quotesContainer" ref={containerRef} onClick={handleClick}>
-      {Boolean(quotesData.length) ? (
-        quotesData.map((quote) => <Quote key={quote.id} quoteData={quote} />)
+      {Boolean(quotes.length) ? (
+        quotes.map((quote) => (
+          <Quote
+            key={quote.id}
+            quoteData={quote}
+            onToggleFav={toggleFavorite}
+          />
+        ))
       ) : (
         <h3>Can't Find Any Quotes</h3>
       )}
