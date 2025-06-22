@@ -1,17 +1,18 @@
 .quoteBackground {
   height: 100vh;
   width: 100%;
-  background-image: url(src/assets/wallpaperflare.com_wallpaper-5.jpg);
   background-size: cover;
   text-align: center;
   overflow: hidden;
+  scroll-snap-align: center;
+  padding-left: 20px;
+  box-sizing: border-box;
 }
-.blur {
+.quoteBlur {
   background: transparent;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
   height: 100vh;
   width: 100%;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;

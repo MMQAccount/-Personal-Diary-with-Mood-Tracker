@@ -1,0 +1,15 @@
+.quotesContainer {
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  cursor: pointer;
+}
+
+.quotesContainer::-webkit-scrollbar {
+  display: none;
+}

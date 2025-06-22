@@ -1,11 +1,17 @@
 import "./quote.css";
-
-const Quote = () => {
+interface IProps {
+  quoteData: IQuote;
+}
+const Quote = (props: IProps) => {
   return (
-    <div className="quoteBackground">
-      <div className="blur">
+    <div
+      className="quoteBackground"
+      style={{ backgroundImage: `url(${props.quoteData.background})` }}
+    >
+      <div className="quoteBlur">
         <div className="quote">
-          <h2>Lorem ipsum dolor sit amet.</h2>
+          <h2>{props.quoteData.quote}</h2>
+          <p>{props.quoteData.author}</p>
         </div>
       </div>
     </div>
