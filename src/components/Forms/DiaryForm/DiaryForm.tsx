@@ -58,7 +58,7 @@ const DiaryForm = () => {
                         setMoodValue(parseInt(e.target.value));
                         handleFormChange(e);
                     }}
-                />
+                    required />
                 <h1>{emojis[moodValue]}</h1>
             </div>
             <div className="diary_data">
@@ -68,7 +68,7 @@ const DiaryForm = () => {
                     className="type"
                     defaultValue={""}
                     onChange={handleFormChange}
-                >
+                    required>
                     <option value="" hidden>
                         Select Community
                     </option>
@@ -82,13 +82,13 @@ const DiaryForm = () => {
                     placeholder="Title..."
                     name="title"
                     onChange={handleFormChange}
-                />
+                    required />
                 <textarea
                     name="notes"
                     id="data"
                     placeholder="Add some notes..."
                     onChange={handleFormChange}
-                ></textarea>
+                    required></textarea>
                 <input type="submit" name="Submit" />
             </div>
         </form>

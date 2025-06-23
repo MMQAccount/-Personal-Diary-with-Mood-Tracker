@@ -36,21 +36,21 @@ const DiaryImage = () => {
                         setMoodValue(parseInt(e.target.value));
                         handleFormChange(e);
                     }}
-                />
+                    required />
                 <h1>{emojis[moodValue]}</h1>
             </div>
             <div className='diary_data'>
-                <select name="type" id="type" className='type' defaultValue={""} onChange={handleFormChange}>
-                    <option value="" hidden>Select Community</option>
+                <select name="type" id="type" className='type' defaultValue={""} onChange={handleFormChange} required>
+                    <option value="" hidden >Select Community</option>
                     <option value="Family">Family 👨‍👩‍👧‍👦</option>
                     <option value="Work">Work 🏢</option>
                     <option value="School">School 🏫</option>
                     <option value="Friends">Friends 👥</option>
                 </select>
-                <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} />
-                <textarea name="notes" id="data" placeholder='Add some notes...' onChange={handleFormChange}></textarea>
-                <input type="text" name='image' placeholder='Image url...' onChange={handleFormChange} />
-                <input type="submit" name='Submit' />
+                <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} required />
+                <textarea name="notes" id="data" placeholder='Add some notes...' onChange={handleFormChange} required></textarea>
+                <input type="text" name='image' placeholder='Image url...' onChange={handleFormChange} required />
+                <input type="submit" name='Submit' required />
             </div>
         </form>
     );

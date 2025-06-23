@@ -5,7 +5,7 @@ import { DiaryContext } from "../../providers/diary-provider";
 type IParams = { id: string };
 
 const DiaryEditPage = () => {
-  const { diary, addToDiary } = useContext(DiaryContext);
+  const { diary, updateDiary } = useContext(DiaryContext);
   const params = useParams() as IParams;
   const navigate = useNavigate();
 
@@ -42,8 +42,8 @@ const DiaryEditPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newDiary: Store.IDiaryItem = { id: Date.now(), ...form };
-    addToDiary(newDiary);
+    const newDiary: Store.IDiaryItem = { id: Number(params.id), ...form };
+    updateDiary(Number(params.id), newDiary);
     navigate('/diaryPage');
   };
 
@@ -69,12 +69,11 @@ const DiaryEditPage = () => {
         <h1>{emojis[moodValue]}</h1>
       </div>
       <div className='diary_data'>
-        <select name="type" className='type' value={form.type} onChange={handleFormChange}>
-          <option value="" hidden>Select Community</option>
-          <option value="family">Family 👨‍👩‍👧‍👦</option>
-          <option value="work">Work 🏢</option>
-          <option value="school">School 🏫</option>
-          <option value="friends">Friends 👥</option>
+        <select name="type" className='type' defaultValue={form.type} value={form.type} onChange={handleFormChange}>
+          <option value="Family">Family 👨‍👩‍👧‍👦</option>
+          <option value="Work">Work 🏢</option>
+          <option value="School">School 🏫</option>
+          <option value="Friends">Friends 👥</option>
         </select>
         <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
         <textarea name="notes" placeholder='Add some notes...' value={form.notes} onChange={handleFormChange}></textarea>

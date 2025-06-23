@@ -6,7 +6,9 @@
   flex-direction: row;
   gap: 10px;
 }
-
+.container_diary h1{
+    color: #796FB8;
+}
 .left_div {
   width: 55%;
   height: 100vh;
@@ -36,6 +38,7 @@
 }
 
 .right_div>h1 {
+  color: #edf2fa;
   animation: fadeIn 7s ease-out forwards;
 }
 
