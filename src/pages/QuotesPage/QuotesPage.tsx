@@ -1,9 +1,9 @@
 import Quote from "../../components/Quote/Quote";
 import { useRef, useState } from "react";
-import "./quotesPage.css";
 import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import { BarsOutlined } from "@ant-design/icons";
+import "reactjs-popup/dist/index.css";
+import "./quotesPage.css";
 
 const quotesData: IQuote[] = [
   {
@@ -52,6 +52,7 @@ const quotesData: IQuote[] = [
 const QuotesPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [quotes, setQuotes] = useState<IQuote[]>(quotesData);
+  const [theme, setTheme] = useState<"nature" | "solid">("nature");
   const handleClick = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -93,10 +94,36 @@ const QuotesPage = () => {
         >
           {
             ((close: () => void) => (
-              <div className="modal">
-                <div className="content">Welcome to GFG!!!</div>
+              <div>
                 <div>
-                  <button onClick={close}>Close modal</button>
+                  <h2>Themes</h2>
+                  <div className="optionGroup">
+                    <button
+                      className={
+                        theme === "nature" ? "option selected" : "option"
+                      }
+                      onClick={() => setTheme("nature")}
+                    >
+                      Nature
+                    </button>
+                    <button
+                      className={
+                        theme === "solid" ? "option selected" : "option"
+                      }
+                      onClick={() => setTheme("solid")}
+                    >
+                      Solid Color
+                    </button>
+                  </div>
+
+                  <div>
+                    <h2>Quotes</h2>
+                  </div>
+                </div>
+                <div>
+                  <button onClick={close} className="popupCloseBotton">
+                    Close modal
+                  </button>
                 </div>
               </div>
             )) as unknown as React.ReactNode
@@ -109,6 +136,7 @@ const QuotesPage = () => {
               key={quote.id}
               quoteData={quote}
               onToggleFav={toggleFavorite}
+              theme={theme}
             />
           ))
         ) : (

@@ -29,4 +29,47 @@
   left: 70px;
   bottom: 50px;
   z-index: 5;
+  transition: 0.3s ease;
+}
+.settingsButton:hover {
+  background-color: rgba(123, 107, 136, 0.6);
+}
+
+/* pop-up window */
+
+.popup-content {
+  width: 40% !important;
+  height: 40% !important;
+  background: #edf2fa !important;
+  padding: 30px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
+  position: relative;
+}
+
+.optionGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.option {
+  flex: 1;
+  padding: 10px 0;
+  background-color: #c5d3df57;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.option:hover {
+  background-color: #c5d3df;
+}
+
+.option.selected {
+  background-color: #796fc1;
+  color: white;
+  box-shadow: 0 0 6px rgba(123, 107, 136, 0.8);
 }

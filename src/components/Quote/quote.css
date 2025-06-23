@@ -36,4 +36,8 @@
   position: fixed;
   right: 50px;
   bottom: 50px;
+  transition: 0.3s ease;
+}
+.favQuoteButton:hover {
+  background-color: rgba(123, 107, 136, 0.6);
 }
