@@ -1,7 +1,7 @@
 import Quote from "../../components/Quote/Quote";
 import { useRef, useState } from "react";
 import Popup from "reactjs-popup";
-import { BarsOutlined } from "@ant-design/icons";
+import { BarsOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import "reactjs-popup/dist/index.css";
 import "./quotesPage.css";
 
@@ -53,6 +53,12 @@ const QuotesPage = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [quotes, setQuotes] = useState<IQuote[]>(quotesData);
   const [theme, setTheme] = useState<"nature" | "solid">("nature");
+  const [quoteFilter, setQuoteFilter] = useState<"all" | "fav">("all");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const filteredQuotes =
+    quoteFilter === "fav" ? quotes.filter((quote) => quote.isFav) : quotes;
+
   const handleClick = () => {
     const container = containerRef.current;
     if (!container) return;
@@ -84,13 +90,21 @@ const QuotesPage = () => {
 
   return (
     <>
-      <div className="quotesContainer" ref={containerRef} onClick={handleClick}>
+      <div
+        className="quotesContainer"
+        ref={containerRef}
+        onClick={() => {
+          if (!isPopupOpen) handleClick();
+        }}
+      >
         <Popup
           trigger={
             <button className="settingsButton">{<BarsOutlined />}</button>
           }
           modal
           nested
+          onOpen={() => setIsPopupOpen(true)}
+          onClose={() => setIsPopupOpen(false)}
         >
           {
             ((close: () => void) => (
@@ -115,23 +129,41 @@ const QuotesPage = () => {
                       Solid Color
                     </button>
                   </div>
-
+                  <hr />
                   <div>
                     <h2>Quotes</h2>
+                    <div className="optionGroup">
+                      <button
+                        className={
+                          quoteFilter === "all" ? "option selected" : "option"
+                        }
+                        onClick={() => setQuoteFilter("all")}
+                      >
+                        All Quotes
+                      </button>
+                      <button
+                        className={
+                          quoteFilter === "fav" ? "option selected" : "option"
+                        }
+                        onClick={() => setQuoteFilter("fav")}
+                      >
+                        Favorite Only
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div>
                   <button onClick={close} className="popupCloseBotton">
-                    Close modal
+                    <CloseCircleOutlined />
                   </button>
                 </div>
               </div>
             )) as unknown as React.ReactNode
           }
         </Popup>
-        ;
-        {Boolean(quotes.length) ? (
-          quotes.map((quote) => (
+
+        {Boolean(filteredQuotes.length) ? (
+          filteredQuotes.map((quote) => (
             <Quote
               key={quote.id}
               quoteData={quote}
@@ -140,7 +172,9 @@ const QuotesPage = () => {
             />
           ))
         ) : (
-          <h3>Can't Find Any Quotes</h3>
+          <div className="noQuotes">
+            <h3>Can't Find Any Quotes</h3>
+          </div>
         )}
       </div>
     </>

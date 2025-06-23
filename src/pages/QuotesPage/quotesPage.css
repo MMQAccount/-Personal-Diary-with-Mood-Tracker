@@ -35,7 +35,7 @@
   background-color: rgba(123, 107, 136, 0.6);
 }
 
-/* pop-up window */
+/* start pop-up window */
 
 .popup-content {
   width: 40% !important;
@@ -44,18 +44,20 @@
   padding: 30px !important;
   border-radius: 12px !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2) !important;
-  position: relative;
+  position: relative !important;
 }
-
+.popup-content h2 {
+  color: #c2c9d4;
+}
 .optionGroup {
   display: flex;
-  gap: 12px;
+  gap: 25px;
   margin-bottom: 20px;
 }
 
 .option {
   flex: 1;
-  padding: 10px 0;
+  padding: 30px 0px;
   background-color: #c5d3df57;
   border: none;
   border-radius: 8px;
@@ -72,4 +74,27 @@
   background-color: #796fc1;
   color: white;
   box-shadow: 0 0 6px rgba(123, 107, 136, 0.8);
+}
+
+hr {
+  border: none;
+  height: 2px;
+  background-color: #c2c9d44c;
+}
+
+.popupCloseBotton {
+  text-align: center;
+  background: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+  color: #000;
+}
+
+/* finish pop-up window */
+.noQuotes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
