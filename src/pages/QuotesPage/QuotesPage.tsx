@@ -1,6 +1,9 @@
 import Quote from "../../components/Quote/Quote";
 import { useRef, useState } from "react";
 import "./quotesPage.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
+import { BarsOutlined } from "@ant-design/icons";
 
 const quotesData: IQuote[] = [
   {
@@ -79,19 +82,40 @@ const QuotesPage = () => {
   };
 
   return (
-    <div className="quotesContainer" ref={containerRef} onClick={handleClick}>
-      {Boolean(quotes.length) ? (
-        quotes.map((quote) => (
-          <Quote
-            key={quote.id}
-            quoteData={quote}
-            onToggleFav={toggleFavorite}
-          />
-        ))
-      ) : (
-        <h3>Can't Find Any Quotes</h3>
-      )}
-    </div>
+    <>
+      <div className="quotesContainer" ref={containerRef} onClick={handleClick}>
+        <Popup
+          trigger={
+            <button className="settingsButton">{<BarsOutlined />}</button>
+          }
+          modal
+          nested
+        >
+          {
+            ((close: () => void) => (
+              <div className="modal">
+                <div className="content">Welcome to GFG!!!</div>
+                <div>
+                  <button onClick={close}>Close modal</button>
+                </div>
+              </div>
+            )) as unknown as React.ReactNode
+          }
+        </Popup>
+        ;
+        {Boolean(quotes.length) ? (
+          quotes.map((quote) => (
+            <Quote
+              key={quote.id}
+              quoteData={quote}
+              onToggleFav={toggleFavorite}
+            />
+          ))
+        ) : (
+          <h3>Can't Find Any Quotes</h3>
+        )}
+      </div>
+    </>
   );
 };
 
