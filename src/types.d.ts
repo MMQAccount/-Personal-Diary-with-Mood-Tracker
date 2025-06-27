@@ -2,16 +2,18 @@ declare namespace Store {
     interface IDiaryItem {
         id: number;
         title: string;
-        type: string
+        type: string[];
         notes: string;
         state: number;
-        image?: string
+        image?: string;
+        audio?: string;
     }
     interface IForm {
         title: string;
         notes: string;
-        image: string;
+        image?: string;
         state: number;
-        type: string;
+        type: string[];
+        audio?: string;
     }
 }
