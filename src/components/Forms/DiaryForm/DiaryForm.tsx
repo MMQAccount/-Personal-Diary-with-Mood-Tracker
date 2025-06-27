@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "./DiaryForm.css";
 import { useNavigate } from "react-router";
+import { Checkbox } from "antd";
 
 const DiaryForm = () => {
-    const emojis = ["😔", "😐", "🙂", "☺️", "😄"];
-    const state = [
+const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
         "RELLY TERRIBLE",
         "SOMEWHAT BAD",
         "COMPLETELY OKAY",
@@ -16,9 +16,18 @@ const DiaryForm = () => {
     const INITIAL_FORM: Store.IForm = {
         title: "",
         notes: "",
-        type: "",
+        type: [],
         image: "",
         state: moodValue,
+    };
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { value, checked } = e.target;
+        setForm(prevForm => {
+            const updatedTypes = checked
+                ? [...prevForm.type, value]
+                : prevForm.type.filter((t) => t !== value);
+            return { ...prevForm, type: updatedTypes };
+        });
     };
     const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
     const { addToDiary } = useContext(DiaryContext);
@@ -62,21 +71,29 @@ const DiaryForm = () => {
                 <h1>{emojis[moodValue]}</h1>
             </div>
             <div className="diary_data">
-                <select
-                    name="type"
-                    id="type"
-                    className="type"
-                    defaultValue={""}
-                    onChange={handleFormChange}
-                    required>
-                    <option value="" hidden>
-                        Select Community
-                    </option>
-                    <option value="Family">Family 👨‍👩‍👧‍👦</option>
-                    <option value="Work">Work 🏢</option>
-                    <option value="School">School 🏫</option>
-                    <option value="Friends">Friends 👥</option>
-                </select>
+                <div className="check">
+                    <label className="checkbox-label">
+                        <input
+                            type="checkbox"
+                            value="Family"
+                            onChange={handleCheckboxChange}
+                            hidden
+                        />
+                        <span className={form.type.includes("Family") ? "checked_span": ""}>Family 👨‍👩‍👧‍👦</span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("Work") ? "checked_span": ""}>Work 🏢</span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("School") ? "checked_span": ""}>School 🏫</span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("Friends") ? "checked_span": ""}>Friends 👥</span>
+                    </label>
+                </div>
                 <input
                     type="text"
                     placeholder="Title..."

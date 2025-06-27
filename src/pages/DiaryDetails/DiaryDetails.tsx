@@ -7,8 +7,7 @@ import './DiaryDetails.css';
 type IParams = { id: string; };
 
 const DiaryDetailsPage = () => {
-  const emojis = ["😔", "😐", "🙂", "☺️", "😄"];
-  const { diary } = useContext(DiaryContext);
+const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = useContext(DiaryContext);
 
   const params = useParams<IParams>();
   const [diaryEx, setDiaryEx] = useState<Store.IDiaryItem>();
@@ -43,6 +42,7 @@ const DiaryDetailsPage = () => {
       </div>
       <div className="notes">
         <ReactMarkdown>{diaryEx?.notes}</ReactMarkdown>
+        {diaryEx?.audio ? <audio src={diaryEx?.audio} controls />  : ""}
       </div>
     </div>
   );

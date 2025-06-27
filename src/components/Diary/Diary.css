@@ -1,29 +1,53 @@
 .diary_content {
-  gap: 20px; 
+  gap: 20px;
   overflow: hidden;
   text-decoration: none;
   color: #545f7b;
   width: 100%;
 }
 
+.image_note {
+  width: 100%;
+}
+
+.image_note img {
+  width: 30%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
 div.container {
-  background-color: white;
-  width: 28%;
+  width: 100%;
   margin: 10px 10px;
-  height: 40vh;
-  border-radius: 10px;
-  padding: 5px 25px;
+  padding: 15px 25px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   color: #545f7b;
-  overflow: hidden;
-  box-shadow: 1px 1px 10px rgba(128, 128, 128, 0.253);
 }
-.container:hover {
-  transform: scale(1.05) translateZ(60px);
+
+.date_div {
+  background-color: rgba(156, 156, 156, 0.229);
+  width: 10%;
+  border: 1px solid rgba(201, 201, 201, 0.27);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1px;
+  align-items: center;
 }
+
+.header_date {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+  align-items: center;
+  margin-left: 0;
+}
+
 .edit_icon {
   font-size: 20px;
   color: #545f7b;
@@ -38,18 +62,7 @@ h1 {
   font-size: 40px;
 }
 
-.imgcontainer>img {
-  width: 40%;
-  height: auto;
-  border-radius: 15px;
-}
 
-.imgcontainer {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  flex-wrap: wrap;
-}
 
 .diary_content,
 .edit_icon {
@@ -77,34 +90,29 @@ h1 {
   padding-top: 5px;
   margin-top: 3%;
 }
-.top_content h3{
-  color: #796FB8;
+
+.top_content h1 {
+  color: #719b76;
 }
-.top_content{
+
+.top_content {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.diary_notes{
-   height: 9.3em;
-   overflow: hidden;
-   text-overflow: ellipsis;
+
+.data_container {
+  margin-top: 2%;
+  background-color: rgb(244, 249, 253);
+  border-radius: 15px;
+  padding: 10px 40px;
 }
 
-@media screen and (max-width: 1406px) {
-  div.container {
-    width: 43%;
-  }
-}
-@media screen and (max-width: 1100px) {
-  div.container {
-    width: 42%;
-  }
-}
-@media screen and (max-width: 954px) {
-  div.container {
-    width: 90%;
+@media screen and (max-width: 754px) {
+
+  .date_div{
+    width: 20%;
   }
 }
