@@ -3,7 +3,6 @@ import './App.css'
 import Header from './components/Header/Header'
 import DiaryPage from './pages/DiaryPage/DiaryPage'
 import HomePage from './pages/HomePage/HomePage'
-import StatisticsPage from './pages/StatisticsPage/StatisticsPage'
 import DiaryForm from './components/Forms/DiaryForm/DiaryForm'
 import DiaryVoice from './components/Forms/DiaryVoice/DiaryVoice'
 import DiaryImage from './components/Forms/DiaryImage/DiaryImage'
@@ -38,13 +37,6 @@ function App() {
             <Route
               path={`/diaryImage`}
               element={<DiaryImage />}
-          />
-          <Route 
-              path={`/statisticsPage`}
-              element={<StatisticsPage />}
-          />
-        </Routes>
-
             />
             <Route
               path={`/dispalyDiary/:id`}
