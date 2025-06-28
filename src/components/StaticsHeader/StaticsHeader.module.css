@@ -10,7 +10,6 @@
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  color: #796FB8;
   user-select: none;
 }
 
@@ -63,8 +62,7 @@
   height: 36px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(145deg, #8b5cf6 0%, #7c66ff 100%);
-  color: #fff;
+  background: white;
   font-size: 1.1rem;
   line-height: 1;
   display: grid;

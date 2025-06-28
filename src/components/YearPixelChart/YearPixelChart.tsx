@@ -1,9 +1,14 @@
 import React from "react";
-import CalendarHeatmap, { type TooltipDataAttrs, type ReactCalendarHeatmapValue, } from "react-calendar-heatmap";
+import CalendarHeatmap, {
+  type TooltipDataAttrs,
+  type ReactCalendarHeatmapValue,
+} from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
 import { moodMap } from "../../constants/moodMap";
 import classes from "./YearPixelChart.module.css";
 import useYearPixels from "../../hooks/yearPixels.hook";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 interface IMoodEntry {
   date: string | Date;
@@ -15,8 +20,16 @@ interface IProps {
   year: number;
 }
 
-const YearPixelChart: React.FC<IProps> = ({ entries, year }:IProps) => {
+const YearPixelChart: React.FC<IProps> = ({ entries, year }) => {
   const { EMPTY_COLOR, moods, values } = useYearPixels({ entries, year });
+
+  const moodColorEmojiMap = Object.fromEntries(
+    moods.map(([mood, moodObj]) =>
+      typeof moodObj === "object" && moodObj !== null && "color" in moodObj && "emoji" in moodObj
+        ? [mood, { color: moodObj.color, emoji: moodObj.emoji }]
+        : [mood, { color: EMPTY_COLOR, emoji: "" }]
+    )
+  ) as Record<string, { color: string; emoji: string }>;
 
   return (
     <div className={classes.heatmapWrapper}>
@@ -29,18 +42,24 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year }:IProps) => {
           <span>Empty</span>
         </div>
 
-        {moods.map(([mood, { color, emoji }]) => (
-          <div key={mood} className={classes.legendItem}>
-            <div
-              className={classes.legendColorBox}
-              style={{ backgroundColor: color }}
-              aria-label={`${mood} mood color`}
-            />
-            <span>
-              {emoji} {mood.charAt(0).toUpperCase() + mood.slice(1)}
-            </span>
-          </div>
-        ))}
+        {moods.map(([mood, moodObj]) => {
+          if (typeof moodObj === "object" && moodObj !== null && "color" in moodObj && "emoji" in moodObj) {
+            const { color, emoji } = moodObj;
+            return (
+              <div key={String(mood)} className={classes.legendItem}>
+                <div
+                  className={classes.legendColorBox}
+                  style={{ backgroundColor: color }}
+                  aria-label={`${mood} mood color`}
+                />
+                <span>
+                  {emoji} {typeof mood === "string" ? mood.charAt(0).toUpperCase() + mood.slice(1) : ""}
+                </span>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
 
       <CalendarHeatmap
@@ -55,8 +74,8 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year }:IProps) => {
         transformDayElement={(element, value, index) => {
           let color = EMPTY_COLOR;
 
-          if (value && value.count && moodMap[value.count]?.color) {
-            color = moodMap[value.count].color;
+          if (value && value.count && moodColorEmojiMap[value.count]) {
+            color = moodColorEmojiMap[value.count].color;
           }
 
           return React.isValidElement(element)
@@ -69,21 +88,24 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year }:IProps) => {
             )
             : null;
         }}
-        
         tooltipDataAttrs={(
           value: ReactCalendarHeatmapValue<string> | undefined
         ): TooltipDataAttrs => {
           if (!value || !value.date || !value.count) {
-            return {};
+            return {} as unknown as TooltipDataAttrs;
           }
           const mood = value.count;
-          const emoji = moodMap[mood]?.emoji ?? "";
+          const emoji = moodColorEmojiMap[mood]?.emoji ?? "";
 
           return {
-            ["data-tip"]: `${value.date}: ${emoji} ${mood}`,
-          } as never;
+            "data-tooltip-id": "heatmap-tooltip",
+            "data-tooltip-content": `${value.date}: ${emoji} ${mood}`,
+          } as unknown as TooltipDataAttrs;
         }}
       />
+
+      {/* Enable tooltip rendering */}
+      <Tooltip id="heatmap-tooltip" />
     </div>
   );
 };

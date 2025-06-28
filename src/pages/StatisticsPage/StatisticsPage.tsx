@@ -57,10 +57,11 @@ const sampleEntries = [
 ];
 
 const typeColorMap: Record<string, { color: string }> = {
-  friends: { color: "#60a5fa" }, // blue-400
-  family: { color: "#4ade80" }, // green-400
-  work: { color: "#facc15" }, // yellow-400
-  health: { color: "#f87171" }, // red-400
+  friends: { color: "#a3c8f4" }, 
+  family: { color: "#d2e596" }, 
+  work: { color: "#fee6a6" }, 
+  health: { color: "#f5ccb3" }, 
+  none : { color: "#d3c1f7" }, 
 };
 
 interface StatisticsPageProps {
@@ -116,12 +117,14 @@ const StatisticsPage = ({ entries = sampleEntries }: StatisticsPageProps) => {
 
           <MoodLineChart data={lineData} xKey={xKey} />
 
+          <h4 className={classes.chartLabel}>Mood distribution </h4>
           <MoodPieChart
             pieData={pieData}
             counts={goodBadCounts}
             colorMap={typeColorMap}
           />
 
+          <h4 className={classes.chartLabel}>Sources that influenced your mood</h4>
           <MoodPieChart
             pieData={typeData}
             counts={typeCounts}

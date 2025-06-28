@@ -1,19 +1,18 @@
 import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
 import classes from "./MoodPieChart.module.css";
 import { moodMap } from "../../constants/moodMap";
-import GoodBadStats from "../CountsStats/CountsStats";
 
 interface IPieDataItem {
   name: string;
   value: number;
-};
+}
 
 interface ICounts {
   counts1: number;
   counts2: number;
   counts1Label: string;
   counts2Label: string;
-};
+}
 
 interface IColorMap {
   [key: string]: { color: string; emoji?: string };
@@ -22,12 +21,13 @@ interface IColorMap {
 interface IProps {
   pieData: IPieDataItem[];
   counts: ICounts;
-  colorMap?: IColorMap;
+  colorMap: IColorMap;
 }
 
-const DEFAULT_COLORS = ["#60a5fa", "#4ade80", "#facc15", "#f87171", "#a78bfa"];
+const DEFAULT_COLORS = ["#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7"];
 
-const MoodPieChart = ({ pieData, counts, colorMap = moodMap }: IProps) => {
+const MoodPieChart = ({ pieData, /*counts,*/ colorMap }: IProps) => {
+
   return (
     <div className={classes.pieWrapper}>
       <div className={classes.pieRow}>
@@ -37,6 +37,7 @@ const MoodPieChart = ({ pieData, counts, colorMap = moodMap }: IProps) => {
               data={pieData}
               dataKey="value"
               nameKey="name"
+              fill="black"
               cx="50%"
               cy="50%"
               outerRadius={100}
@@ -60,7 +61,7 @@ const MoodPieChart = ({ pieData, counts, colorMap = moodMap }: IProps) => {
           </PieChart>
         </ResponsiveContainer>
 
-        {<GoodBadStats {...counts} />}
+        {/* {<GoodBadStats {...counts} />} */}
       </div>
     </div>
   );
