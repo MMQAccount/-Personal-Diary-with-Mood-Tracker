@@ -24,6 +24,35 @@ interface IProps {
   colorMap: IColorMap;
 }
 
+interface ICustomLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  outerRadius: number;
+  percent: number;
+  name: string;
+}
+
+const renderCustomLabel = ({cx,cy,midAngle,outerRadius,percent,name,}: ICustomLabelProps) => {
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 20; // Push label 20px outside the outer radius
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text
+      x={x}
+      y={y}
+      fill="#8e8e8e"
+      textAnchor={x > cx ? "start" : "end"}
+      dominantBaseline="central"
+      fontSize={16}
+    >
+      {`${moodMap[name]?.emoji ?? ""} ${name} ${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
 const DEFAULT_COLORS = ["#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7"];
 
 const MoodPieChart = ({ pieData, /*counts,*/ colorMap }: IProps) => {
@@ -41,9 +70,8 @@ const MoodPieChart = ({ pieData, /*counts,*/ colorMap }: IProps) => {
               cx="50%"
               cy="50%"
               outerRadius={100}
-              label={({ name, percent }) =>
-                `${moodMap[name]?.emoji ?? ""} ${name} ${(percent*100).toFixed(0)}%`
-              }
+              label={renderCustomLabel}
+              labelLine={true} 
             >
               {pieData.map(({ name }, i) => {
                 const entry = colorMap[name];
