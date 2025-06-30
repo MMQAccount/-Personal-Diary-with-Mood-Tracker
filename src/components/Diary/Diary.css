@@ -3,7 +3,13 @@
   overflow: hidden;
   text-decoration: none;
   color: #545f7b;
-  width: 100%;
+  width: 95%;
+  height: fit-content;
+  margin-top: 2%;
+  background-color: rgba(255, 255, 255, 0.55);
+  border-radius: 15px;
+  padding: 10px 40px;
+  box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
 }
 .diary_content:hover{
   cursor: pointer;
@@ -28,6 +34,7 @@ div.container {
   justify-content: space-between;
   align-items: center;
   color: #545f7b;
+
 }
 
 .date_div {
@@ -105,12 +112,7 @@ h1 {
   align-items: center;
 }
 
-.data_container {
-  margin-top: 2%;
-  background-color: rgb(244, 249, 253);
-  border-radius: 15px;
-  padding: 10px 40px;
-}
+
 
 @media screen and (max-width: 754px) {
 
