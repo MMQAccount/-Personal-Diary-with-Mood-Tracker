@@ -172,10 +172,20 @@ option {
     .diarys {
         margin-top: 15%;
     }
+
+    .input_wrapper:focus-within {
+        width: 300px;
+    }
 }
 
 @media (max-width: 769px) {
     .checkbox-label {
         font-size: smaller;
     }
+
+    .diary_type {
+        margin: 4% 2%;
+
+    }
+
 }

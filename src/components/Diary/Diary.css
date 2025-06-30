@@ -11,9 +11,11 @@
   padding: 10px 40px;
   box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
 }
-.diary_content:hover{
+
+.diary_content:hover {
   cursor: pointer;
 }
+
 .image_note {
   width: 100%;
 }
@@ -112,10 +114,7 @@ h1 {
   align-items: center;
 }
 
-
-
 @media screen and (max-width: 754px) {
-
   .date_div {
     width: 20%;
   }
