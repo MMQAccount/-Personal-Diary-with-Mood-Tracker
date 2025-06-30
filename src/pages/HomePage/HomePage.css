@@ -1,56 +1,67 @@
-
-.container_diary{
-    width: 100%;
-    height: 100vh;
-    background-color: #796FB8;
-    display: flex;
-    flex-direction: row; 
-    gap: 10px;
+.container_diary {
+  width: 100%;
+  height: 100vh;
+  background-color: #719b76;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
-.left_div{
-    width: 55%;
-    height: 100vh;
-    background-color: #edf2fa;
-    border-radius: 0px 0px 80% 0px;
-    color: #796FB8;
-    display: flex;
-    flex-direction: column;
-    gap: 22%;
-}
-.right_div{
-    width: 35%;
-    border-radius: 0px 0px 80% 0px;
-    color: #edf2fa;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    text-align: center;
+.container_diary h1{
+    color: #719b76;
 }
 
-.right_div>img{
-    width: 200px;
-    animation: fadeIn 2s ease-out forwards;
-}
-.right_div>h1{
-    animation: fadeIn 7s ease-out forwards;
-}
-.right_div>h3{
-    animation: fadeIn 10s ease-out forwards;
+.left_div {
+  width: 55%;
+  height: 100vh;
+  background-color: #edf2fa;
+  border-radius: 0px 0px 80% 0px;
+  color: #796FB8;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
 }
 
+
+.right_div {
+  width: 35%;
+  border-radius: 0px 0px 80% 0px;
+  color: #edf2fa;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px auto;
+}
+
+.left_div>.reflectly_container>img {
+  width: 200px;
+  animation: fadeIn 2s ease-out forwards;
+}
+
+.right_div>h1 {
+  color: #edf2fa;
+  animation: fadeIn 7s ease-out forwards;
+}
+
+.right_div>h3 {
+  animation: fadeIn 10s ease-out forwards;
+}
+.reflectly_container{
+  text-align: center;
+  color: #719b76;
+  font-size: x-large;
+  margin-left: -15%;
+}
 .greeting {
   z-index: 2;
   text-align: center;
-  padding: 0 10% 5% 0px;
-  color: #796FB8;
+  color: #edf2fa;
 }
 
-.greeting h2 {
+.greeting h1 {
   font-size: 2.9rem;
   margin-bottom: 10px;
   animation: fadeIn 2s ease-out forwards;
+  color: #edf2fa;
 }
 
 .greeting p {
@@ -59,12 +70,37 @@
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.7; }
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .reflectly_container{
+    font-size: large;
+    margin-right: 8%;
+  }
 }

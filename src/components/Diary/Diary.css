@@ -1,40 +1,118 @@
-.diary_content{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 20px;
+.diary_content {
+  gap: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #545f7b;
+  width: 100%;
 }
-div.container{
-    background-color: white;
-    width: 90%;
-    margin: 10px auto;
-    height: fit-content;
-    border-radius: 10px;
-    padding: 5px 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    color:#545f7b;
+
+.image_note {
+  width: 100%;
 }
-.edit_icon{
-    font-size: 20px;
+
+.image_note img {
+  width: 30%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
-.edit_icon:hover{
-    box-shadow: 1px 1px 5px gray;
-    cursor: pointer;
+
+div.container {
+  width: 100%;
+  margin: 10px 10px;
+  padding: 15px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  color: #545f7b;
 }
-h1{
-    font-size: 40px;
+
+.date_div {
+  background-color: rgba(156, 156, 156, 0.229);
+  width: 10%;
+  border: 1px solid rgba(201, 201, 201, 0.27);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  line-height: 1px;
+  align-items: center;
 }
-.imgcontainer>img{
-    width: 300px;
-    height: auto;
-    border-radius: 15px;
+
+.header_date {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 2%;
+  align-items: center;
+  margin-left: 0;
 }
-.imgcontainer{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    flex-wrap: wrap;
+
+.edit_icon {
+  font-size: 20px;
+  color: #545f7b;
+}
+
+.edit_icon:hover {
+  box-shadow: 1px 1px 5px gray;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+
+
+.diary_content,
+.edit_icon {
+  text-decoration: none;
+}
+
+.left_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10%;
+}
+
+
+.state_type {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  height: 50px;
+  border-top: 1px solid #545f7b66;
+  padding-top: 5px;
+  margin-top: 3%;
+}
+
+.top_content h1 {
+  color: #719b76;
+}
+
+.top_content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.data_container {
+  margin-top: 2%;
+  background-color: rgb(244, 249, 253);
+  border-radius: 15px;
+  padding: 10px 40px;
+}
+
+@media screen and (max-width: 754px) {
+
+  .date_div{
+    width: 20%;
+  }
 }

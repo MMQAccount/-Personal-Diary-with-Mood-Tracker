@@ -33,3 +33,8 @@ A private web application for journaling with daily mood tracking and analytics.
 1. Clone the repo:  
 ```bash
 git clone https://github.com/MMQAccount/-Personal-Diary-with-Mood-Tracker.git
+npm install antd --save
+npm i
+npm install react-router-dom
+npm install --save-dev @types/react @types/react-dom
+npm install vite --save-dev
