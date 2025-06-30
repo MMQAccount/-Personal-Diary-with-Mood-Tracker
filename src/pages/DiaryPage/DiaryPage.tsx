@@ -11,7 +11,7 @@ import useSearch from '../../hooks/useSearch.hook';
 import useSearchType from '../../hooks/useSearchType.hook';
 import useSearchByMood from '../../hooks/useSearchByMood.hook';
 const DiaryPage = () => {
-
+  const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
   const { DiaryDays } = useDays();
   const { handleSearchByType, searchResultsByType } = useSearchType();
   const { handleSearch, searchResults } = useSearch();
@@ -109,11 +109,10 @@ const DiaryPage = () => {
           <div>
             <select name="mood" id="mood" className='search_mood' onChange={handelSelectChange} defaultValue={""}>
               <option value="" hidden>Mood</option>
-              <option value="0">😭</option>
-              <option value="1">🙁</option>
-              <option value="2">😐</option>
-              <option value="3">☺️</option>
-              <option value="4">😁</option>
+              {emojis.map((emoji, index) => (
+                <option key={index} value={index}>
+                  {emoji}
+                </option>))}
             </select>
           </div>
         </div>
