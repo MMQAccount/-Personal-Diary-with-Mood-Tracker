@@ -16,4 +16,7 @@ declare namespace Store {
         type: string[];
         audio?: string;
     }
+    interface ISearchForm {
+        type: string[];
+    }
 }

@@ -120,7 +120,7 @@ textarea {
 
 button,
 select,
-input[type="submit"] {
+input[type="submit"], input[type="checkbox"]{
   cursor: pointer;
 }
 .check{

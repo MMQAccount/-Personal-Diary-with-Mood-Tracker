@@ -8,9 +8,9 @@ import { useReactMediaRecorder } from "react-media-recorder";
 const DiaryVoice = () => {
     const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
-
     const emojis = ['😭', '🙁', '😐', '☺️', '😁']; const stateLabels = ["RELLY TERRIBLE", "SOMEWHAT BAD", "COMPLETELY OKAY", "PRETTY GOOD", "SUPER AWESOME"];
-
+    const { addToDiary } = useContext(DiaryContext);
+    const navigate = useNavigate();
     const [moodValue, setMoodValue] = useState(2);
     const INITIAL_FORM: Store.IForm = {
         title: '',
@@ -19,10 +19,8 @@ const DiaryVoice = () => {
         image: '',
         state: moodValue,
     };
-
     const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
-    const { addToDiary } = useContext(DiaryContext);
-    const navigate = useNavigate();
+
     useEffect(() => {
         if (listening) {
             setForm(prev => ({ ...prev, notes: transcript }));
@@ -54,6 +52,7 @@ const DiaryVoice = () => {
         console.log(newDiary);
         navigate('/diaryPage');
     };
+
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
         setForm(prevForm => {
@@ -63,6 +62,7 @@ const DiaryVoice = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
+
     return (
         <form onSubmit={handelSubmit}>
             <h1>{stateLabels[moodValue]}</h1>
@@ -109,7 +109,7 @@ const DiaryVoice = () => {
                 </div>
 
                 <input type="text" placeholder='Title...' name='title' onChange={handleFormChange} required />
-                <textarea name="notes" placeholder="Type notes or use voice..." value={form.notes} onChange={handleFormChange} required />
+                <textarea name="notes" placeholder="Type notes or use voice..." value={form.notes} onChange={handleFormChange} />
 
                 <div className="record_buttons">
                     {status === "recording" ? (

@@ -1,8 +1,7 @@
 import { EditOutlined } from "@ant-design/icons";
 import "./Diary.css";
 import ReactMarkdown from "react-markdown";
-import { Link, useNavigate } from "react-router-dom";
-import Markdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   id: number;
@@ -15,9 +14,9 @@ interface IProps {
 }
 
 const Diary = ({ id, title, notes, state, image, type, audio }: IProps) => {
-  const date = new Date(id);
   const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
   const navigate = useNavigate();
+
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     navigate(`/DiaryEditPage/${id}`);
@@ -25,6 +24,7 @@ const Diary = ({ id, title, notes, state, image, type, audio }: IProps) => {
   const handleDiaryClick = () => {
     navigate(`/dispalyDiary/${id}`);
   };
+
   return (
     <div className="diary_content" onClick={handleDiaryClick}>
       <div className="data_container">
@@ -32,7 +32,6 @@ const Diary = ({ id, title, notes, state, image, type, audio }: IProps) => {
           <h1>{title.charAt(0).toUpperCase() + title.slice(1)}</h1>
           <EditOutlined className="edit_icon" onClick={handleEditClick} />
         </div>
-
         <div className="diary_notes">
           <ReactMarkdown>{notes}</ReactMarkdown>
           {audio ? <audio src={audio} controls /> : ""}

@@ -6,14 +6,7 @@ interface IDiaryContext {
   updateDiary: (id: number, item: Store.IDiaryItem) => void;
 }
 const initialDiary: Store.IDiaryItem[] = [
-  {
-    id: new Date("2025-06-27").getTime(),
-    title: "Deep Reflection",
-    notes: "Today I spent hours reading old journal entries. \n\n- Realized how far I've come\n- Missed some friendships\n\n**Conclusion:** growth is slow, but it's happening.",
-    state: 2,
-    type: ["Friends"],
-    image: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg",
-  },
+
   {
     id: new Date("2025-06-27").getTime(),
     title: "Family Reunion",
@@ -30,28 +23,28 @@ const initialDiary: Store.IDiaryItem[] = [
     image: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg",
   },
   {
-    id: new Date("2025-06-29").getTime(),
+    id: new Date("2025-05-29").getTime(),
     title: "Quiet Victory",
     notes: "Finally finished that stubborn article I've been working on. The words just *flowed* today.\n\nResult:\n\n- **2,500** words written\n- Dozens of edits\n\nFeeling proud and relieved!",
     state: 4,
     type: ["Work"],
   },
   {
-    id: new Date("2025-06-30").getTime(),
+    id: new Date("2025-05-30").getTime(),
     title: "Midterms Stress",
     notes: "Studying for my midterms is **exhausting**. Notes are everywhere:\n- Biology chapter 5\n- Math integration problems\n- Literature analysis 🤯\n\nI scheduled breaks and made a *color-coded* timetable. \n\n**Goal:** finish all review by Friday.",
     state: 2,
     type: ["School"],
   },
   {
-    id: new Date("2025-07-01").getTime(),
+    id: new Date("2025-06-01").getTime(),
     title: "Evening Walk",
     notes: "Took a long walk as the sun set. The park was calm, birds chirping. I felt a sense of peace:\n\n> _Walking clears the mind._\n\nReturned with a fresh perspective and motivation to journal.",
-    state: 3,
+    state: 0,
     type: ["School"],
   },
   {
-    id: new Date("2025-07-02").getTime(),
+    id: new Date("2025-06-02").getTime(),
     title: "Friendsgiving Prep",
     notes: "Planning a **Friendsgiving** dinner:\n\n- 🥧 Pumpkin pie\n- 🍗 Roast chicken\n- 🥗 Green salad\n- 🎶 Playlist is ready\n\nCreated an invite in the group chat and assigned tasks. So excited!",
     state: 4,
@@ -59,7 +52,7 @@ const initialDiary: Store.IDiaryItem[] = [
     image: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg",
   },
   {
-    id: new Date("2025-07-03").getTime(),
+    id: new Date("2025-06-03").getTime(),
     title: "On Top of the World",
     notes: "Everything clicked today — energy, creativity, and happiness!",
     state: 4,
