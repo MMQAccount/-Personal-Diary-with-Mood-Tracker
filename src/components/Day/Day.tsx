@@ -21,7 +21,9 @@ const Day = ({ id }: IProps) => {
             return diaryDay === targetDay;
         });
     };
+
     const todayEntries = filterToday(Number(date), diary);
+
     return (
         <div className="container">
             <div className="header_date">
@@ -32,7 +34,7 @@ const Day = ({ id }: IProps) => {
                 <h2>{date.toLocaleDateString('en-US', { weekday: 'long' })}</h2>
             </div>
             {todayEntries.map(d => (
-                <Diary id={d.id} title={d.title} notes={d.notes} state={d.state} type={d.type} image={d.image} audio={d.audio} />
+                <Diary key={d.id} id={d.id} title={d.title} notes={d.notes} state={d.state} type={d.type} image={d.image} audio={d.audio} />
             ))}
         </div>
     );
