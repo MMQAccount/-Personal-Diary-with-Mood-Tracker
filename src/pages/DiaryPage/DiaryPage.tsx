@@ -54,7 +54,7 @@ const DiaryPage = () => {
     handleSearchByMood(val);
   }
   useEffect(() => {
-    const result = handleSearchByType(form.type);
+    handleSearchByType(form.type);
   }, [form]);
   return (
     <div className="diary_container">
