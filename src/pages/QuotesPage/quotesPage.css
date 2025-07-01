@@ -1,6 +1,6 @@
 .quotesContainer {
   height: 100vh;
-  width: 100%;
+  width: 100%+50px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -9,6 +9,7 @@
   scrollbar-width: none;
   cursor: pointer;
   position: relative;
+  margin-left: -50px;
 }
 
 .quotesContainer::-webkit-scrollbar {

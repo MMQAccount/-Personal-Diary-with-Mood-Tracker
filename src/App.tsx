@@ -10,6 +10,7 @@ import QuotesPage from './pages/QuotesPage/QuotesPage';
 import DiaryProvider from './providers/diary-provider';
 import DiaryDetailsPage from './pages/DiaryDetails/DiaryDetails';
 import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage';
+import StatisticsPage from './pages/StatisticsPage/StatisticsPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path='/quotesPage' element={<QuotesPage />} />
             <Route path='/dispalyDiary/:id' element={<DiaryDetailsPage />} />
             <Route path='/DiaryEditPage/:id' element={<DiaryEditPage />} />
+            <Route path={`/statisticsPage`} element={<StatisticsPage />} />
           </Routes>
         </DiaryProvider>
       </BrowserRouter>
