@@ -2,10 +2,14 @@ import React, { useContext, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "./DiaryForm.css";
 import { useNavigate } from "react-router";
-import { Checkbox } from "antd";
 
 const DiaryForm = () => {
-const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
+
+
+    const { addToDiary } = useContext(DiaryContext);
+    const navigate = useNavigate();
+
+    const emojis = ['😭', '🙁', '😐', '☺️', '😁']; const state = [
         "RELLY TERRIBLE",
         "SOMEWHAT BAD",
         "COMPLETELY OKAY",
@@ -20,6 +24,8 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
         image: "",
         state: moodValue,
     };
+    const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
+
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
         setForm(prevForm => {
@@ -29,10 +35,6 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
             return { ...prevForm, type: updatedTypes };
         });
     };
-    const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
-    const { addToDiary } = useContext(DiaryContext);
-    const navigate = useNavigate();
-
     const handleFormChange = (
         e: React.ChangeEvent<
             HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -52,6 +54,7 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
         console.log(newDiary);
         navigate("/diaryPage");
     };
+
     return (
         <form onSubmit={handelSubmit}>
             <h1>{state[moodValue]}</h1>
@@ -79,19 +82,19 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];    const state = [
                             onChange={handleCheckboxChange}
                             hidden
                         />
-                        <span className={form.type.includes("Family") ? "checked_span": ""}>Family 👨‍👩‍👧‍👦</span>
+                        <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
                     </label>
                     <label className="checkbox-label">
                         <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("Work") ? "checked_span": ""}>Work 🏢</span>
+                        <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
                     </label>
                     <label className="checkbox-label">
                         <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("School") ? "checked_span": ""}>School 🏫</span>
+                        <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
                     </label>
                     <label className="checkbox-label">
                         <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("Friends") ? "checked_span": ""}>Friends 👥</span>
+                        <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
                     </label>
                 </div>
                 <input

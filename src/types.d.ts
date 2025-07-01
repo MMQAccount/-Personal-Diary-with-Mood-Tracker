@@ -24,5 +24,9 @@ declare namespace Store {
         state: number;
         type: string[];
         audio?: string;
+
+    interface ISearchForm {
+        type: string[];
     }
 }
+
