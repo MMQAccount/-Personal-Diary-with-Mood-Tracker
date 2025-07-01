@@ -38,3 +38,5 @@ npm i
 npm install react-router-dom
 npm install --save-dev @types/react @types/react-dom
 npm install vite --save-dev
+npm i reactjs-popup
+npm i react-speech-recognition 
