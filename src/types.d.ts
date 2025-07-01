@@ -1,3 +1,12 @@
+
+  interface IQuote {
+  id: number;
+  quote: string;
+  author: string;
+  background: string;
+  color: string;
+  isFav: boolean;
+}
 declare namespace Store {
     interface IDiaryItem {
         id: number;
@@ -15,8 +24,9 @@ declare namespace Store {
         state: number;
         type: string[];
         audio?: string;
-    }
+
     interface ISearchForm {
         type: string[];
     }
 }
+
