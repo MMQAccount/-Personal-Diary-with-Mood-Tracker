@@ -120,7 +120,7 @@ const StatisticsPage = ({ entries = sampleEntries }: StatisticsPageProps) => {
       )}
 
       <div className={classes.chartContainer}>
-        <h2 className={classes.chartLabel} style={{ marginTop: "7px" }} >Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}</h2>
+        <h2 className={classes.chartLabel} >Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}</h2>
         <MoodLineChart data={lineData} xKey={xKey} />
       </div>
 
