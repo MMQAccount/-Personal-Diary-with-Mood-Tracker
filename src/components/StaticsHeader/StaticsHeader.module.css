@@ -44,13 +44,15 @@
   font-size:20px;
 }
 
+/* TODO: change the border-color */
 .controls select:hover {
-  border-color: #b5b5ff;
+  border-color: #719b76;
 }
 
+/* TODO: change the border-color */
 .controls select:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #719b76;
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.25);
 }
 
