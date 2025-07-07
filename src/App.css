@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
-body{
+
+body {
     font-family: 'Quicksand', sans-serif;
     width: 100%-(100px);
     height: 100vh;
@@ -7,4 +8,11 @@ body{
     padding: 0;
     margin: 0;
     padding-left: 100px;
+}
+
+@media screen and (max-width: 754px) {
+    body {
+        width: 100%;
+        padding: 0;
+    }
 }

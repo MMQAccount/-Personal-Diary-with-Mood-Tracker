@@ -9,6 +9,7 @@ import DiaryImage from './components/Forms/DiaryImage/DiaryImage'
 import DiaryProvider from './providers/diary-provider';
 import DiaryDetailsPage from './pages/DiaryDetails/DiaryDetails'
 import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
+import DiaryMood from './components/Forms/DiaryMood/DiaryMood'
 
 
 function App() {
@@ -37,6 +38,10 @@ function App() {
             <Route
               path={`/diaryImage`}
               element={<DiaryImage />}
+            />
+            <Route
+              path={`/diaryMood`}
+              element={<DiaryMood />}
             />
             <Route
               path={`/dispalyDiary/:id`}

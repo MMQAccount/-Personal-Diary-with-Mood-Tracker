@@ -28,12 +28,14 @@ const DiaryPage = () => {
     if (value === 'input') navigate('/diaryForm');
     else if (value === 'voice') navigate('/diaryVoice');
     else if (value === 'image') navigate('/diaryImage');
+    else if (value === 'mood') navigate('/diaryMood');
   };
 
   const options = [
     { label: 'input 📜', value: 'input' },
     { label: 'voice 🎙️', value: 'voice' },
     { label: 'image🖼️', value: 'image' },
+    { label: 'mood☺️', value: 'mood' },
   ];
 
   const handleSelect = (value: string) => {
@@ -83,82 +85,48 @@ const DiaryPage = () => {
             onChange={handleSearch}
           />
         </div>
-
-        <div className="check">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              value="Family"
-              onChange={handleCheckboxChange}
-              hidden
-            />
-            <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
-          </label>
-          <label className="checkbox-label">
-            <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} />
-            <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
-          </label>
-          <label className="checkbox-label">
-            <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} />
-            <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
-          </label>
-          <label className="checkbox-label">
-            <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} />
-            <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
-          </label>
-          <div>
-            <select name="mood" id="mood" className='search_mood' onChange={handelSelectChange} defaultValue={""}>
-              <option value="" hidden>Mood</option>
-              {emojis.map((emoji, index) => (
-                <option key={index} value={index}>
-                  {emoji}
-                </option>))}
-            </select>
-          </div>
+      </div>
+      <div className="check">
+        <label className="checkbox-label">
+          <input
+            type="checkbox"
+            value="Family"
+            onChange={handleCheckboxChange}
+            hidden
+          />
+          <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
+        </label>
+        <label className="checkbox-label">
+          <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} />
+          <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
+        </label>
+        <label className="checkbox-label">
+          <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} />
+          <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
+        </label>
+        <label className="checkbox-label">
+          <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} />
+          <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
+        </label>
+        <div>
+          <select name="mood" id="mood" className='search_mood' onChange={handelSelectChange} defaultValue={""}>
+            <option value="" hidden>Mood</option>
+            {emojis.map((emoji, index) => (
+              <option key={index} value={index}>
+                {emoji}
+              </option>))}
+          </select>
         </div>
       </div>
-
+      {searchResultsByType.length > 0 ? <h2>{`Filterd By : ${form.type.join(", ")}`}</h2> : ""}
+      {searchResultsByMood.length > 0 ? <h2>{`Filterd By : ${0}`}</h2> : ""}
       <div className='diarys'>
-        {searchResultsByMood.length > 0 || searchResultsByType.length > 0 || searchResults.length > 0
-          ? searchResultsByMood.length > 0 ? searchResultsByMood.map(d => (
-            <Diary
-              key={d.id}
-              id={d.id}
-              title={d.title}
-              notes={d.notes}
-              state={d.state}
-              type={d.type}
-              image={d.image}
-              audio={d.audio}
-            />
-          )) : searchResultsByType.length > 0 ? searchResultsByType.map(d => (
-            <Diary
-              key={d.id}
-              id={d.id}
-              title={d.title}
-              notes={d.notes}
-              state={d.state}
-              type={d.type}
-              image={d.image}
-              audio={d.audio}
-            />
-          )) : searchResults.map(d => (
-            <Diary
-              key={d.id}
-              id={d.id}
-              title={d.title}
-              notes={d.notes}
-              state={d.state}
-              type={d.type}
-              image={d.image}
-              audio={d.audio}
-            />
-          ))
-          : diary.length > 0
-            ? DiaryDays.map(d => <Day key={d} id={d} />)
-            : <h3>Can't Find Any Diary, Try To Add Some</h3>}
+
+        {diary.length > 0
+          ? DiaryDays.map(d => <Day key={d} id={d} />)
+          : <h3>Can't Find Any Diary, Try To Add Some</h3>}
       </div>
-    </div>
+    </div >
   );
 };
 

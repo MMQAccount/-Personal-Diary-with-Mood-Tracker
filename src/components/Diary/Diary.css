@@ -118,4 +118,10 @@ h1 {
   .date_div {
     width: 20%;
   }
+  .header_date{
+    margin-left: -15%;
+  }
+div.container{
+  padding-left: 8%;
+}
 }

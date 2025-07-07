@@ -26,7 +26,7 @@ option {
 .search_container {
     padding-top: 10px;
     height: 50px;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -35,17 +35,13 @@ option {
 }
 
 .input_wrapper {
-    width: 35px;
-    transition: width 0.4s ease;
+    width: 50%;
 }
 
-.input_wrapper:focus-within {
-    width: 500px;
-}
+
 
 .search_input {
     margin-top: 5px;
-    background-color: inherit;
     border: none;
 }
 
@@ -115,6 +111,7 @@ option {
     display: flex;
     flex-direction: row;
     gap: 2%;
+    align-items: center;
 }
 
 .checkbox-label {
@@ -179,13 +176,15 @@ option {
 }
 
 @media (max-width: 769px) {
+    .diary_container {
+    padding: 0 2% 0 1.5% ;
+}
     .checkbox-label {
         font-size: smaller;
     }
 
     .diary_type {
-        margin: 4% 2%;
-
+        margin: 4% 2%
     }
 
 }

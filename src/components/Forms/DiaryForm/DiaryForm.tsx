@@ -9,20 +9,12 @@ const DiaryForm = () => {
     const { addToDiary } = useContext(DiaryContext);
     const navigate = useNavigate();
 
-    const emojis = ['😭', '🙁', '😐', '☺️', '😁']; const state = [
-        "RELLY TERRIBLE",
-        "SOMEWHAT BAD",
-        "COMPLETELY OKAY",
-        "PRETTY GOOD",
-        "SUPER AWESOME",
-    ];
-    const [moodValue, setMoodValue] = useState(2);
     const INITIAL_FORM: Store.IForm = {
         title: "",
         notes: "",
         type: [],
         image: "",
-        state: moodValue,
+        state: -1,
     };
     const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
 
@@ -49,6 +41,10 @@ const DiaryForm = () => {
     };
     const handelSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if(form.type.length === 0){
+            alert("Select One Cominity At Least!");
+            return;
+        }
         const newDiary: Store.IDiaryItem = { id: Date.now(), ...form };
         addToDiary(newDiary);
         console.log(newDiary);
@@ -57,22 +53,6 @@ const DiaryForm = () => {
 
     return (
         <form onSubmit={handelSubmit}>
-            <h1>{state[moodValue]}</h1>
-            <div className="mood_input">
-                <input
-                    type="range"
-                    min={0}
-                    max={4}
-                    defaultValue={2}
-                    className="range_input"
-                    name="state"
-                    onChange={(e) => {
-                        setMoodValue(parseInt(e.target.value));
-                        handleFormChange(e);
-                    }}
-                    required />
-                <h1>{emojis[moodValue]}</h1>
-            </div>
             <div className="diary_data">
                 <div className="check">
                     <label className="checkbox-label">

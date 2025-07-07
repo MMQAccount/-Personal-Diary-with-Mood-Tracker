@@ -2,6 +2,8 @@ import "../Diary/Diary.css";
 import { DiaryContext } from "../../providers/diary-provider";
 import { useContext } from "react";
 import Diary from "../Diary/Diary";
+import ImageDiary from "../Diary/ImageDiary";
+import VoiceDiary from "../Diary/VoiceDiary";
 
 interface IProps {
     id: number;
@@ -23,7 +25,9 @@ const Day = ({ id }: IProps) => {
     };
 
     const todayEntries = filterToday(Number(date), diary);
-
+    const imageDiarys = todayEntries.filter(d => (d.image?.length !== 0));
+    const voiceDiarys = todayEntries.filter(d => (d.audio?.length !== 0));
+    const textDiarys = todayEntries.filter(d => (d.title.length !== 0));
     return (
         <div className="container">
             <div className="header_date">
@@ -33,9 +37,9 @@ const Day = ({ id }: IProps) => {
                 </div>
                 <h2>{date.toLocaleDateString('en-US', { weekday: 'long' })}</h2>
             </div>
-            {todayEntries.map(d => (
-                <Diary key={d.id} id={d.id} title={d.title} notes={d.notes} state={d.state} type={d.type} image={d.image} audio={d.audio} />
-            ))}
+            {textDiarys.length > 0 ? <Diary diarys={textDiarys} /> : ""}
+            {voiceDiarys.length > 0 ? <VoiceDiary voices={voiceDiarys} /> : ""}
+            {imageDiarys.length > 0 ? <ImageDiary images={imageDiarys} /> : ""}
         </div>
     );
 };
