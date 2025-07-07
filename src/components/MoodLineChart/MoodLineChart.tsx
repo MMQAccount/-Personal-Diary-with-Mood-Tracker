@@ -1,4 +1,4 @@
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceLine, } from "recharts";
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, ReferenceLine, } from "recharts";
 import classes from "./MoodLineChart.module.css";
 import { scoreToMood } from "../../constants/moodMap";
 
@@ -32,8 +32,8 @@ const MoodLineChart = ({ data, xKey }: IProps) => {
                 data={data}
                 margin={{ top: 20, right: 30, left: 30, bottom: 20 }}
             >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey={xKey} tickLine={false} stroke="#8884d8" />
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}  // ⛔ Remove this
+                <XAxis dataKey={xKey} tickLine={false} stroke="#8e8e8e" />
                 <YAxis
                     type="number"
                     domain={[-2, 2]}
@@ -57,9 +57,8 @@ const MoodLineChart = ({ data, xKey }: IProps) => {
                     type="monotone"
                     dataKey="score"
                     stroke={color}
-                    strokeWidth={2}
-                    dot={{ r: 4 }}
-                    activeDot={{ r: 6 }}
+                    strokeWidth={4}
+                    dot={false}
                 />
             </LineChart>
         </ResponsiveContainer>
