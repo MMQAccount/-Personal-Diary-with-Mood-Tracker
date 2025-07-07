@@ -5,6 +5,14 @@
 }
 
 /* -------------- Card container  -------------- */
+.fullWidthPage {
+  width: 100%;
+  padding: 0 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
   position: relative;
   padding: 32px 40px;
@@ -33,6 +41,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
   overflow: hidden;
   margin-left: -17px;
+  margin-bottom: 15px;
 }
 
 .chartLabel {
@@ -55,6 +64,25 @@
   color: #222222c2;
   user-select: none;
 }
+
+.sideBySideCharts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  gap: 20px;
+}
+
+.pieChartWrapper {
+  flex: 1 1 46.9%;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
 
 /* -------------- Calendar‑heatmap swatches -------------- */
 .bgGreen   { background:#22c55e; }

@@ -90,45 +90,51 @@ const StatisticsPage = ({ entries = sampleEntries }: StatisticsPageProps) => {
   const [viewMode, setViewMode] = useState<"weekly" | "monthly" | "yearly">("monthly");
   const [weekStart, setWeekStart] = useState(getClosestMonday(now));
 
-
-  const { lineData, pieData, goodBadCounts, xKey, typeData, typeCounts } = useMoodData(entries, viewMode, { selectedYear, selectedMonth, weekStart });
+  const { lineData, pieData, goodBadCounts, xKey, typeData, typeCounts } = useMoodData(entries, viewMode, {
+    selectedYear,
+    selectedMonth,
+    weekStart,
+  });
 
   return (
-    <>
+    <div className={classes.fullWidthPage}>
       <h2 className={classes.title}>Statistics</h2>
 
-      <div className={classes.container}>
-        <StaticsHeader
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-          selectedYear={selectedYear}
-          setSelectedYear={setSelectedYear}
-          selectedMonth={selectedMonth}
-          setSelectedMonth={setSelectedMonth}
-          weekStart={weekStart}
-          setWeekStart={setWeekStart}
-          startOfISOWeek={startOfISOWeek}
-          addDays={addDays}
-        />
+      <StaticsHeader
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        selectedYear={selectedYear}
+        setSelectedYear={setSelectedYear}
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+        weekStart={weekStart}
+        setWeekStart={setWeekStart}
+        startOfISOWeek={startOfISOWeek}
+        addDays={addDays}
+      />
 
-        {viewMode === "yearly" && (
-          <div className={classes.chartContainer}>
-            <YearPixelChart entries={entries} year={selectedYear} />
-          </div>
-        )}
-
+      {viewMode === "yearly" && (
         <div className={classes.chartContainer}>
-          <MoodLineChart data={lineData} xKey={xKey} />
+          <YearPixelChart entries={entries} year={selectedYear} />
         </div>
+      )}
 
-        <div className={classes.chartContainer}>
+      <div className={classes.chartContainer}>
+          <h2 className={classes.chartLabel} style={{ fontSize: "20px" , marginTop: "7px" }} >Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}</h2>
+        <MoodLineChart data={lineData} xKey={xKey} />
+      </div>
+
+      <div className={classes.sideBySideCharts}>
+        <div className={classes.pieChartWrapper}>
           <h4 className={classes.chartLabel}>Mood distribution</h4>
           <MoodPieChart
             pieData={pieData}
             counts={goodBadCounts}
             colorMap={typeColorMap}
           />
+        </div>
 
+        <div className={classes.pieChartWrapper}>
           <h4 className={classes.chartLabel}>Sources that influenced your mood</h4>
           <MoodPieChart
             pieData={typeData}
@@ -137,7 +143,7 @@ const StatisticsPage = ({ entries = sampleEntries }: StatisticsPageProps) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
