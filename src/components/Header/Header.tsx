@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/dino2.png";
 import diary_logo from "../../assets/diary.png";
 import "./Header.css";
@@ -7,6 +7,7 @@ import {
   SettingOutlined,
   WechatWorkOutlined,
 } from "@ant-design/icons";
+
 const Header = () => {
   return (
     <header className="nav_container">
@@ -42,4 +43,5 @@ const Header = () => {
     </header>
   );
 };
+
 export default Header;

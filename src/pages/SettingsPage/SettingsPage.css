@@ -63,6 +63,7 @@ body[data-theme="dark-default"] select {
     background-color: #050b14;
     color: #f1f1f1;
     box-shadow: none;
+    border: 2px solid;
 }
 
 body[data-theme="dark-default"] .select-header {
@@ -168,7 +169,8 @@ body[data-theme="dark-default"] span,
 body[data-theme="dark-default"] a,
 body[data-theme="dark-default"] .login-link,
 body[data-theme="dark-default"] .signup-link,
-body[data-theme="dark-default"] .input-group label {
+body[data-theme="dark-default"] .input-group label,
+body[data-theme="dark-default"] ._controls_1qngu_17 label {
     color: #f1f1f1;
 }
 
@@ -177,14 +179,14 @@ body[data-theme="dark-default"] .toggle-theme-btn {
     color: #ffffff;
 }
 
-body[data-theme="dark-default"] ._container_unu7q_8,
-body[data-theme="dark-default"] ._controls_1j74h_16 label {
-    background-color: #09101a;
+body[data-theme="dark-default"] ._chartContainer_1pco4_34,
+body[data-theme="dark-default"] ._pieChartWrapper_1pco4_74 {
+    background: #09101a;
     color: #f1f1f1;
-    border: none;
 }
 
-body[data-theme="dark-default"] ._chartLabel_unu7q_38 {
+body[data-theme="dark-default"] ._chartLabel_unu7q_38,
+body[data-theme="dark-default"] ._chartLabel_1pco4_45 {
     color: #f1f1f1;
     border: none;
 }
@@ -320,7 +322,8 @@ body[data-theme="light-purple"] .select-options li,
 body[data-theme="light-purple"] .color-label,
 body[data-theme="light-purple"] .settings-title,
 body[data-theme="light-purple"] .edit-btn,
-body[data-theme="light-purple"] .input-group label {
+body[data-theme="light-purple"] .input-group label,
+body[data-theme="light-purple"] ._title_1pco4_56 {
     color: #5a3c7c;
 }
 
@@ -433,7 +436,7 @@ body[data-theme="light-purple"] .date_div {
 
 body[data-theme="light-purple"] .signup-button {
     background: linear-gradient(135deg, #704a99, #a77acb);
-    color: #5a3c7c;
+    color: #f4f4f4;
 }
 
 body[data-theme="light-purple"] .greeting h1,
@@ -590,7 +593,9 @@ body[data-theme="dark-purple"] a,
 body[data-theme="dark-purple"] .login-link,
 body[data-theme="dark-purple"] .signup-link,
 body[data-theme="dark-purple"] .input-group label,
-body[data-theme="dark-purple"] .edit-btn {
+body[data-theme="dark-purple"] .edit-btn,
+body[data-theme="dark-purple"] ._controls_1qngu_17 label,
+body[data-theme="dark-purple"] ._chartLabel_1pco4_45 {
     color: #e8def7;
 }
 
@@ -607,7 +612,9 @@ body[data-theme="dark-purple"] ._controls_1j74h_16 label {
     border: none;
 }
 
-body[data-theme="dark-purple"] ._chartContainer_unu7q_26 {
+body[data-theme="dark-purple"] ._chartContainer_unu7q_26,
+body[data-theme="dark-purple"] ._chartContainer_1pco4_34,
+body[data-theme="dark-purple"] ._pieChartWrapper_1pco4_74 {
     background-color: #1d102d;
     color: #f1f1f1;
 }
@@ -660,7 +667,10 @@ body[data-theme="light-yellow"] .select-options li,
 body[data-theme="light-yellow"] .color-label,
 body[data-theme="light-yellow"] .settings-title,
 body[data-theme="light-yellow"] .edit-btn,
-body[data-theme="light-yellow"] .input-group label {
+body[data-theme="light-yellow"] .input-group label,
+body[data-theme="light-yellow"] ._title_1pco4_56,
+body[data-theme="light-yellow"] ._chartLabel_1pco4_45,
+body[data-theme="light-yellow"] ._controls_1qngu_17 label {
     color: #4a390f;
 }
 
@@ -847,7 +857,10 @@ body[data-theme="dark-yellow"] .record_buttons button,
 body[data-theme="dark-yellow"] .color-label,
 body[data-theme="dark-yellow"] .settings-title,
 body[data-theme="dark-yellow"] .input-group label,
-body[data-theme="dark-yellow"] .edit-btn {
+body[data-theme="dark-yellow"] .edit-btn,
+body[data-theme="dark-yellow"] ._title_1pco4_56,
+body[data-theme="dark-yellow"] ._controls_1qngu_17 label,
+body[data-theme="dark-yellow"] ._chartLabel_1pco4_45 {
     color: #f0e0b7;
 }
 
@@ -1024,6 +1037,12 @@ body[data-theme="dark-yellow"] ._controls_1j74h_16 label {
 body[data-theme="dark-yellow"] ._chartLabel_unu7q_38 {
     color: #f0e0b7;
     border: none;
+}
+
+body[data-theme="dark-yellow"] ._chartContainer_1pco4_34,
+body[data-theme="dark-yellow"] ._pieChartWrapper_1pco4_74 {
+    background-color: #0c0b0b;
+    color: #f0e0b7;
 }
 
 body[data-theme="dark-yellow"] ._chartContainer_unu7q_26 {

@@ -12,6 +12,7 @@ import useSearchType from "../../hooks/useSearchType.hook";
 import useSearchByMood from "../../hooks/useSearchByMood.hook";
 import { useTheme } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
+
 const DiaryPage = () => {
   const { theme, toggleTheme } = useTheme();
   const emojis = ["😭", "🙁", "😐", "☺️", "😁"];

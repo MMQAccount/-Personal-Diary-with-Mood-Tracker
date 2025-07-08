@@ -41,9 +41,9 @@ const StaticsHeader = (props: IProps) => {
 
   return (
     <div className={classes.header}>
-      <h2 className={classes.title} style={{ color }}>
+      {/* <h2 className={classes.title} style={{ color }}>
         Mood Statistics
-      </h2>
+      </h2> */}
 
       <div className={classes.controls}>
         <label>

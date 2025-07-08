@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 24px;
+  margin-left: 15px;
 }
 
 .title {
@@ -15,14 +16,17 @@
 
 .controls {
   display: flex;
-  gap: 20px;
+  gap: 50px;
   flex-wrap: wrap;
   align-items: center;
+  margin: 40px 0;
+  font-size:50px;
+
 }
 
 .controls label {
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size:22px;
   color: #374151;
 }
 
@@ -38,15 +42,18 @@
   color: #1f2937;
   cursor: pointer;
   transition: all 0.25s ease;
+  font-size:20px;
 }
 
+/* TODO: change the border-color */
 .controls select:hover {
-  border-color: #b5b5ff;
+  border-color: #719b76;
 }
 
+/* TODO: change the border-color */
 .controls select:focus {
   outline: none;
-  border-color: #8b5cf6;
+  border-color: #719b76;
   box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.25);
 }
 
@@ -63,7 +70,7 @@
   border: none;
   border-radius: 50%;
   background: white;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   line-height: 1;
   display: grid;
   place-items: center;
@@ -86,4 +93,5 @@
   font-size: 0.95rem;
   min-width: 180px;
   text-align: center;
+  font-size: 20px;
 }

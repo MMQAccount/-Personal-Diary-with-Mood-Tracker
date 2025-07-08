@@ -87,7 +87,7 @@ const SettingsPage = () => {
         />
 
         <div className="input-group">
-          <label>Avatar URL (optional)</label>
+          <label>Avatar URL</label>
           <div className="input-edit-wrapper">
             <input
               type="text"
