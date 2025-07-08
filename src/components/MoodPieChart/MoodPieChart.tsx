@@ -46,7 +46,7 @@ const renderCustomLabel = ({cx,cy,midAngle,outerRadius,percent,name,}: ICustomLa
       fill="#8e8e8e"
       textAnchor={x > cx ? "start" : "end"}
       dominantBaseline="central"
-      fontSize={16}
+      fontSize={20}
     >
       {`${moodMap[name]?.emoji ?? ""} ${name} ${(percent * 100).toFixed(0)}%`}
     </text>
