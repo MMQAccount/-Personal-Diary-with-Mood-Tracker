@@ -1,0 +1,23 @@
+.global-navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 12px;
+}
+
+.theme-icon-btn {
+    color: #2c352d;
+    position: absolute;
+    top: 21px;
+    right: 15px;
+    font-size: 37px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.theme-icon-btn:hover {
+    transform: scale(1.2);
+    color: #5b775e;
+}
