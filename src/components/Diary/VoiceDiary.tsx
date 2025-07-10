@@ -1,18 +1,17 @@
 import "./Diary.css";
 
 interface IProps {
-  voices: Store.IDiaryItem[]
+  voice: string
 }
 
-const VoiceDiary = ({ voices }: IProps) => {
+const VoiceDiary = ({ voice }: IProps) => {
   return (
     <div className="diary_content">
       {/* <div className="top_content">
           <EditOutlined className="edit_icon"/>
         </div> */}
-      <h2>Voices 🎙️</h2>
       <div className="image_note">
-        {voices.map(d => (d.audio ? <audio src={d.audio} controls /> : ""))}
+        {voice ? <audio src={voice} controls /> : ""}
       </div>
     </div>
   );

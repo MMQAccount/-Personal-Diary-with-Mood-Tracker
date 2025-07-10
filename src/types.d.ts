@@ -1,20 +1,31 @@
 declare namespace Store {
-    interface IDiaryItem {
+    interface IDayDiary {
         id: number;
-        title: string;
-        type: string[];
-        notes: string;
-        state: number;
-        image?: string;
-        audio?: string;
+        state?: number;
+        title?: string;
+        type?: string[];
+        notes?: string[];
+        voices?: string[];
+        images?: string[];
     }
-    interface IForm {
+    interface IDiaryMood {
+        state: number;
         title: string;
-        notes: string;
-        image?: string;
+        type: string[];
+    }
+    interface IMoodForm {
+        title: string;
         state: number;
         type: string[];
-        audio?: string;
+    }
+    interface INoteForm {
+        notes: string;
+    }
+    interface IImageForm {
+        image: string;
+    }
+    interface IVoiceForm {
+        voice: string;
     }
     interface ISearchForm {
         type: string[];

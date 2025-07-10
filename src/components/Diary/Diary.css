@@ -18,13 +18,17 @@
 
 .image_note {
   width: 100%;
+  display: flex;
+  gap: 0.5%;
+  flex-wrap: wrap;
 }
 
 .image_note img {
-  width: 30%;
+  width: 25%;
   height: auto;
   display: block;
   border-radius: 8px;
+  margin-bottom: 1%;
 }
 
 div.container {
@@ -41,7 +45,7 @@ div.container {
 
 .date_div {
   background-color: rgba(156, 156, 156, 0.229);
-  width: 10%;
+  width: 40%;
   border: 1px solid rgba(201, 201, 201, 0.27);
   border-radius: 15px;
   display: flex;
@@ -52,6 +56,22 @@ div.container {
 
 .header_date {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2%;
+  align-items: center;
+  margin-left: 0;
+}
+.header_date_day{
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  gap: 10%;
+  align-items: center;
+  margin-left: 0;
+}
+.header_mood_type{
   display: flex;
   flex-direction: row;
   gap: 2%;

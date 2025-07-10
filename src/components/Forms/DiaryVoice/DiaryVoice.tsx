@@ -8,17 +8,19 @@ import { useReactMediaRecorder } from "react-media-recorder";
 const DiaryVoice = () => {
     const { transcript, listening, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
-    const { addToDiary } = useContext(DiaryContext);
+    const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
-    const INITIAL_FORM: Store.IForm = {
-        title: '',
-        notes: '',
-        type: [],
-        image: '',
-        state: -1,
-    };
-    const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
 
+    const [form, setForm] = useState<Store.IVoiceForm>({ voice: "" });
+
+    // بعد انتهاء التسجيل الصوتي، خزّن رابط التسجيل
+    useEffect(() => {
+        if (mediaBlobUrl) {
+            setForm(prev => ({ ...prev, voice: mediaBlobUrl }));
+        }
+    }, [mediaBlobUrl]);
+
+    // تحديث الملاحظات بناءً على الكلام المسجل
     useEffect(() => {
         if (listening) {
             setForm(prev => ({ ...prev, notes: transcript }));
@@ -29,33 +31,55 @@ const DiaryVoice = () => {
         return <span>Your browser does not support speech recognition.</span>;
     }
 
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-        let value: any = e.target.value;
-        if (e.target.name === 'state') {
-            value = Number(value);
-        }
-        setForm({ ...form, [e.target.name]: value });
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
     };
 
     const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const newDiary: Store.IDiaryItem = {
-            id: Date.now(),
-            ...form,
-            audio: mediaBlobUrl || ''
-        };
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayTimestamp = today.getTime();
 
-        addToDiary(newDiary);
-        console.log(newDiary);
-        navigate('/diaryPage');
+        const existingDiary = diary.find(d => {
+            const entryDate = new Date(d.id);
+            entryDate.setHours(0, 0, 0, 0);
+            return entryDate.getTime() === todayTimestamp;
+        });
+
+        if (existingDiary) {
+            updateDiary(existingDiary.id, {
+                ...existingDiary,
+                voices: [...(existingDiary.voices || []), form.voice],
+            });
+        } else {
+            const newDiary: Store.IDayDiary = {
+                id: todayTimestamp,
+                notes: [],
+                images: [],
+                voices: [form.voice],
+                title: "",
+                type: [],
+                state: 0,
+            };
+            addToDiary(newDiary);
+        }
+
+        setForm({ voice: "" });
+        navigate("/diaryPage");
     };
 
     return (
         <form onSubmit={handelSubmit}>
             <div className='diary_data'>
-
-                <textarea name="notes" placeholder="Type notes or use voice..." value={form.notes} onChange={handleFormChange} />
+                <textarea
+                    name="notes"
+                    placeholder="Speech notes (auto)"
+                    value={form.voice || ""}
+                    onChange={handleFormChange}
+                />
 
                 <div className="record_buttons">
                     {status === "recording" ? (

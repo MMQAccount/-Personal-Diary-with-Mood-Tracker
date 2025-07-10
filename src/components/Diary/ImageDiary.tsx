@@ -1,7 +1,7 @@
 import "./Diary.css";
 
 interface IProps {
-  images: Store.IDiaryItem[]
+  images: string[]
 }
 
 const ImageDiary = ({ images }: IProps) => {
@@ -12,7 +12,7 @@ const ImageDiary = ({ images }: IProps) => {
         </div> */}
       <h2>Photos 🖼️</h2>
       <div className="image_note">
-        {images.map(d => (d.image ? <img src={d.image} alt="" /> : ""))}
+        {images.map(d => (<img src={d} alt="" />))}
       </div>
     </div>
   );

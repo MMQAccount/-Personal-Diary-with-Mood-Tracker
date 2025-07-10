@@ -4,35 +4,65 @@ import { DiaryContext } from '../../../providers/diary-provider';
 import { useNavigate } from 'react-router-dom';
 
 const DiaryImage = () => {
-    const INITIAL_FORM: Store.IForm = { title: '', notes: '', type: [], image: '', state: -1 };
-    const [form, setForm] = useState<Store.IForm>(INITIAL_FORM);
-    const { addToDiary } = useContext(DiaryContext);
+    const INITIAL_FORM: Store.IImageForm = { image: '' };
+    const [form, setForm] = useState<Store.IImageForm>(INITIAL_FORM);
+    const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
 
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        let value: any = e.target.value;
-        if (e.target.name === 'state') {
-            value = Number(value);
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayTimestamp = today.getTime();
+
+        const existingDiary = diary.find(d => {
+            const entryDate = new Date(d.id);
+            entryDate.setHours(0, 0, 0, 0);
+            return entryDate.getTime() === todayTimestamp;
+        });
+
+        if (existingDiary) {
+            updateDiary(existingDiary.id, {
+                ...existingDiary,
+                images: [...(existingDiary.images || []), form.image],
+            });
+        } else {
+            const newDiary: Store.IDayDiary = {
+                id: todayTimestamp,
+                images: [form.image],
+                notes: [],
+                voices: [],
+                title: "",
+                type: [],
+                state: 0,
+            };
+            addToDiary(newDiary);
         }
-        setForm({ ...form, [e.target.name]: value });
-    }
-    const handelSubmit = (e: React.MouseEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newDiary: Store.IDiaryItem = { id: Date.now(), ...form };
-        addToDiary(newDiary);
-        console.log(newDiary);
-        navigate('/diaryPage')
-    }
+
+        setForm(INITIAL_FORM);
+        navigate("/diaryPage");
+    };
 
     return (
         <form onSubmit={handelSubmit}>
             <div className='diary_data'>
-                <input type="text" name='image' placeholder='Image url...' onChange={handleFormChange} required />
-                <input type="submit" name='Submit' required />
+                <input
+                    type="text"
+                    name='image'
+                    placeholder='Image url...'
+                    value={form.image}
+                    onChange={handleFormChange}
+                    required
+                />
+                <input type="submit" value="Submit" />
             </div>
         </form>
     );
-}
+};
 
 export default DiaryImage;
