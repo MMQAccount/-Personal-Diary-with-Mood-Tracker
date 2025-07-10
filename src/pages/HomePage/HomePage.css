@@ -6,8 +6,9 @@
   flex-direction: row;
   gap: 10px;
 }
-.container_diary h1{
-    color: #719b76;
+
+.container_diary h1 {
+  color: #719b76;
 }
 
 .left_div {
@@ -21,10 +22,8 @@
   gap: 5%;
 }
 
-
 .right_div {
   width: 35%;
-  border-radius: 0px 0px 80% 0px;
   color: #edf2fa;
   display: flex;
   flex-direction: column;
@@ -45,12 +44,14 @@
 .right_div>h3 {
   animation: fadeIn 10s ease-out forwards;
 }
-.reflectly_container{
+
+.reflectly_container {
   text-align: center;
   color: #719b76;
   font-size: x-large;
   margin-left: -15%;
 }
+
 .greeting {
   z-index: 2;
   text-align: center;
@@ -68,6 +69,69 @@
   font-size: 1.2rem;
   animation: fadeIn 3s ease-out forwards;
 }
+
+.login-button2 {
+  position: absolute;
+  top: 20px;
+  right: 83px;
+  padding: 12px 22px;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  filter: none;
+}
+
+.login-button2:hover {
+  background: #f0f0f0;
+  color: #000000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+}
+
+.login-button2:active {
+  background: #e0e0e0;
+  color: #000000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
+}
+
+.logout-button {
+  position: fixed;
+  top: 21px;
+  right: 83px;
+  border: none;
+  cursor: pointer;
+  padding: 13px 14px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 2000;
+}
+
+.logout-button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.logout-button:active {
+  background: #e0e0e0;
+  transform: translateY(1px);
+}
+
 
 @keyframes pulse {
   0% {
@@ -99,7 +163,7 @@
 }
 
 @media screen and (max-width: 1100px) {
-  .reflectly_container{
+  .reflectly_container {
     font-size: large;
     margin-right: 8%;
   }

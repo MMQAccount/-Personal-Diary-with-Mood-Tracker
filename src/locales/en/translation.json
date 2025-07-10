@@ -1,0 +1,23 @@
+{
+  "welcome": "Welcome Back!",
+  "enterDetails": "Please enter your details to login.",
+  "emailPlaceholder": "Email Address",
+  "passwordPlaceholder": "Password",
+  "loginButton": "Log In",
+  "noAccount": "Don't have an account?",
+  "signUp": "Sign Up",
+  "incorrectAlert": "Email or password is incorrect",
+  "toggleLang": "Arabic",
+  "required": "This field is required",
+  "invalidEmail": "Invalid email address",
+  "shortPassword": "Password must be at least 6 characters",
+  "createAccount": "Create Account",
+  "confirmPasswordPlaceholder": "Confirm Password",
+  "alreadyHave": "Already have an account?",
+  "login": "Log in",
+  "passwordMismatch": "Passwords do not match!",
+  "success": "Account created successfully! Please login.",
+  "fullName": "Full Name",
+  "avatarUrl": "Avatar URL (optional)"
+}
+ 

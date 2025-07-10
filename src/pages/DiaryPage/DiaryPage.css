@@ -143,6 +143,23 @@ option {
     font-size: 13px;
 }
 
+.theme-icon-btn2 {
+    color: #2c352d;
+    position: absolute;
+    top: 17px;
+    right: 79px;
+    font-size: 37px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.theme-icon-btn2:hover {
+    transform: scale(1.2);
+    color: #5b775e;
+}
+
 @media (max-width: 944px) {
     .select-options {
         position: static;
