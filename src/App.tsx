@@ -8,7 +8,6 @@ import DiaryVoice from './components/Forms/DiaryVoice/DiaryVoice'
 import DiaryImage from './components/Forms/DiaryImage/DiaryImage'
 import DiaryProvider from './providers/diary-provider';
 import DiaryDetailsPage from './pages/DiaryDetails/DiaryDetails'
-// import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
 import DiaryMood from './components/Forms/DiaryMood/DiaryMood'
 import DiaryImages from './pages/DiaryDetails/DiaryImages'
 import EditNote from './pages/DiaryEdit.tsx/EditNote'
@@ -62,10 +61,6 @@ function App() {
               path="/EditDay/:id"
               element={<DiaryEditPage />}
             />
-            {/* <Route
-              path={`/DiaryEditPage/:id`}
-              element={<DiaryEditPage />}
-            /> */}
           </Routes>
         </DiaryProvider>
       </BrowserRouter>
