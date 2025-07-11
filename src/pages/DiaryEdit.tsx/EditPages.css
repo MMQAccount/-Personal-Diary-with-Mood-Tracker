@@ -1,0 +1,22 @@
+.btns{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.btns>button[type="submit"]{
+    width: 95%;
+    background-color: #719b76;
+    border: none;
+    padding: 1%;
+    border-radius: 10px;
+    color: white;
+    font-size: large;
+}
+
+.editForm>form{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}

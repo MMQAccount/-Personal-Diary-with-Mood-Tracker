@@ -26,7 +26,7 @@ option {
 .search_container {
     padding-top: 10px;
     height: 50px;
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -35,17 +35,13 @@ option {
 }
 
 .input_wrapper {
-    width: 35px;
-    transition: width 0.4s ease;
+    width: 50%;
 }
 
-.input_wrapper:focus-within {
-    width: 500px;
-}
+
 
 .search_input {
     margin-top: 5px;
-    background-color: inherit;
     border: none;
 }
 
@@ -115,6 +111,7 @@ option {
     display: flex;
     flex-direction: row;
     gap: 2%;
+    align-items: center;
 }
 
 .checkbox-label {
@@ -143,23 +140,6 @@ option {
     font-size: 13px;
 }
 
-.theme-icon-btn2 {
-    color: #2c352d;
-    position: absolute;
-    top: 17px;
-    right: 79px;
-    font-size: 37px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.theme-icon-btn2:hover {
-    transform: scale(1.2);
-    color: #5b775e;
-}
-
 @media (max-width: 944px) {
     .select-options {
         position: static;
@@ -183,11 +163,11 @@ option {
         flex-wrap: wrap;
         align-items: center;
         gap: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
     }
 
     .diarys {
-        margin-top: 15%;
+        margin-top: 5%;
     }
 
     .input_wrapper:focus-within {
@@ -196,13 +176,33 @@ option {
 }
 
 @media (max-width: 769px) {
+    .diary_container {
+        width: 90%;
+        margin: 0% 5%;
+    }
+
     .checkbox-label {
         font-size: smaller;
     }
 
     .diary_type {
-        margin: 4% 2%;
-
+        margin: 4% 2%
     }
 
+}
+.theme-icon-btn2 {
+    color: #2c352d;
+    position: absolute;
+    top: 17px;
+    right: 79px;
+    font-size: 37px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.theme-icon-btn2:hover {
+    transform: scale(1.2);
+    color: #5b775e;
 }

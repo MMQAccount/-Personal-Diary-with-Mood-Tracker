@@ -18,6 +18,9 @@ import { ThemeProvider } from "./utils/ThemeContext";
 import { UserProvider } from "./utils/UserContext";
 import Layout from "./components/Layout/Layout";
 import "./i18n";
+import DiaryMood from "./components/Forms/DiaryMood/DiaryMood";
+import DiaryImages from "./pages/DiaryDetails/DiaryImages";
+import EditNote from "./pages/DiaryEdit.tsx/EditNote";
 
 function App() {
   return (
@@ -28,16 +31,17 @@ function App() {
             <Header />
             <Routes>
               <Route path={`/`} element={<HomePage />} />
-              <Route path={`/diaryPage`} element={<DiaryPage />} />
-              <Route path={`/diaryForm`} element={<DiaryForm />} />
-              <Route path={`/diaryVoice`} element={<DiaryVoice />} />
-              <Route path={`/diaryImage`} element={<DiaryImage />} />
+              <Route path="/diaryPage" element={<DiaryPage />} />
+              <Route path="/diaryForm" element={<DiaryForm />} />
+              <Route path="/diaryVoice" element={<DiaryVoice />} />
+              <Route path="/diaryImage" element={<DiaryImage />} />
+              <Route path="/diaryMood" element={<DiaryMood />} />
+              <Route path="/dispalyDiary/:id" element={<DiaryDetailsPage />} />
+              <Route path="/DiaryImages/:id" element={<DiaryImages />} />
+              <Route path="/EditNote/:day/:noteId" element={<EditNote />} />
+              <Route path="/EditDay/:id" element={<DiaryEditPage />} />
+              <Route path="/DiaryEditPage/:id" element={<DiaryEditPage />} />
               <Route path={`/quotesPage`} element={<QuotesPage />} />
-              <Route
-                path={`/dispalyDiary/:id`}
-                element={<DiaryDetailsPage />}
-              />
-              <Route path={`/DiaryEditPage/:id`} element={<DiaryEditPage />} />
               <Route element={<Layout />}>
                 <Route path={`/statisticsPage`} element={<StatisticsPage />} />
                 <Route path="/login" element={<LoginPage />} />

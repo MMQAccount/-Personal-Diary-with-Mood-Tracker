@@ -1,17 +1,16 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import "./Diary.css";
-import ReactMarkdown from "react-markdown";
 import { useContext } from "react";
 import { DiaryContext } from "../../providers/diary-provider";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  note: string;
+  voice: string;
   id: number;
   day: number;
 }
 
-const Diary = ({ note, id, day }: IProps) => {
+const VoiceDiary = ({ voice, id, day }: IProps) => {
   const { diary, updateDiary } = useContext(DiaryContext);
   const navigate = useNavigate();
   const del_diary = (id: number, day: number) => {
@@ -26,29 +25,25 @@ const Diary = ({ note, id, day }: IProps) => {
     });
 
     if (existingDiary) {
-      const updatedNotes = existingDiary.notes
-        ? existingDiary.notes.filter((_, index) => index !== id)
+      const updatedNotes = existingDiary.voices
+        ? existingDiary.voices.filter((_, index) => index !== id)
         : [];
 
       updateDiary(existingDiary.id, {
         ...existingDiary,
-        notes: updatedNotes,
+        voices: updatedNotes,
       });
     }
     navigate("/diaryPage");
   }
-  const goToEdit = (id: number, day: number) => {
-    navigate(`/EditNote/${day}/${id}`);
-  };
-
   return (
-    <div className="diary_content" onClick={() => goToEdit(id, day)}>
+    <div className="diary_content">
       <div className="diary_notes">
-        <ReactMarkdown>{note}</ReactMarkdown>
-        <DeleteOutlined className="del_icon" onClick={() => del_diary(id, day)} />
+        {voice ? <audio src={voice} controls /> : ""}
+        <DeleteOutlined className="del_icon" onClick={() => del_diary(id, day)}/>
       </div>
     </div>
   );
 };
 
-export default Diary;
+export default VoiceDiary;

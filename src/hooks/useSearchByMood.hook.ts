@@ -3,7 +3,7 @@ import { DiaryContext } from "../providers/diary-provider";
 
 const useSearchByMood = () => {
 
-    const [searchResultsByMood, setSearchResultsByMood] = useState<Store.IDiaryItem[]>([]);
+    const [searchResultsByMood, setSearchResultsByMood] = useState<Store.IDayDiary[]>([]);
     const { diary } = useContext(DiaryContext);
 
     const handleSearchByMood = (mood: number) => {
