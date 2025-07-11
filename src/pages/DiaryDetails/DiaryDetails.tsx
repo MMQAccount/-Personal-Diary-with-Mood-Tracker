@@ -10,7 +10,7 @@ const DiaryDetailsPage = () => {
 const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = useContext(DiaryContext);
 
   const params = useParams<IParams>();
-  const [diaryEx, setDiaryEx] = useState<Store.IDiaryItem>();
+  const [diaryEx, setDiaryEx] = useState<Store.IDayDiary>();
 
   useEffect(() => {
     const p = diary?.find(d => d.id === Number(params.id));
@@ -29,9 +29,7 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = us
     <div className="main_container">
       <div className="diary_content_container">
         <h1>{diaryEx?.title}</h1>
-        <div className="imgcontainer">
-          {diaryEx?.image ? <img src={diaryEx.image} alt="" /> : null}
-        </div>
+        
         <div className="content">
           <h3>{diaryEx?.state ? emojis[diaryEx.state] : ""}</h3>
           |
@@ -40,10 +38,7 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = us
           </p>
         </div>
       </div>
-      <div className="notes">
-        <ReactMarkdown>{diaryEx?.notes}</ReactMarkdown>
-        {diaryEx?.audio ? <audio src={diaryEx?.audio} controls />  : ""}
-      </div>
+
     </div>
   );
 };

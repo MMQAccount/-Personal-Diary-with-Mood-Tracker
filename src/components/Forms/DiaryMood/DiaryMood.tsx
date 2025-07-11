@@ -80,64 +80,65 @@ const DiaryMood = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>{stateTexts[moodValue]}</h1>
-            <div className="mood_input">
+        <div className="form-wrapper">
+            <form onSubmit={handleSubmit}>
+                <h1>{stateTexts[moodValue]}</h1>
+                <div className="mood_input">
+                    <input
+                        type="range"
+                        min={0}
+                        max={4}
+                        value={moodValue}
+                        className="range_input"
+                        name="state"
+                        onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            setMoodValue(val);
+                            handleFormChange(e);
+                        }}
+                        required
+                    />
+                    <h1>{emojis[moodValue]}</h1>
+                </div>
+
                 <input
-                    type="range"
-                    min={0}
-                    max={4}
-                    value={moodValue}
-                    className="range_input"
-                    name="state"
-                    onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        setMoodValue(val);
-                        handleFormChange(e);
-                    }}
+                    type="text"
+                    placeholder="Title..."
+                    name="title"
+                    value={form.title}
+                    onChange={handleFormChange}
                     required
                 />
-                <h1>{emojis[moodValue]}</h1>
-            </div>
 
-            <input
-                type="text"
-                placeholder="Title..."
-                name="title"
-                value={form.title}
-                onChange={handleFormChange}
-                required
-            />
-
-            <div className="check">
-                <label className="checkbox-label">
-                    <input type="checkbox" value="Family" onChange={handleCheckboxChange} />
-                    <span className={form.type.includes("Family") ? "checked_span" : ""}>
-                        Family 👨‍👩‍👧‍👦
-                    </span>
-                </label>
-                <label className="checkbox-label">
-                    <input type="checkbox" value="Work" onChange={handleCheckboxChange} />
-                    <span className={form.type.includes("Work") ? "checked_span" : ""}>
-                        Work 🏢
-                    </span>
-                </label>
-                <label className="checkbox-label">
-                    <input type="checkbox" value="School" onChange={handleCheckboxChange} />
-                    <span className={form.type.includes("School") ? "checked_span" : ""}>
-                        School 🏫
-                    </span>
-                </label>
-                <label className="checkbox-label">
-                    <input type="checkbox" value="Friends" onChange={handleCheckboxChange} />
-                    <span className={form.type.includes("Friends") ? "checked_span" : ""}>
-                        Friends 👥
-                    </span>
-                </label>
-            </div>
-
-            <input type="submit" value="Submit" />
-        </form>
+                <div className="check">
+                    <label className="checkbox-label">
+                        <input type="checkbox" value="Family" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("Family") ? "checked_span" : ""}>
+                            Family 👨‍👩‍👧‍👦
+                        </span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" value="Work" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("Work") ? "checked_span" : ""}>
+                            Work 🏢
+                        </span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" value="School" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("School") ? "checked_span" : ""}>
+                            School 🏫
+                        </span>
+                    </label>
+                    <label className="checkbox-label">
+                        <input type="checkbox" value="Friends" onChange={handleCheckboxChange} />
+                        <span className={form.type.includes("Friends") ? "checked_span" : ""}>
+                            Friends 👥
+                        </span>
+                    </label>
+                </div>
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
     );
 };
 

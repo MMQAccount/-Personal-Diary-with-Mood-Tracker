@@ -49,19 +49,21 @@ const DiaryImage = () => {
     };
 
     return (
-        <form onSubmit={handelSubmit}>
-            <div className='diary_data'>
-                <input
-                    type="text"
-                    name='image'
-                    placeholder='Image url...'
-                    value={form.image}
-                    onChange={handleFormChange}
-                    required
-                />
-                <input type="submit" value="Submit" />
-            </div>
-        </form>
+        <div className="form-wrapper">
+            <form onSubmit={handelSubmit}>
+                <div className='diary_data'>
+                    <input
+                        type="text"
+                        name='image'
+                        placeholder='Image url...'
+                        value={form.image}
+                        onChange={handleFormChange}
+                        required
+                    />
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
+        </div>
     );
 };
 

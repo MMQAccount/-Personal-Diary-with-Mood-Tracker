@@ -11,7 +11,7 @@ const initialDiary: Store.IDayDiary[] = [
     id: new Date("2025-06-27").getTime(),
     title: "Family Reunion",
     type: ["Family"],
-    state: 4,
+    state: 0,
     notes: [
       "We had a big *family reunion* at grandma's house. It was:",
       "1. Warm and loving",
@@ -23,10 +23,10 @@ const initialDiary: Store.IDayDiary[] = [
   },
   {
     id: new Date("2025-06-28").getTime(),
-    title: "",
+    title: "Grandma bake",
     type: ["Family", "School"],
-    state: 3,
-    notes: [],
+    state: 1,
+    notes: ["Note test"],
     voices: [],
     images: [
       "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"

@@ -1,17 +1,17 @@
-import './DiaryPage.css';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Input } from 'antd';
-import { useNavigate } from 'react-router-dom';
-import { DiaryContext } from '../../providers/diary-provider';
-import { useContext, useEffect, useState } from 'react';
-import Day from '../../components/Day/Day';
-import Diary from '../../components/Diary/Diary';
-import useDays from '../../hooks/useDays.hook';
-import useSearch from '../../hooks/useSearch.hook';
-import useSearchType from '../../hooks/useSearchType.hook';
-import useSearchByMood from '../../hooks/useSearchByMood.hook';
+import "./DiaryPage.css";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import { DiaryContext } from "../../providers/diary-provider";
+import { useContext, useEffect, useState } from "react";
+import Day from "../../components/Day/Day";
+import Diary from "../../components/Diary/Diary";
+import useDays from "../../hooks/useDays.hook";
+import useSearch from "../../hooks/useSearch.hook";
+import useSearchType from "../../hooks/useSearchType.hook";
+import useSearchByMood from "../../hooks/useSearchByMood.hook";
 const DiaryPage = () => {
-  const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
+  const emojis = ["😭", "🙁", "😐", "☺️", "😁"];
   const { DiaryDays } = useDays();
   const { handleSearchByType, searchResultsByType } = useSearchType();
   const { handleSearch, searchResults } = useSearch();
@@ -23,19 +23,20 @@ const DiaryPage = () => {
     type: [],
   };
   const [form, setForm] = useState<Store.ISearchForm>(INITIAL_FORM);
+  const [select, setSelected] = useState("");
 
   const handleChangeInput = (value: string) => {
-    if (value === 'input') navigate('/diaryForm');
-    else if (value === 'voice') navigate('/diaryVoice');
-    else if (value === 'image') navigate('/diaryImage');
-    else if (value === 'mood') navigate('/diaryMood');
+    if (value === "input") navigate("/diaryForm");
+    else if (value === "voice") navigate("/diaryVoice");
+    else if (value === "image") navigate("/diaryImage");
+    else if (value === "mood") navigate("/diaryMood");
   };
 
   const options = [
-    { label: 'input 📜', value: 'input' },
-    { label: 'voice 🎙️', value: 'voice' },
-    { label: 'image🖼️', value: 'image' },
-    { label: 'mood☺️', value: 'mood' },
+    { label: "input 📜", value: "input" },
+    { label: "voice 🎙️", value: "voice" },
+    { label: "image🖼️", value: "image" },
+    { label: "mood☺️", value: "mood" },
   ];
 
   const handleSelect = (value: string) => {
@@ -44,7 +45,7 @@ const DiaryPage = () => {
   };
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    setForm(prevForm => {
+    setForm((prevForm) => {
       const updatedTypes = checked
         ? [...prevForm.type, value]
         : prevForm.type.filter((t) => t !== value);
@@ -52,9 +53,10 @@ const DiaryPage = () => {
     });
   };
   const handelSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected(e.target.value);
     const val = Number(e.target.value);
     handleSearchByMood(val);
-  }
+  };
   useEffect(() => {
     handleSearchByType(form.type);
   }, [form]);
@@ -67,7 +69,7 @@ const DiaryPage = () => {
 
         {open && (
           <ul className="select-options">
-            {options.map(opt => (
+            {options.map((opt) => (
               <li key={opt.value} onClick={() => handleSelect(opt.value)}>
                 {opt.label}
               </li>
@@ -75,13 +77,13 @@ const DiaryPage = () => {
           </ul>
         )}
       </div>
-      <div className='search_container'>
+      <div className="search_container">
         <h1>Welcome,</h1>
         <div className="input_wrapper">
           <Input
             placeholder="Search ..."
-            prefix={<SearchOutlined className='icon' />}
-            className='search_input'
+            prefix={<SearchOutlined className="icon" />}
+            className="search_input"
             onChange={handleSearch}
           />
         </div>
@@ -94,39 +96,74 @@ const DiaryPage = () => {
             onChange={handleCheckboxChange}
             hidden
           />
-          <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
+          <span className={form.type.includes("Family") ? "checked_span" : ""}>
+            Family 👨‍👩‍👧‍👦
+          </span>
         </label>
         <label className="checkbox-label">
-          <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} />
-          <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
+          <input
+            type="checkbox"
+            name="Work"
+            value="Work"
+            onChange={handleCheckboxChange}
+          />
+          <span className={form.type.includes("Work") ? "checked_span" : ""}>
+            Work 🏢
+          </span>
         </label>
         <label className="checkbox-label">
-          <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} />
-          <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
+          <input
+            type="checkbox"
+            name="School"
+            value="School"
+            onChange={handleCheckboxChange}
+          />
+          <span className={form.type.includes("School") ? "checked_span" : ""}>
+            School 🏫
+          </span>
         </label>
         <label className="checkbox-label">
-          <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} />
-          <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
+          <input
+            type="checkbox"
+            name="Friends"
+            value="Friends"
+            onChange={handleCheckboxChange}
+          />
+          <span className={form.type.includes("Friends") ? "checked_span" : ""}>
+            Friends 👥
+          </span>
         </label>
         <div>
-          <select name="mood" id="mood" className='search_mood' onChange={handelSelectChange} defaultValue={""}>
-            <option value="" hidden>Mood</option>
+          <select
+            name="mood"
+            id="mood"
+            className="search_mood"
+            onChange={handelSelectChange}
+            defaultValue={""}
+          >
+            <option value="">Mood</option>
             {emojis.map((emoji, index) => (
               <option key={index} value={index}>
                 {emoji}
-              </option>))}
+              </option>
+            ))}
           </select>
         </div>
       </div>
-      {searchResultsByType.length > 0 ? <h2>{`Filterd By : ${form.type.join(", ")}`}</h2> : ""}
-      {searchResultsByMood.length > 0 ? <h2>{`Filterd By : ${0}`}</h2> : ""}
-      <div className='diarys'>
-
-        {diary.length > 0
-          ? DiaryDays.map(d => <Day key={d} id={d} />)
-          : <h3>Can't Find Any Diary, Try To Add Some</h3>}
+      <div className="diarys">
+        {searchResults.length > 0 ? (
+          searchResults.map((d) => <Day key={d.id} id={d.id} />)
+        ) : searchResultsByMood.length > 0 && select !== "" ? (
+          searchResultsByMood.map((d) => <Day key={d.id} id={d.id} />)
+        ) : select !== "" ? (<h2>No Result</h2>) : searchResultsByType.length > 0 ? (
+          searchResultsByType.map((d) => <Day key={d.id} id={d.id} />)
+        ) : form.type.length !== 0 ? (<h2>No Result</h2>) : diary.length > 0 ? (
+          DiaryDays.map((d) => <Day key={d} id={d} />)
+        ) : (
+          <h3>Can't Find Any Diary, Try To Add Some</h3>
+        )}
       </div>
-    </div >
+    </div>
   );
 };
 

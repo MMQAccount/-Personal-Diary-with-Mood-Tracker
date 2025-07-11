@@ -49,19 +49,21 @@ const DiaryForm = () => {
     };
 
     return (
-        <form onSubmit={handelSubmit}>
-            <div className="diary_data">
-                <textarea
-                    name="notes"
-                    id="data"
-                    placeholder="Add some notes..."
-                    value={form.notes}
-                    onChange={handleFormChange}
-                    required
-                ></textarea>
-                <input type="submit" name="Submit" />
-            </div>
-        </form>
+        <div className="form-wrapper">
+            <form onSubmit={handelSubmit}>
+                <div className="diary_data">
+                    <textarea
+                        name="notes"
+                        id="data"
+                        placeholder="Add some notes..."
+                        value={form.notes}
+                        onChange={handleFormChange}
+                        required
+                    ></textarea>
+                    <input type="submit" name="Submit" />
+                </div>
+            </form>
+        </div>
     );
 };
 

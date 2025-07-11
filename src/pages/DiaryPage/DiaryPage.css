@@ -163,11 +163,11 @@ option {
         flex-wrap: wrap;
         align-items: center;
         gap: 10px;
-        margin-bottom: 30px;
+        margin-bottom: 50px;
     }
 
     .diarys {
-        margin-top: 15%;
+        margin-top: 5%;
     }
 
     .input_wrapper:focus-within {
@@ -177,8 +177,10 @@ option {
 
 @media (max-width: 769px) {
     .diary_container {
-    padding: 0 2% 0 1.5% ;
-}
+        width: 90%;
+        margin: 0% 5%;
+    }
+
     .checkbox-label {
         font-size: smaller;
     }

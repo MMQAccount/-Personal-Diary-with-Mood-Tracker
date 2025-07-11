@@ -8,8 +8,11 @@ import DiaryVoice from './components/Forms/DiaryVoice/DiaryVoice'
 import DiaryImage from './components/Forms/DiaryImage/DiaryImage'
 import DiaryProvider from './providers/diary-provider';
 import DiaryDetailsPage from './pages/DiaryDetails/DiaryDetails'
-import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
+// import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
 import DiaryMood from './components/Forms/DiaryMood/DiaryMood'
+import DiaryImages from './pages/DiaryDetails/DiaryImages'
+import EditNote from './pages/DiaryEdit.tsx/EditNote'
+import DiaryEditPage from './pages/DiaryEdit.tsx/DiaryEditPage'
 
 
 function App() {
@@ -48,9 +51,21 @@ function App() {
               element={<DiaryDetailsPage />}
             />
             <Route
-              path={`/DiaryEditPage/:id`}
+              path={`/DiaryImages/:id`}
+              element={<DiaryImages />}
+            />
+            <Route
+              path="/EditNote/:day/:noteId"
+              element={<EditNote />}
+            />
+            <Route
+              path="/EditDay/:id"
               element={<DiaryEditPage />}
             />
+            {/* <Route
+              path={`/DiaryEditPage/:id`}
+              element={<DiaryEditPage />}
+            /> */}
           </Routes>
         </DiaryProvider>
       </BrowserRouter>

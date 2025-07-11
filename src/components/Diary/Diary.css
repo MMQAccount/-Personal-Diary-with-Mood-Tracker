@@ -5,11 +5,26 @@
   color: #545f7b;
   width: 95%;
   height: fit-content;
-  margin-top: 2%;
+  margin-top: 1%;
   background-color: rgba(255, 255, 255, 0.55);
   border-radius: 15px;
   padding: 10px 40px;
   box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
+}
+
+.del_icon {
+  font-size: larger;
+}
+
+.del_icon:hover {
+  color: red;
+}
+
+.diary_notes {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .diary_content:hover {
@@ -17,14 +32,18 @@
 }
 
 .image_note {
-  width: 100%;
   display: flex;
   gap: 0.5%;
   flex-wrap: wrap;
 }
 
+.images {
+  background-color: inherit;
+  box-shadow: none;
+}
+
 .image_note img {
-  width: 25%;
+  width: 24%;
   height: auto;
   display: block;
   border-radius: 8px;
@@ -45,7 +64,7 @@ div.container {
 
 .date_div {
   background-color: rgba(156, 156, 156, 0.229);
-  width: 40%;
+  width: 13%;
   border: 1px solid rgba(201, 201, 201, 0.27);
   border-radius: 15px;
   display: flex;
@@ -63,15 +82,17 @@ div.container {
   align-items: center;
   margin-left: 0;
 }
-.header_date_day{
-  width: 20%;
+
+.header_date_day {
+  width: 80%;
   display: flex;
   flex-direction: row;
-  gap: 10%;
+  gap: 3%;
   align-items: center;
-  margin-left: 0;
+  margin-left: 0%;
 }
-.header_mood_type{
+
+.header_mood_type {
   display: flex;
   flex-direction: row;
   gap: 2%;
@@ -82,10 +103,11 @@ div.container {
 .edit_icon {
   font-size: 20px;
   color: #545f7b;
+  margin-left: 5%;
 }
 
 .edit_icon:hover {
-  box-shadow: 1px 1px 5px gray;
+  color: #719b76;
   cursor: pointer;
 }
 
@@ -134,14 +156,23 @@ h1 {
   align-items: center;
 }
 
+.title {
+  color: #719b76;
+}
+
 @media screen and (max-width: 754px) {
+
   .date_div {
     width: 20%;
   }
-  .header_date{
-    margin-left: -15%;
+
+  .header_date_day {
+    margin-left: -5%;
   }
-div.container{
-  padding-left: 8%;
 }
+
+@media screen and (max-width: 900px) {
+  .date_div {
+    width: 17%;
+  }
 }

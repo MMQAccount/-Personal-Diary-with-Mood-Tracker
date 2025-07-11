@@ -50,7 +50,7 @@ img {
     .homePage>img {
         height: 60px;
         width: auto;
-        margin: 0 0px -15px 0;
+        margin: 0 0px -20px 0;
     }
 
     .nav_container {
@@ -58,7 +58,7 @@ img {
         height: 50px;
         flex-direction: row;
         position: fixed;
-        top: 91.8vh;
+        top: 92.8vh;
         left: 0;
         text-align: center;
         background-color: #719b76;
