@@ -9,6 +9,7 @@
     top: 0;
     left: 0;
     text-align: center;
+    z-index: 1000;
 }
 
 img {
@@ -39,15 +40,20 @@ img {
     display: block;
 }
 
-.active>.navlink {
+.active > .navlink {
     background-color: #719b76;
     border-radius: 15px;
     padding: 15px 19px;
     max-width: 400px;
 }
 
+.homePage > img {
+    padding: 0;
+    border-radius: 0;
+}
+
 @media screen and (max-width: 754px) {
-    .homePage>img {
+    .homePage > img {
         height: 60px;
         width: auto;
         margin: 0 0px -20px 0;
@@ -90,7 +96,7 @@ img {
         padding-bottom: 20px;
     }
 
-    .active>.navlink {
+    .active > .navlink {
         transform: translateY(-10px);
         color: #719b76;
         padding: 10px 15px;
