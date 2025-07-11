@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { DiaryContext } from "../../providers/diary-provider";
 import { useContext, useEffect, useState } from "react";
 import Day from "../../components/Day/Day";
-import Diary from "../../components/Diary/Diary";
 import useDays from "../../hooks/useDays.hook";
 import useSearch from "../../hooks/useSearch.hook";
 import useSearchType from "../../hooks/useSearchType.hook";
@@ -23,27 +22,33 @@ const DiaryPage = () => {
   const { diary } = useContext(DiaryContext);
   const [open, setOpen] = useState(false);
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
+
   const INITIAL_FORM: Store.ISearchForm = {
     type: [],
   };
+
   const [form, setForm] = useState<Store.ISearchForm>(INITIAL_FORM);
+  const [select, setSelected] = useState("");
 
   const handleChangeInput = (value: string) => {
     if (value === "input") navigate("/diaryForm");
     else if (value === "voice") navigate("/diaryVoice");
     else if (value === "image") navigate("/diaryImage");
+    else if (value === "mood") navigate("/diaryMood");
   };
 
   const options = [
     { label: "input 📜", value: "input" },
     { label: "voice 🎙️", value: "voice" },
     { label: "image🖼️", value: "image" },
+    { label: "mood☺️", value: "mood" },
   ];
 
   const handleSelect = (value: string) => {
     handleChangeInput(value);
     setOpen(false);
   };
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
     setForm((prevForm) => {
@@ -53,23 +58,27 @@ const DiaryPage = () => {
       return { ...prevForm, type: updatedTypes };
     });
   };
+
   const handelSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelected(e.target.value);
     const val = Number(e.target.value);
     handleSearchByMood(val);
   };
+
   useEffect(() => {
     handleSearchByType(form.type);
   }, [form]);
+
   return (
     <div className="diary_container">
       <button className="theme-icon-btn2" onClick={toggleTheme}>
         {theme === "light" ? <FaMoon /> : <FaSun />}
       </button>
+
       <div className="diary_type">
         <div className="select-header" onClick={() => setOpen(!open)}>
           <PlusOutlined />
         </div>
-
         {open && (
           <ul className="select-options">
             {options.map((opt) => (
@@ -80,6 +89,7 @@ const DiaryPage = () => {
           </ul>
         )}
       </div>
+
       <div className="search_container">
         <h1>Welcome,</h1>
         <div className="input_wrapper">
@@ -92,56 +102,28 @@ const DiaryPage = () => {
         </div>
 
         <div className="check">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              value="Family"
-              onChange={handleCheckboxChange}
-              hidden
-            />
-            <span
-              className={form.type.includes("Family") ? "checked_span" : ""}
-            >
-              Family 👨‍👩‍👧‍👦
-            </span>
-          </label>
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="Work"
-              value="Work"
-              onChange={handleCheckboxChange}
-            />
-            <span className={form.type.includes("Work") ? "checked_span" : ""}>
-              Work 🏢
-            </span>
-          </label>
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="School"
-              value="School"
-              onChange={handleCheckboxChange}
-            />
-            <span
-              className={form.type.includes("School") ? "checked_span" : ""}
-            >
-              School 🏫
-            </span>
-          </label>
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              name="Friends"
-              value="Friends"
-              onChange={handleCheckboxChange}
-            />
-            <span
-              className={form.type.includes("Friends") ? "checked_span" : ""}
-            >
-              Friends 👥
-            </span>
-          </label>
+          {["Family", "Work", "School", "Friends"].map((type) => (
+            <label key={type} className="checkbox-label">
+              <input
+                type="checkbox"
+                value={type}
+                onChange={handleCheckboxChange}
+                hidden
+              />
+              <span
+                className={form.type.includes(type) ? "checked_span" : ""}
+              >
+                {type} {type === "Family"
+                  ? "👨‍👩‍👧‍👦"
+                  : type === "Work"
+                  ? "🏢"
+                  : type === "School"
+                  ? "🏫"
+                  : "👥"}
+              </span>
+            </label>
+          ))}
+
           <div>
             <select
               name="mood"
@@ -164,49 +146,16 @@ const DiaryPage = () => {
       </div>
 
       <div className="diarys">
-        {searchResultsByMood.length > 0 ||
-        searchResultsByType.length > 0 ||
-        searchResults.length > 0 ? (
-          searchResultsByMood.length > 0 ? (
-            searchResultsByMood.map((d) => (
-              <Diary
-                key={d.id}
-                id={d.id}
-                title={d.title}
-                notes={d.notes}
-                state={d.state}
-                type={d.type}
-                image={d.image}
-                audio={d.audio}
-              />
-            ))
-          ) : searchResultsByType.length > 0 ? (
-            searchResultsByType.map((d) => (
-              <Diary
-                key={d.id}
-                id={d.id}
-                title={d.title}
-                notes={d.notes}
-                state={d.state}
-                type={d.type}
-                image={d.image}
-                audio={d.audio}
-              />
-            ))
-          ) : (
-            searchResults.map((d) => (
-              <Diary
-                key={d.id}
-                id={d.id}
-                title={d.title}
-                notes={d.notes}
-                state={d.state}
-                type={d.type}
-                image={d.image}
-                audio={d.audio}
-              />
-            ))
-          )
+        {searchResults.length > 0 ? (
+          searchResults.map((d) => <Day key={d.id} id={d.id} />)
+        ) : searchResultsByMood.length > 0 && select !== "" ? (
+          searchResultsByMood.map((d) => <Day key={d.id} id={d.id} />)
+        ) : select !== "" ? (
+          <h2>No Result</h2>
+        ) : searchResultsByType.length > 0 ? (
+          searchResultsByType.map((d) => <Day key={d.id} id={d.id} />)
+        ) : form.type.length !== 0 ? (
+          <h2>No Result</h2>
         ) : diary.length > 0 ? (
           DiaryDays.map((d) => <Day key={d} id={d} />)
         ) : (

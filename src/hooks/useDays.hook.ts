@@ -5,7 +5,7 @@ const useDays = () => {
 
     const { diary } = useContext(DiaryContext);
 
-    const getUniqueDiaryDayIds = (diary: Store.IDiaryItem[]): number[] => {
+    const getUniqueDiaryDayIds = (diary: Store.IDayDiary[]): number[] => {
         const uniqueDaysMap = new Map<string, number>();
         diary.forEach(item => {
             const dayKey = new Date(item.id).toISOString().split("T")[0];

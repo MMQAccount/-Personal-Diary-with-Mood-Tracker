@@ -3,7 +3,7 @@ import { DiaryContext } from "../providers/diary-provider";
 
 const useSearch = () => {
 
-    const [searchResults, setSearchResults] = useState<Store.IDiaryItem[]>([]);
+    const [searchResults, setSearchResults] = useState<Store.IDayDiary[]>([]);
     const { diary } = useContext(DiaryContext);
 
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +14,7 @@ const useSearch = () => {
         }
 
         const filtered = diary.filter(d =>
-            d.title.toLowerCase().includes(val) || d.notes.toLowerCase().includes(val)
+            d.title?.toLowerCase().includes(val) || d.notes?.map(n => n.toLowerCase().includes(val))
         );
         setSearchResults(filtered);
     };
