@@ -60,7 +60,7 @@ const MoodPieChart = ({ pieData, /*counts,*/ colorMap }: IProps) => {
   return (
     <div className={classes.pieWrapper}>
       <div className={classes.pieRow}>
-        <ResponsiveContainer width="100%" aspect={2.5}>
+        <ResponsiveContainer width="100%" height={350}>
           <PieChart>
             <Pie
               data={pieData}
