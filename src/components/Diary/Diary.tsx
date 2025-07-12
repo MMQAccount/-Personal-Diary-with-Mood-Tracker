@@ -42,9 +42,9 @@ const Diary = ({ note, id, day }: IProps) => {
   };
 
   return (
-    <div className="diary_content" onClick={() => goToEdit(id, day)}>
+    <div className="diary_content" >
       <div className="diary_notes">
-        <ReactMarkdown>{note}</ReactMarkdown>
+        <span onClick={() => goToEdit(id, day)} className="span_note"><ReactMarkdown>{note}</ReactMarkdown></span>
         <DeleteOutlined className="del_icon" onClick={() => del_diary(id, day)} />
       </div>
     </div>

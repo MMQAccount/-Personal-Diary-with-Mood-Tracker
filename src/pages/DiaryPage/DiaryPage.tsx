@@ -100,48 +100,47 @@ const DiaryPage = () => {
             onChange={handleSearch}
           />
         </div>
-
-        <div className="check">
-          {["Family", "Work", "School", "Friends"].map((type) => (
-            <label key={type} className="checkbox-label">
-              <input
-                type="checkbox"
-                value={type}
-                onChange={handleCheckboxChange}
-                hidden
-              />
-              <span
-                className={form.type.includes(type) ? "checked_span" : ""}
-              >
-                {type} {type === "Family"
-                  ? "👨‍👩‍👧‍👦"
-                  : type === "Work"
+      </div>
+      <div className="check">
+        {["Family", "Work", "School", "Friends"].map((type) => (
+          <label key={type} className="checkbox-label">
+            <input
+              type="checkbox"
+              value={type}
+              onChange={handleCheckboxChange}
+              hidden
+            />
+            <span
+              className={form.type.includes(type) ? "checked_span" : ""}
+            >
+              {type} {type === "Family"
+                ? "👨‍👩‍👧‍👦"
+                : type === "Work"
                   ? "🏢"
                   : type === "School"
-                  ? "🏫"
-                  : "👥"}
-              </span>
-            </label>
-          ))}
+                    ? "🏫"
+                    : "👥"}
+            </span>
+          </label>
+        ))}
 
-          <div>
-            <select
-              name="mood"
-              id="mood"
-              className="search_mood"
-              onChange={handelSelectChange}
-              defaultValue={""}
-            >
-              <option value="" hidden>
-                Mood
+        <div>
+          <select
+            name="mood"
+            id="mood"
+            className="search_mood"
+            onChange={handelSelectChange}
+            defaultValue={""}
+          >
+            <option value="">
+              Mood
+            </option>
+            {emojis.map((emoji, index) => (
+              <option key={index} value={index}>
+                {emoji}
               </option>
-              {emojis.map((emoji, index) => (
-                <option key={index} value={index}>
-                  {emoji}
-                </option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </select>
         </div>
       </div>
 

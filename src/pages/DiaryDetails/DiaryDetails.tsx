@@ -7,7 +7,7 @@ import './DiaryDetails.css';
 type IParams = { id: string; };
 
 const DiaryDetailsPage = () => {
-const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = useContext(DiaryContext);
+  const emojis = ['😭', '🙁', '😐', '☺️', '😁']; const { diary } = useContext(DiaryContext);
 
   const params = useParams<IParams>();
   const [diaryEx, setDiaryEx] = useState<Store.IDayDiary>();
@@ -29,7 +29,7 @@ const emojis = ['😭', '🙁', '😐', '☺️', '😁'];  const { diary } = us
     <div className="main_container">
       <div className="diary_content_container">
         <h1>{diaryEx?.title}</h1>
-        
+
         <div className="content">
           <h3>{diaryEx?.state ? emojis[diaryEx.state] : ""}</h3>
           |

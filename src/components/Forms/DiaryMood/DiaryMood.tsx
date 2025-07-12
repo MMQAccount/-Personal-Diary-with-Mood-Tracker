@@ -101,15 +101,6 @@ const DiaryMood = () => {
                     <h1>{emojis[moodValue]}</h1>
                 </div>
 
-                <input
-                    type="text"
-                    placeholder="Title..."
-                    name="title"
-                    value={form.title}
-                    onChange={handleFormChange}
-                    required
-                />
-
                 <div className="check">
                     <label className="checkbox-label">
                         <input type="checkbox" value="Family" onChange={handleCheckboxChange} />
@@ -136,6 +127,7 @@ const DiaryMood = () => {
                         </span>
                     </label>
                 </div>
+                <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
                 <input type="submit" value="Submit" />
             </form>
         </div>

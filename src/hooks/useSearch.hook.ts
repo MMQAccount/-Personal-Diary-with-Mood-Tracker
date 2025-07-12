@@ -14,7 +14,7 @@ const useSearch = () => {
         }
 
         const filtered = diary.filter(d =>
-            d.title?.toLowerCase().includes(val) || d.notes?.map(n => n.toLowerCase().includes(val))
+            d.title?.toLowerCase().includes(val) || d.notes?.some(n => n.toLowerCase().includes(val))
         );
         setSearchResults(filtered);
     };

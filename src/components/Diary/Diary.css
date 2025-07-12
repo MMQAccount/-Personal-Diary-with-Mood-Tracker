@@ -12,6 +12,15 @@
   box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
 }
 
+.image_content {
+  width: fit-content;
+}
+
+.span_note {
+  width: 100%;
+  color: #545f7b;
+}
+
 .del_icon {
   font-size: larger;
 }
