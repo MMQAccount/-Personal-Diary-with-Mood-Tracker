@@ -11,13 +11,15 @@ form {
 span {
   color: #8e8e8e;
 }
+
 .form-wrapper {
   height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.form-wrapper > form{
+
+.form-wrapper>form {
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -130,14 +132,17 @@ textarea {
 
 button,
 select,
-input[type="submit"], input[type="checkbox"]{
+input[type="submit"],
+input[type="checkbox"] {
   cursor: pointer;
 }
-.check{
+
+.check {
   display: flex;
   flex-direction: row;
   gap: 2%;
 }
+
 .checkbox-label {
   display: inline-block;
   margin-right: 15px;
@@ -145,7 +150,7 @@ input[type="submit"], input[type="checkbox"]{
   user-select: none;
 }
 
-.checked_span{
+.checked_span {
   border: 1px solid #719b76;
   border-radius: 20px;
   padding: 5px 8px;
@@ -153,18 +158,21 @@ input[type="submit"], input[type="checkbox"]{
   color: white;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   display: none;
 }
+
 @media screen and (max-width: 768px) {
   form {
     margin: 3% 3% 3% -5%;
   }
-  .checked_span{
-  padding: 5px 8px;
-  margin: 0 -10%;
-}
-.checkbox-label{
-  margin-right: 0;
-}
+
+  .checked_span {
+    padding: 5px 8px;
+    margin: 0 -10%;
+  }
+
+  .checkbox-label {
+    margin-right: 0;
+  }
 }

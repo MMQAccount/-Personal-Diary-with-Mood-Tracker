@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import "./Diary.css";
 
 interface IProps {
-  id:number;
+  id: number;
   images: string[]
 }
 
@@ -15,7 +15,7 @@ const ImageDiary = ({ images, id }: IProps) => {
     <div onClick={displayImages} className="image_content">
       <h2>Photos 🖼️</h2>
       <div className="image_note">
-        {images.map((d, i) => (<img key={i} src={d} alt=""/>))}
+        {images.map((d, i) => (<img key={i} src={d} alt="" />))}
       </div>
     </div>
   );

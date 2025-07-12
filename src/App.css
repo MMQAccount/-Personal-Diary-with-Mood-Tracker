@@ -8,11 +8,3 @@ body {
   margin: 0;
   padding-left: 100px;
 }
-
-
-@media (max-width: 769px) {
-  body{
-    width: 100%;
-    padding-left: 0;
-  }
-}

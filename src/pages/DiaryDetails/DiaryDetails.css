@@ -6,8 +6,9 @@
     border-right: 1px solid #2222222f;
     padding-right: 5%;
 }
-.img_cont{
-    padding:2%;
+
+.img_cont {
+    padding: 2%;
     width: 25%;
     display: flex;
     flex-direction: column;
@@ -15,9 +16,11 @@
     border-radius: 15px;
     gap: 10px;
 }
+
 .img_cont>img {
     width: 90%;
 }
+
 h1 {
     color: #222222c2;
     font-size: 2em;
@@ -40,7 +43,8 @@ h1 {
     font-size: larger;
     margin-top: -2%;
 }
-.main_container{
+
+.main_container {
     width: 80%;
     display: flex;
     flex-direction: row;
@@ -51,10 +55,11 @@ h1 {
     color: #464646;
     margin: 5% auto;
 }
-.notes{
+
+.notes {
     width: 50%;
 }
-audio {
-  filter: invert(22%) sepia(23%) saturate(336%) hue-rotate(70deg);
-}
 
+audio {
+    filter: invert(22%) sepia(23%) saturate(336%) hue-rotate(70deg);
+}

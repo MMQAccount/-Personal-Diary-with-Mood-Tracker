@@ -1,11 +1,12 @@
-.btns{
+.btns {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 10px;
 }
-.btns>button[type="submit"]{
+
+.btns>button[type="submit"] {
     width: 95%;
     background-color: #719b76;
     border: none;
@@ -14,28 +15,30 @@
     color: white;
     font-size: large;
 }
-.editForm>form{
+
+.editForm>form {
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-.editForm > form {
-  width: 55%;
-  margin: auto;
-  padding: 30px;
-  background: #ffffff;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  color: #333;
+.editForm>form {
+    width: 55%;
+    margin: auto;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    color: #333;
 }
 
 span {
-  color: #8e8e8e;
+    color: #8e8e8e;
 }
+
 .editForm {
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
