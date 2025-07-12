@@ -25,7 +25,6 @@ const DiaryVoice = () => {
 
     const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const todayTimestamp = today.getTime();
@@ -49,11 +48,10 @@ const DiaryVoice = () => {
                 voices: [form.voice],
                 title: "",
                 type: [],
-                state: 0,
+                state: -1,
             };
             addToDiary(newDiary);
         }
-
         setForm({ voice: "" });
         navigate("/diaryPage");
     };

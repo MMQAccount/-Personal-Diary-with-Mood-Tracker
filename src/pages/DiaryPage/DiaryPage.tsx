@@ -100,7 +100,7 @@ const DiaryPage = () => {
             onChange={handleSearch}
           />
         </div>
-
+      </div>
         <div className="check">
           {["Family", "Work", "School", "Friends"].map((type) => (
             <label key={type} className="checkbox-label">
@@ -132,7 +132,7 @@ const DiaryPage = () => {
               onChange={handelSelectChange}
               defaultValue={""}
             >
-              <option value="" hidden>
+              <option value="">
                 Mood
               </option>
               {emojis.map((emoji, index) => (
@@ -143,7 +143,6 @@ const DiaryPage = () => {
             </select>
           </div>
         </div>
-      </div>
 
       <div className="diarys">
         {searchResults.length > 0 ? (

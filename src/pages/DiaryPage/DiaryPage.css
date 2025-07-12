@@ -60,11 +60,10 @@ option {
 .custom-select {
     position: relative;
     width: 100px;
-    font-family: sans-serif;
 }
 
 .select-header {
-    width: 20px;
+    width: 40%;
     height: 25px;
     background-color: #719b76;
     color: white;
@@ -80,7 +79,7 @@ option {
 
 .select-options {
     position: absolute;
-    right: -15px;
+    right: -30%;
     width: 100px;
     background-color: white;
     border: 1px solid #c3c3c3;
@@ -141,17 +140,9 @@ option {
 }
 
 @media (max-width: 944px) {
-    .select-options {
-        position: static;
-        width: auto;
-        margin-top: 10px;
-        background-color: white;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        padding: 5px 10px;
-        border-radius: 8px;
+     .diary_type {
+        margin: 4% 2%
     }
-
     .checkbox-label {
         display: flex;
         justify-content: center;
@@ -176,6 +167,17 @@ option {
 }
 
 @media (max-width: 769px) {
+    .select-options {
+        position: relative;
+        width: auto;
+        margin-top: 50%;
+        background-color: white;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        padding: 5px 10px;
+        border-radius: 8px;
+    }
+
     .diary_container {
         width: 90%;
         margin: 0% 5%;
@@ -186,10 +188,41 @@ option {
     }
 
     .diary_type {
-        margin: 4% 2%
+        margin: 5% 1%
     }
+    
+.select-header {
+    width: 40%;
+    height: 25px;
+    background-color: #719b76;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    font-size: larger;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.select-options {
+    position: absolute;
+    right: -12%;
+    width: 100px;
+    background-color: white;
+    border: 1px solid #c3c3c3;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    margin: 5px 0 0;
+    padding: 0;
+    z-index: 10;
+}
+
 
 }
+
 .theme-icon-btn2 {
     color: #2c352d;
     position: absolute;

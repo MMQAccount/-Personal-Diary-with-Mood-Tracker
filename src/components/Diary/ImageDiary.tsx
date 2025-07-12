@@ -12,7 +12,7 @@ const ImageDiary = ({ images, id }: IProps) => {
     navigate(`/DiaryImages/${id}`);
   }
   return (
-    <div onClick={displayImages}>
+    <div onClick={displayImages} className="image_content">
       <h2>Photos 🖼️</h2>
       <div className="image_note">
         {images.map((d, i) => (<img key={i} src={d} alt=""/>))}

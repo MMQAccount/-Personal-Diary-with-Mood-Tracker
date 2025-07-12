@@ -39,7 +39,7 @@ const Day = ({ id }: IProps) => {
                 </div>
             </div>
             <div className="diary_notes">
-                <h2 className="title">{todayEntries.map(d => (d.title))} {todayEntries.map(d => (typeof d.state === "number" ? emojis[d.state] : ""))}</h2>
+                <h2 className="title">{todayEntries.map(d => (d.title))} {todayEntries.map(d => (emojis[d.state ?? -1] ?? " "))}</h2>
                 <div className="header_mood_type">
                     <h4>
                         {todayEntries.map(d => (d.type ? d.type : "")).join("")}

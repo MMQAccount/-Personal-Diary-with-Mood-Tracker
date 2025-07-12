@@ -40,18 +40,18 @@ const DiaryEditPage = () => {
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  if (!diaryEx) return;
+        e.preventDefault();
+        if (!diaryEx) return;
 
-  updateDiary(diaryEx.id, {
-    ...diaryEx,
-    title: form.title.trim(),
-    type: [...form.type],
-    state: form.state,
-  });
+        updateDiary(diaryEx.id, {
+            ...diaryEx,
+            title: form.title.trim(),
+            type: [...form.type],
+            state: form.state,
+        });
 
-  navigate("/diaryPage");
-};
+        navigate("/diaryPage");
+    };
 
     if (!diaryEx) return <h2>Loading diary entry...</h2>;
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,53 +64,56 @@ const DiaryEditPage = () => {
         });
     };
     return (
-        <form onSubmit={handleSubmit}>
-            <h1>{stateLabels[moodValue]}</h1>
-            <div className='mood_input'>
-                <input
-                    type="range"
-                    min={0}
-                    max={4}
-                    value={moodValue}
-                    className='range_input'
-                    name='state'
-                    onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        setMoodValue(val);
-                        handleFormChange(e);
-                    }}
-                />
-                <h1>{emojis[moodValue]}</h1>
-            </div>
-            <div className='diary_data'>
-                <div className="check">
-                    <label className="checkbox-label">
-                        <input
-                            type="checkbox"
-                            value="Family"
-                            onChange={handleCheckboxChange}
-                            hidden
-                            checked={form.type.includes("Family")}
-                        />
-                        <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} checked={form.type.includes("Work")} />
-                        <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} checked={form.type.includes("School")} />
-                        <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} checked={form.type.includes("Friends")} />
-                        <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
-                    </label>
+        <div className="editForm">
+            <form onSubmit={handleSubmit}>
+                <h1>{stateLabels[moodValue]}</h1>
+                <div className='mood_input'>
+                    <input
+                        type="range"
+                        min={0}
+                        max={4}
+                        value={moodValue}
+                        className='range_input'
+                        name='state'
+                        onChange={(e) => {
+                            const val = parseInt(e.target.value);
+                            setMoodValue(val);
+                            handleFormChange(e);
+                        }}
+                    />
+                    <h1>{emojis[moodValue]}</h1>
                 </div>
-                <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
-                <input type="submit" value="Submit" />
-            </div>
-        </form>
+                <div className='diary_data'>
+                    <div className="check">
+                        <label className="checkbox-label">
+                            <input
+                                type="checkbox"
+                                value="Family"
+                                onChange={handleCheckboxChange}
+                                hidden
+                                checked={form.type.includes("Family")}
+                            />
+                            <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
+                        </label>
+                        <label className="checkbox-label">
+                            <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} checked={form.type.includes("Work")} />
+                            <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
+                        </label>
+                        <label className="checkbox-label">
+                            <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} checked={form.type.includes("School")} />
+                            <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
+                        </label>
+                        <label className="checkbox-label">
+                            <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} checked={form.type.includes("Friends")} />
+                            <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
+                        </label>
+                    </div>
+                    <br />
+                    <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
+        </div>
     );
 };
 
