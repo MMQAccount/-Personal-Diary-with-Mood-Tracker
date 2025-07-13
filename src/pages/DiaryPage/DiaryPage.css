@@ -3,6 +3,7 @@
     height: 100vh;
     background-color: #edf2fa;
     color: #c2c9d4;
+    direction: inherit;
 }
 
 .diary_type {
@@ -15,12 +16,9 @@
     border: none;
 }
 
-option {
-    outline: none;
-}
-
-.search_input:hover {
-    cursor: pointer;
+html[dir="rtl"] .diary_type {
+    right: auto;
+    left: 5%;
 }
 
 .search_container {
@@ -31,14 +29,18 @@ option {
     flex-direction: row;
     align-items: center;
     gap: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
 }
+
+
 
 .input_wrapper {
     width: 50%;
 }
 
-
+.search_input:hover {
+    cursor: pointer;
+}
 
 .search_input {
     margin-top: 5px;
@@ -75,6 +77,12 @@ option {
     font-size: larger;
     font-weight: bolder;
     text-align: center;
+    justify-content: center;
+}
+
+html[dir="rtl"] .select-header {
+    right: auto;
+    left: 0;
 }
 
 .select-options {
@@ -89,6 +97,11 @@ option {
     margin: 5px 0 0;
     padding: 0;
     z-index: 10;
+}
+
+html[dir="rtl"] .select-options {
+    right: auto;
+    left: -30%;
 }
 
 .select-options li {
@@ -113,11 +126,20 @@ option {
     align-items: center;
 }
 
+html[dir="rtl"] .check {
+    flex-direction: row-reverse;
+}
+
 .checkbox-label {
     display: inline-block;
     margin-right: 15px;
     cursor: pointer;
     user-select: none;
+}
+
+html[dir="rtl"] .checkbox-label {
+    margin-right: 0;
+    margin-left: 15px;
 }
 
 .checked_span {
@@ -139,9 +161,24 @@ option {
     font-size: 13px;
 }
 
+.filter_by_tag {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+}
+
 @media (max-width: 944px) {
+
+    .input_wrapper {
+        width: 30%;
+    }
+
+    .filter_by_tag {
+        width: 70%;
+    }
+
     .diary_type {
-        margin: 4% 2%
+        margin: 4% 2%;
     }
 
     .checkbox-label {
@@ -168,6 +205,22 @@ option {
 }
 
 @media (max-width: 769px) {
+    .check {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .input_wrapper {
+        width: 100%;
+    }
+
+    .filter_by_tag {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-top: 5%;
+    }
+
     .select-options {
         position: relative;
         width: auto;
@@ -181,7 +234,7 @@ option {
 
     .diary_container {
         width: 90%;
-        margin: 0% 5%;
+        margin: 0 5%;
     }
 
     .checkbox-label {
@@ -189,7 +242,7 @@ option {
     }
 
     .diary_type {
-        margin: 5% 1%
+        margin: 5% 1%;
     }
 
     .select-header {
@@ -205,11 +258,12 @@ option {
         font-size: larger;
         font-weight: bolder;
         text-align: center;
+        justify-content: center;
     }
 
     .select-options {
         position: absolute;
-        right: -12%;
+        right: -13%;
         width: 100px;
         background-color: white;
         border: 1px solid #c3c3c3;
@@ -221,7 +275,9 @@ option {
         z-index: 10;
     }
 
-
+    .search_container {
+        margin-bottom: 15px;
+    }
 }
 
 .theme-icon-btn2 {
@@ -234,6 +290,11 @@ option {
     border: none;
     cursor: pointer;
     transition: transform 0.3s ease, color 0.3s ease;
+}
+
+html[dir="rtl"] .theme-icon-btn2 {
+    right: auto;
+    left: 12%;
 }
 
 .theme-icon-btn2:hover {

@@ -78,6 +78,7 @@ const DiaryMood = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
+  const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
 
     return (
         <div className="form-wrapper">
@@ -102,30 +103,14 @@ const DiaryMood = () => {
                 </div>
 
                 <div className="check">
-                    <label className="checkbox-label">
-                        <input type="checkbox" value="Family" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("Family") ? "checked_span" : ""}>
-                            Family 👨‍👩‍👧‍👦
-                        </span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" value="Work" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("Work") ? "checked_span" : ""}>
-                            Work 🏢
-                        </span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" value="School" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("School") ? "checked_span" : ""}>
-                            School 🏫
-                        </span>
-                    </label>
-                    <label className="checkbox-label">
-                        <input type="checkbox" value="Friends" onChange={handleCheckboxChange} />
-                        <span className={form.type.includes("Friends") ? "checked_span" : ""}>
-                            Friends 👥
-                        </span>
-                    </label>
+                    {tags.map(m => (
+                        <label className="checkbox-label">
+                            <input type="checkbox" value={m} onChange={handleCheckboxChange} />
+                            <span className={form.type.includes(m) ? "checked_span" : ""}>
+                                {m}
+                            </span>
+                        </label> ))
+                    }
                 </div>
                 <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
                 <input type="submit" value="Submit" />

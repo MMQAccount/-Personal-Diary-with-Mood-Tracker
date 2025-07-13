@@ -63,6 +63,8 @@ const DiaryEditPage = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
+    const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
+
     return (
         <div className="editForm">
             <form onSubmit={handleSubmit}>
@@ -85,28 +87,14 @@ const DiaryEditPage = () => {
                 </div>
                 <div className='diary_data'>
                     <div className="check">
-                        <label className="checkbox-label">
-                            <input
-                                type="checkbox"
-                                value="Family"
-                                onChange={handleCheckboxChange}
-                                hidden
-                                checked={form.type.includes("Family")}
-                            />
-                            <span className={form.type.includes("Family") ? "checked_span" : ""}>Family 👨‍👩‍👧‍👦</span>
-                        </label>
-                        <label className="checkbox-label">
-                            <input type="checkbox" name="Work" value="Work" onChange={handleCheckboxChange} checked={form.type.includes("Work")} />
-                            <span className={form.type.includes("Work") ? "checked_span" : ""}>Work 🏢</span>
-                        </label>
-                        <label className="checkbox-label">
-                            <input type="checkbox" name="School" value="School" onChange={handleCheckboxChange} checked={form.type.includes("School")} />
-                            <span className={form.type.includes("School") ? "checked_span" : ""}>School 🏫</span>
-                        </label>
-                        <label className="checkbox-label">
-                            <input type="checkbox" name="Friends" value="Friends" onChange={handleCheckboxChange} checked={form.type.includes("Friends")} />
-                            <span className={form.type.includes("Friends") ? "checked_span" : ""}>Friends 👥</span>
-                        </label>
+                        {tags.map(m => (
+                            <label className="checkbox-label">
+                                <input type="checkbox" value={m} onChange={handleCheckboxChange} />
+                                <span className={form.type.includes(m) ? "checked_span" : ""}>
+                                    {m}
+                                </span>
+                            </label>))
+                        }
                     </div>
                     <br />
                     <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />

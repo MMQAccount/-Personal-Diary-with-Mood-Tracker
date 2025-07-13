@@ -1,9 +1,10 @@
+import React, { useContext, useEffect, useState } from "react";
 import "./DiaryPage.css";
+import { useTranslation } from "react-i18next";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { DiaryContext } from "../../providers/diary-provider";
-import { useContext, useEffect, useState } from "react";
 import Day from "../../components/Day/Day";
 import useDays from "../../hooks/useDays.hook";
 import useSearch from "../../hooks/useSearch.hook";
@@ -11,8 +12,14 @@ import useSearchType from "../../hooks/useSearchType.hook";
 import useSearchByMood from "../../hooks/useSearchByMood.hook";
 import { useTheme } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
+import i18n from '../../i18n';
+
+interface ISearchForm {
+  type: string[];
+}
 
 const DiaryPage = () => {
+  const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();
   const emojis = ["😭", "🙁", "😐", "☺️", "😁"];
   const { DiaryDays } = useDays();
@@ -22,27 +29,37 @@ const DiaryPage = () => {
   const { diary } = useContext(DiaryContext);
   const [open, setOpen] = useState(false);
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
-
-  const INITIAL_FORM: Store.ISearchForm = {
-    type: [],
-  };
-
-  const [form, setForm] = useState<Store.ISearchForm>(INITIAL_FORM);
+  const [form, setForm] = useState<ISearchForm>({ type: [] });
   const [select, setSelected] = useState("");
 
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
+
+    const onLangChanged = (lng: string) => {
+      document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
+    };
+
+    i18n.on("languageChanged", onLangChanged);
+
+    return () => {
+      i18n.off("languageChanged", onLangChanged);
+    };
+  }, []);
+
+  const options = [
+    { label: t("input"), value: "input" },
+    { label: t("voice"), value: "voice" },
+    { label: t("image"), value: "image" },
+    { label: t("mood_option"), value: "mood" },
+  ];
+
+  const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
   const handleChangeInput = (value: string) => {
     if (value === "input") navigate("/diaryForm");
     else if (value === "voice") navigate("/diaryVoice");
     else if (value === "image") navigate("/diaryImage");
     else if (value === "mood") navigate("/diaryMood");
   };
-
-  const options = [
-    { label: "input 📜", value: "input" },
-    { label: "voice 🎙️", value: "voice" },
-    { label: "image🖼️", value: "image" },
-    { label: "mood☺️", value: "mood" },
-  ];
 
   const handleSelect = (value: string) => {
     handleChangeInput(value);
@@ -59,10 +76,14 @@ const DiaryPage = () => {
     });
   };
 
-  const handelSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(e.target.value);
     const val = Number(e.target.value);
     handleSearchByMood(val);
+  };
+
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleSearch(e);
   };
 
   useEffect(() => {
@@ -71,7 +92,7 @@ const DiaryPage = () => {
 
   return (
     <div className="diary_container">
-      <button className="theme-icon-btn2" onClick={toggleTheme}>
+      <button className="theme-icon-btn2" onClick={toggleTheme} title={t("toggle_theme")}>
         {theme === "light" ? <FaMoon /> : <FaSun />}
       </button>
 
@@ -91,50 +112,35 @@ const DiaryPage = () => {
       </div>
 
       <div className="search_container">
-        <h1>Welcome,</h1>
+        <h1>{t("welcome")}</h1>
+      </div>
+
+      <div className="check">
         <div className="input_wrapper">
           <Input
-            placeholder="Search ..."
+            placeholder={t("search_placeholder")}
             prefix={<SearchOutlined className="icon" />}
             className="search_input"
-            onChange={handleSearch}
+            onChange={handleSearchInput}
           />
         </div>
-      </div>
-      <div className="check">
-        {["Family", "Work", "School", "Friends"].map((type) => (
-          <label key={type} className="checkbox-label">
-            <input
-              type="checkbox"
-              value={type}
-              onChange={handleCheckboxChange}
-              hidden
-            />
-            <span
-              className={form.type.includes(type) ? "checked_span" : ""}
-            >
-              {type} {type === "Family"
-                ? "👨‍👩‍👧‍👦"
-                : type === "Work"
-                  ? "🏢"
-                  : type === "School"
-                    ? "🏫"
-                    : "👥"}
-            </span>
-          </label>
-        ))}
-
-        <div>
+        <div className="filter_by_tag">
+          {tags.map((type) => (
+            <label key={type} className="checkbox-label">
+              <input type="checkbox" value={type} onChange={handleCheckboxChange} hidden />
+              <span className={form.type.includes(type) ? "checked_span" : ""}>
+                {t(type)}
+              </span>
+            </label>
+          ))}
           <select
             name="mood"
             id="mood"
             className="search_mood"
-            onChange={handelSelectChange}
+            onChange={handleSelectChange}
             defaultValue={""}
           >
-            <option value="">
-              Mood
-            </option>
+            <option value="">{t("mood")}</option>
             {emojis.map((emoji, index) => (
               <option key={index} value={index}>
                 {emoji}
@@ -150,15 +156,15 @@ const DiaryPage = () => {
         ) : searchResultsByMood.length > 0 && select !== "" ? (
           searchResultsByMood.map((d) => <Day key={d.id} id={d.id} />)
         ) : select !== "" ? (
-          <h2>No Result</h2>
+          <h2>{t("no_result")}</h2>
         ) : searchResultsByType.length > 0 ? (
           searchResultsByType.map((d) => <Day key={d.id} id={d.id} />)
         ) : form.type.length !== 0 ? (
-          <h2>No Result</h2>
+          <h2>{t("no_result")}</h2>
         ) : diary.length > 0 ? (
           DiaryDays.map((d) => <Day key={d} id={d} />)
         ) : (
-          <h3>Can't Find Any Diary, Try To Add Some</h3>
+          <h3>{t("cant_find")}</h3>
         )}
       </div>
     </div>

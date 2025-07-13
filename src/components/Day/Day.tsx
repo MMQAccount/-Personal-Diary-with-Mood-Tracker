@@ -41,9 +41,9 @@ const Day = ({ id }: IProps) => {
             <div className="diary_notes">
                 <h2 className="title">{todayEntries.map(d => (d.title))} {todayEntries.map(d => (emojis[d.state ?? -1] ?? " "))}</h2>
                 <div className="header_mood_type">
-                    <h4>
-                        {todayEntries.map(d => (d.type ? d.type : "")).join("")}
-                    </h4>
+                    {todayEntries
+                        .flatMap(d => Array.isArray(d.type) ? d.type : d.type ? [d.type] : [])
+                        .join(" | ")}
                     <EditOutlined className="edit_icon" onClick={() => goToEdit(id)} />
                 </div>
             </div>

@@ -10,7 +10,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-06-27").getTime(),
     title: "Family Reunion",
-    type: ["Family"],
+    type: ["Family 👨‍👩‍👧‍👦"],
     state: 0,
     notes: [
       "We had a big *family reunion* at grandma's house. It was:",
@@ -24,7 +24,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-06-28").getTime(),
     title: "Grandma bake",
-    type: ["Family", "School"],
+    type: ["Family 👨‍👩‍👧‍👦", "School 🏫"],
     state: 1,
     notes: ["Note test"],
     voices: [],
@@ -35,7 +35,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-05-29").getTime(),
     title: "Quiet Victory",
-    type: ["Work"],
+    type: ["Work 🏢"],
     state: 4,
     notes: [
       "Finally finished that stubborn article I've been working on. The words just *flowed* today.",
@@ -49,7 +49,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-05-30").getTime(),
     title: "Midterms Stress",
-    type: ["School"],
+    type: ["School 🏫"],
     state: 2,
     notes: [
       "Studying for my midterms is **exhausting**. Notes are everywhere:",
@@ -64,7 +64,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-06-01").getTime(),
     title: "Evening Walk",
-    type: ["School"],
+    type: ["School 🏫"],
     state: 1,
     notes: [
       "Took a long walk as the sun set. The park was calm, birds chirping. I felt a sense of peace:",
@@ -76,7 +76,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-06-02").getTime(),
     title: "Friendsgiving Prep",
-    type: ["Friends"],
+    type: ["Friends 👥"],
     state: 3,
     notes: [
       "Planning a **Friendsgiving** dinner:",
@@ -94,7 +94,7 @@ const initialDiary: Store.IDayDiary[] = [
   {
     id: new Date("2025-06-03").getTime(),
     title: "On Top of the World",
-    type: ["Family"],
+    type: ["Family 👨‍👩‍👧‍👦"],
     state: 4,
     notes: [
       "Everything clicked today — energy, creativity, and happiness!"

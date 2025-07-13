@@ -46,10 +46,11 @@
 }
 
 .reflectly_container {
+  width: 95%;
   text-align: center;
   color: #719b76;
   font-size: x-large;
-  margin-left: -15%;
+  margin-left: -10%;
 }
 
 .greeting {
@@ -165,6 +166,13 @@
 @media screen and (max-width: 1100px) {
   .reflectly_container {
     font-size: large;
-    margin-right: 8%;
+  }
+  .left_div{
+    padding-left: 5%;
   }
 }
+/* @media screen and (max-width: 1100px) {
+  .reflectly_container {
+    margin-left: 5%;
+  }
+} */
