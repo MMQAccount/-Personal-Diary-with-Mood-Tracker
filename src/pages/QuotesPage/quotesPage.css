@@ -1,6 +1,6 @@
 .quotesContainer {
   height: 100vh;
-  width: 100%;
+  width: 100%+50px;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -9,6 +9,7 @@
   scrollbar-width: none;
   cursor: pointer;
   position: relative;
+  margin-left: -50px;
 }
 
 .quotesContainer::-webkit-scrollbar {
@@ -71,9 +72,9 @@
 }
 
 .option.selected {
-  background-color: #796fc1;
+  background-color: #719b76;
   color: white;
-  box-shadow: 0 0 6px rgba(123, 107, 136, 0.8);
+  box-shadow: 0 0 6px rgba(107, 136, 120, 0.8);
 }
 
 hr {
@@ -88,7 +89,14 @@ hr {
   border: none;
   font-size: 25px;
   cursor: pointer;
-  color: #000;
+  color: rgb(133, 131, 131);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transition: 0.3s ease;
+}
+.popupCloseBotton:hover {
+  color: rgb(94, 94, 94);
 }
 
 /* finish pop-up window */
