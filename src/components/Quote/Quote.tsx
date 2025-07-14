@@ -20,16 +20,18 @@ const Quote = (props: IProps) => {
   };
 
   return (
-    <div className="quoteBackground" style={backgroundStyle}>
-      <div className="quoteBlur">
-        <div className="quote">
-          <h2>"{props.quoteData.quote}"</h2>
-          <p>
-            <i>{props.quoteData.author}</i>{" "}
-          </p>
-          <button className="favQuoteButton" onClick={handleFavClick}>
-            {quoteData.isFav ? <HeartFilled /> : <HeartOutlined />}
-          </button>
+    <div className="quoteCard">
+      <div className="quoteBackground" style={backgroundStyle}>
+        <div className="quoteBlur">
+          <div className="quote">
+            <h2>"{props.quoteData.quote}"</h2>
+            <p>
+              <i>{props.quoteData.author}</i>{" "}
+            </p>
+            <button className="favQuoteButton" onClick={handleFavClick}>
+              {quoteData.isFav ? <HeartFilled /> : <HeartOutlined />}
+            </button>
+          </div>
         </div>
       </div>
     </div>
