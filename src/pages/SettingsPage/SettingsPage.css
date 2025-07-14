@@ -1252,3 +1252,48 @@ body[data-theme="dark-yellow"] .error {
     background-color: #719b76;
     border: 2px dashed #f1f1f1;
 }
+
+.mood-customization {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.mood-customization h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.mood-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.mood-row label {
+  width: 80px;
+  font-weight: 500;
+}
+
+.mood-row select {
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  font-size: 1rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.mood-row select:hover {
+  border-color: #007bff;
+}
+
+.mood-preview {
+  font-size: 2.2rem;
+  color: #444;
+}

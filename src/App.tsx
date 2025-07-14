@@ -22,6 +22,10 @@ import DiaryMood from "./components/Forms/DiaryMood/DiaryMood";
 import DiaryImages from "./pages/DiaryDetails/DiaryImages";
 import EditNote from "./pages/DiaryEdit.tsx/EditNote";
 
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
+
 function App() {
   return (
     <UserProvider>
