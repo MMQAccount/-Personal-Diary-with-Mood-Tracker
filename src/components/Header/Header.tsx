@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/dino2.png";
 import diary_logo from "../../assets/diary.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartLine, faFilePen, faGear, faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+
 import "./Header.css";
-import {
-  LineChartOutlined,
-  SettingOutlined,
-  WechatWorkOutlined,
-} from "@ant-design/icons";
+
 
 const Header = () => {
   return (
@@ -19,25 +18,24 @@ const Header = () => {
           className={({ isActive }) => (isActive ? "active" : "")}
           to={`/diaryPage`}
         >
-          <img src={diary_logo} className="navlink" />
+          <FontAwesomeIcon icon={faFilePen} className="navlink" />
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "active" : "")}
           to={`/quotesPage`}
         >
-          <WechatWorkOutlined className="navlink" />
+          <FontAwesomeIcon icon={faQuoteLeft} className="navlink" />
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "active" : "")}
           to={`/statisticsPage`}
         >
-          <LineChartOutlined className="navlink" />
-        </NavLink>
+          <FontAwesomeIcon icon={faChartLine} className="navlink" />        </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "active" : "")}
           to={`/settings`}
         >
-          <SettingOutlined className="navlink" />
+          <FontAwesomeIcon icon={faGear} className="navlink" />
         </NavLink>
       </nav>
     </header>
