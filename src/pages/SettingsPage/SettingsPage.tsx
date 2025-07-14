@@ -2,7 +2,28 @@ import { useState } from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faSave, faEdit, } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGrinStars,
+  faGrinHearts,
+  faSmile,
+  faFrown,
+  faMeh,
+  faSadTear,
+  faSadCry,
+  faTired,
+  faAngry,
+  faSmileBeam,
+  faLaugh,
+  faLaughBeam,
+  faMehBlank,
+  faFaceRollingEyes,
+  faGrinWink,
+  faFaceGrinWide,
+  faGrimace,
+  faDizzy
+} from "@fortawesome/free-regular-svg-icons";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 type Theme = "light" | "dark";
 
@@ -40,6 +61,31 @@ const SettingsPage = () => {
   const [email, setEmail] = useState<string>("237510@ppu.edu.ps");
   const [password, setPassword] = useState<string>("Mariam@123456789");
 
+  const availableMoodIcons: Record<string, IconDefinition[]> = {
+    Delighted: [faGrinStars, faLaughBeam, faGrinHearts],
+    Happy: [faSmileBeam, faLaugh, faGrinWink, faFaceGrinWide],
+    Neutral: [faMeh, faMehBlank, faSmile],
+    Sad: [faSadTear, faTired, faFrown],
+    Miserable: [faAngry, faSadCry, faFaceRollingEyes, faGrimace, faDizzy],
+  };
+
+  const [moodIcons, setMoodIcons] = useState<Record<string, IconDefinition>>({
+    Delighted: faGrinHearts,
+    Happy: faSmileBeam,
+    Neutral: faSmile,
+    Sad: faFrown,
+    Miserable: faSadCry,
+  });
+
+  const handleMoodChange = (mood: string, newIconName: string) => {
+    const icon = availableMoodIcons[mood].find(
+      (icon) => icon.iconName === newIconName
+    );
+    if (icon) {
+      setMoodIcons((prev) => ({ ...prev, [mood]: icon }));
+    }
+  };
+
   const handleSave = (): void => {
     alert("✅ Saved! (Just fake for now Hhh)");
   };
@@ -67,9 +113,8 @@ const SettingsPage = () => {
             return (
               <button
                 key={color.name}
-                className={`color-btn ${isSelected ? "selected" : ""} ${
-                  isDefault ? "default-color" : ""
-                }`}
+                className={`color-btn ${isSelected ? "selected" : ""} ${isDefault ? "default-color" : ""
+                  }`}
                 title={color.name}
                 style={!isDefault ? { backgroundColor } : undefined}
                 onClick={() => setSelectedColor(isDefault ? "" : color.name)}
@@ -144,6 +189,27 @@ const SettingsPage = () => {
               <FontAwesomeIcon icon={faEdit} />
             </button>
           </div>
+        </div>
+
+        {/* Mood Customization Section */}
+        <div className="mood-customization">
+          <h3>Customize Mood Icons</h3>
+          {Object.entries(availableMoodIcons).map(([mood, icons]) => (
+            <div key={mood} className="mood-row">
+              <label>{mood}:</label>
+              <select
+                value={moodIcons[mood]?.iconName}
+                onChange={(e) => handleMoodChange(mood, e.target.value)}
+              >
+                {icons.map((icon) => (
+                  <option key={icon.iconName} value={icon.iconName}>
+                    {icon.iconName}
+                  </option>
+                ))}
+              </select>
+              <FontAwesomeIcon icon={moodIcons[mood]} className="mood-preview" />
+            </div>
+          ))}
         </div>
 
         <button className="save-btn" onClick={handleSave}>
