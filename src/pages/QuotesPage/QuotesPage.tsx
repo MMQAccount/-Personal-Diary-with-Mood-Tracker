@@ -55,6 +55,7 @@ const QuotesPage = () => {
   const [theme, setTheme] = useState<"nature" | "solid">("nature");
   const [quoteFilter, setQuoteFilter] = useState<"all" | "fav">("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [fullScreen, setFullScreen] = useState(false);
 
   const filteredQuotes =
     quoteFilter === "fav" ? quotes.filter((quote) => quote.isFav) : quotes;
@@ -169,6 +170,8 @@ const QuotesPage = () => {
               quoteData={quote}
               onToggleFav={toggleFavorite}
               theme={theme}
+              fullScreen={fullScreen}
+              onToggleFullScreen={() => setFullScreen((prev) => !prev)}
             />
           ))
         ) : (
