@@ -9,7 +9,6 @@
   scrollbar-width: none;
   cursor: pointer;
   position: relative;
-  margin-left: -50px;
 }
 
 .quotesContainer::-webkit-scrollbar {
