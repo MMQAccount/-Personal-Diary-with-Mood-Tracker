@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faEdit, } from "@fortawesome/free-solid-svg-icons";
+
 import {
   faGrinStars,
   faGrinHearts,
@@ -24,6 +25,7 @@ import {
   faDizzy
 } from "@fortawesome/free-regular-svg-icons";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { TagsContext } from "../../providers/tag-providor";
 
 type Theme = "light" | "dark";
 
@@ -46,7 +48,10 @@ const colorOptions: ColorOption[] = [
   { name: "Purple", light: "#9b59b6", dark: "#2c145a" },
 ];
 
+
 const SettingsPage = () => {
+  const { tags, updateTags } = useContext(TagsContext);
+
   const {
     theme,
     toggleTheme,
@@ -85,6 +90,11 @@ const SettingsPage = () => {
       setMoodIcons((prev) => ({ ...prev, [mood]: icon }));
     }
   };
+
+  const handleTagChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    updateTags(index, e.target.value);
+  };
+
 
   const handleSave = (): void => {
     alert("✅ Saved! (Just fake for now Hhh)");
@@ -209,6 +219,17 @@ const SettingsPage = () => {
               </select>
               <FontAwesomeIcon icon={moodIcons[mood]} className="mood-preview" />
             </div>
+          ))}
+        </div>
+        <div className="mood-customization">
+          <h3>Customize Tag Icons</h3>
+          {tags.map((t, index) => (
+            <input
+              key={index}
+              type="text"
+              defaultValue={t}
+              onChange={(e) => handleTagChange(index, e)}
+            />
           ))}
         </div>
 

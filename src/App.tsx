@@ -24,6 +24,7 @@ import EditNote from "./pages/DiaryEdit.tsx/EditNote";
 
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import TagProvider from "./providers/tag-providor";
 config.autoAddCss = false;
 
 function App() {
@@ -31,32 +32,34 @@ function App() {
     <UserProvider>
       <ThemeProvider>
         <BrowserRouter>
-          <DiaryProvider>
-            <Header />
-            <Routes>
-              <Route path={`/`} element={<HomePage />} />
-              <Route path="/diaryPage" element={<DiaryPage />} />
-              <Route path="/diaryForm" element={<DiaryForm />} />
-              <Route path="/diaryVoice" element={<DiaryVoice />} />
-              <Route path="/diaryImage" element={<DiaryImage />} />
-              <Route path="/diaryMood" element={<DiaryMood />} />
-              <Route path="/dispalyDiary/:id" element={<DiaryDetailsPage />} />
-              <Route path="/DiaryImages/:id" element={<DiaryImages />} />
-              <Route path="/EditNote/:day/:noteId" element={<EditNote />} />
-              <Route path="/EditDay/:id" element={<DiaryEditPage />} />
-              <Route path="/DiaryEditPage/:id" element={<DiaryEditPage />} />
-              <Route path={`/quotesPage`} element={<QuotesPage />} />
-              <Route element={<Layout />}>
-                <Route path={`/statisticsPage`} element={<StatisticsPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/settings" element={<SettingsPage />} />
-              </Route>
-            </Routes>
-          </DiaryProvider>
+          <TagProvider>
+            <DiaryProvider>
+              <Header />
+              <Routes>
+                <Route path={`/`} element={<HomePage />} />
+                <Route path="/diaryPage" element={<DiaryPage />} />
+                <Route path="/diaryForm" element={<DiaryForm />} />
+                <Route path="/diaryVoice" element={<DiaryVoice />} />
+                <Route path="/diaryImage" element={<DiaryImage />} />
+                <Route path="/diaryMood" element={<DiaryMood />} />
+                <Route path="/dispalyDiary/:id" element={<DiaryDetailsPage />} />
+                <Route path="/DiaryImages/:id" element={<DiaryImages />} />
+                <Route path="/EditNote/:day/:noteId" element={<EditNote />} />
+                <Route path="/EditDay/:id" element={<DiaryEditPage />} />
+                <Route path="/DiaryEditPage/:id" element={<DiaryEditPage />} />
+                <Route path={`/quotesPage`} element={<QuotesPage />} />
+                <Route element={<Layout />}>
+                  <Route path={`/statisticsPage`} element={<StatisticsPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignupPage />} />
+                  <Route path="/settings" element={<SettingsPage />} />
+                </Route>
+              </Routes>
+            </DiaryProvider>
+          </TagProvider>
         </BrowserRouter>
       </ThemeProvider>
-    </UserProvider>
+    </UserProvider >
   );
 }
 

@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { DiaryContext } from "../../providers/diary-provider";
+import { TagsContext } from "../../providers/tag-providor";
 
 type IParams = { id: string };
 
@@ -63,7 +64,7 @@ const DiaryEditPage = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
-    const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
+  const { tags } = useContext(TagsContext);
 
     return (
         <div className="editForm">

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "../DiaryForm/DiaryForm.css";
 import { useNavigate } from "react-router";
+import { TagsContext } from "../../../providers/tag-providor";
 
 const DiaryMood = () => {
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
@@ -78,7 +79,7 @@ const DiaryMood = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
-  const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
+  const { tags } = useContext(TagsContext);
 
     return (
         <div className="form-wrapper">

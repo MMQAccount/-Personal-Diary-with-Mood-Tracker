@@ -13,7 +13,7 @@ import useSearchByMood from "../../hooks/useSearchByMood.hook";
 import { useTheme } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
 import i18n from '../../i18n';
-
+import { TagsContext } from "../../providers/tag-providor";
 interface ISearchForm {
   type: string[];
 }
@@ -31,6 +31,7 @@ const DiaryPage = () => {
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
   const [form, setForm] = useState<ISearchForm>({ type: [] });
   const [select, setSelected] = useState("");
+  const { tags } = useContext(TagsContext);
 
   useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
@@ -53,7 +54,6 @@ const DiaryPage = () => {
     { label: t("mood_option"), value: "mood" },
   ];
 
-  const tags = ["Family 👨‍👩‍👧‍👦", "Work 🏢", "School 🏫", "Friends 👥"];
   const handleChangeInput = (value: string) => {
     if (value === "input") navigate("/diaryForm");
     else if (value === "voice") navigate("/diaryVoice");
@@ -125,7 +125,7 @@ const DiaryPage = () => {
           />
         </div>
         <div className="filter_by_tag">
-          {tags.map((type) => (
+          {tags.map((type: string) => (
             <label key={type} className="checkbox-label">
               <input type="checkbox" value={type} onChange={handleCheckboxChange} hidden />
               <span className={form.type.includes(type) ? "checked_span" : ""}>

@@ -1,5 +1,6 @@
 import { createContext, type ReactNode, useState } from "react";
 
+
 interface IDiaryContext {
   diary: Store.IDayDiary[];
   addToDiary: (item: Store.IDayDiary) => void;
@@ -116,10 +117,10 @@ const diaryProvider = ({ children }: { children: ReactNode }) => {
     setDiary((prev) => [...prev, item]);
   }
   const updateDiary = (id: number, item: Store.IDayDiary) => {
-  setDiary((prev) =>
-    prev.map((d) => (d.id === id ? { ...d, ...item } : d))
-  );
-};
+    setDiary((prev) =>
+      prev.map((d) => (d.id === id ? { ...d, ...item } : d))
+    );
+  };
 
   return <DiaryContext.Provider value={{ diary, addToDiary, updateDiary }}>{children}</DiaryContext.Provider>
 }
