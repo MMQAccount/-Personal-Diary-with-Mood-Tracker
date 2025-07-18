@@ -12,14 +12,14 @@ import useSearchType from "../../hooks/useSearchType.hook";
 import useSearchByMood from "../../hooks/useSearchByMood.hook";
 import { useTheme } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
-import i18n from '../../i18n';
 import { TagsContext } from "../../providers/tag-providor";
+
 interface ISearchForm {
   type: string[];
 }
 
 const DiaryPage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation("diary");
   const { theme, toggleTheme } = useTheme();
   const emojis = ["😭", "🙁", "😐", "☺️", "😁"];
   const { DiaryDays } = useDays();
@@ -34,6 +34,10 @@ const DiaryPage = () => {
   const { tags } = useContext(TagsContext);
 
   useEffect(() => {
+    document.body.classList.toggle("rtl", i18n.language === "ar");
+  }, [i18n.language]);
+
+  useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
 
     const onLangChanged = (lng: string) => {
@@ -41,10 +45,7 @@ const DiaryPage = () => {
     };
 
     i18n.on("languageChanged", onLangChanged);
-
-    return () => {
-      i18n.off("languageChanged", onLangChanged);
-    };
+    return () => i18n.off("languageChanged", onLangChanged);
   }, []);
 
   const options = [
@@ -96,23 +97,24 @@ const DiaryPage = () => {
         {theme === "light" ? <FaMoon /> : <FaSun />}
       </button>
 
-      <div className="diary_type">
-        <div className="select-header" onClick={() => setOpen(!open)}>
-          <PlusOutlined />
-        </div>
-        {open && (
-          <ul className="select-options">
-            {options.map((opt) => (
-              <li key={opt.value} onClick={() => handleSelect(opt.value)}>
-                {opt.label}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
       <div className="search_container">
         <h1>{t("welcome")}</h1>
+
+        <div className="diary_type">
+          <div className="select-header" onClick={() => setOpen(!open)}>
+            <PlusOutlined />
+          </div>
+
+          {open && (
+            <ul className="select-options">
+              {options.map((opt) => (
+                <li key={opt.value} onClick={() => handleSelect(opt.value)}>
+                  {opt.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
 
       <div className="check">
@@ -124,6 +126,7 @@ const DiaryPage = () => {
             onChange={handleSearchInput}
           />
         </div>
+
         <div className="filter_by_tag">
           {tags.map((type: string) => (
             <label key={type} className="checkbox-label">
@@ -133,6 +136,7 @@ const DiaryPage = () => {
               </span>
             </label>
           ))}
+
           <select
             name="mood"
             id="mood"
@@ -149,7 +153,6 @@ const DiaryPage = () => {
           </select>
         </div>
       </div>
-
       <div className="diarys">
         {searchResults.length > 0 ? (
           searchResults.map((d) => <Day key={d.id} id={d.id} />)

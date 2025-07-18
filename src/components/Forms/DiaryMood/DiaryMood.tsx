@@ -3,18 +3,20 @@ import { DiaryContext } from "../../../providers/diary-provider";
 import "../DiaryForm/DiaryForm.css";
 import { useNavigate } from "react-router";
 import { TagsContext } from "../../../providers/tag-providor";
+import { useTranslation } from "react-i18next";
 
 const DiaryMood = () => {
+    const { t } = useTranslation("diary");
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
 
     const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
     const stateTexts = [
-        "REALLY TERRIBLE",
-        "SOMEWHAT BAD",
-        "COMPLETELY OKAY",
-        "PRETTY GOOD",
-        "SUPER AWESOME",
+        t("reallyTerrible"),
+        t("somewhatBad"),
+        t("completelyOkay"),
+        t("prettyGood"),
+        t("superAwesome"),
     ];
 
     const [moodValue, setMoodValue] = useState(2);
@@ -79,7 +81,8 @@ const DiaryMood = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
-  const { tags } = useContext(TagsContext);
+
+    const { tags } = useContext(TagsContext);
 
     return (
         <div className="form-wrapper">
@@ -105,16 +108,22 @@ const DiaryMood = () => {
 
                 <div className="check">
                     {tags.map(m => (
-                        <label className="checkbox-label">
+                        <label key={m} className="checkbox-label">
                             <input type="checkbox" value={m} onChange={handleCheckboxChange} />
                             <span className={form.type.includes(m) ? "checked_span" : ""}>
-                                {m}
+                                {t(m)}
                             </span>
-                        </label> ))
-                    }
+                        </label>
+                    ))}
                 </div>
-                <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
-                <input type="submit" value="Submit" />
+                <input
+                    type="text"
+                    placeholder={t("titlePlaceholder")}
+                    name="title"
+                    value={form.title}
+                    onChange={handleFormChange}
+                />
+                <input type="submit" value={t("submit")} />
             </form>
         </div>
     );

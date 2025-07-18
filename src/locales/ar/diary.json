@@ -1,0 +1,31 @@
+{
+    "toggle_theme": "تغيير النمط",
+    "mood_option": "مزاج",
+    "welcome": "مرحبًا بك في يومياتك",
+    "search_placeholder": "ابحث بالعنوان أو المحتوى...",
+    "mood": "المزاج",
+    "toggleLang": "English",
+    "no_result": "لم يتم العثور على نتائج.",
+    "cant_find": "لا توجد أي مذكرات بعد.",
+    "input": "نص",
+    "voice": "صوت",
+    "image": "صورة",
+    "add_notes_placeholder": "أضف بعض الملاحظات...",
+    "submit_button": "إرسال",
+    "imageUrlPlaceholder": "رابط الصورة...",
+    "submit": "إرسال",
+    "status_recording": "🟢 جاري التسجيل",
+    "status_not_recording": "🔴 غير مسجل",
+    "playback": "تشغيل",
+    "start_recording": "ابدأ التسجيل",
+    "stop_recording": "أوقف التسجيل",
+    "reallyTerrible": "سيء جدًا",
+    "somewhatBad": "سيء إلى حد ما",
+    "completelyOkay": "على ما يرام تمامًا",
+    "prettyGood": "جيد جدًا",
+    "superAwesome": "رائع جدًا",
+    "titlePlaceholder": "العنوان...",
+    "loadingDiary": "جارٍ تحميل المذكرة...",
+    "save_button": "حفظ",
+    "photos_title": "الصور 🖼️"
+}

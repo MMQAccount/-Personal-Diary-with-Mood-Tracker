@@ -2,16 +2,24 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { DiaryContext } from "../../providers/diary-provider";
 import { TagsContext } from "../../providers/tag-providor";
+import { useTranslation } from "react-i18next";
 
 type IParams = { id: string };
 
 const DiaryEditPage = () => {
+    const { t } = useTranslation("diary");
     const { diary, updateDiary } = useContext(DiaryContext);
     const params = useParams() as IParams;
     const navigate = useNavigate();
 
     const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
-    const stateLabels = ["REALLY TERRIBLE", "SOMEWHAT BAD", "COMPLETELY OKAY", "PRETTY GOOD", "SUPER AWESOME"];
+    const stateLabels = [
+      t("reallyTerrible"),
+      t("somewhatBad"),
+      t("completelyOkay"),
+      t("prettyGood"),
+      t("superAwesome")
+    ];
 
     const INITIAL_FORM: Store.IDiaryMood = { title: '', type: [], state: 2 };
     const [form, setForm] = useState<Store.IMoodForm>(INITIAL_FORM);
@@ -39,7 +47,6 @@ const DiaryEditPage = () => {
         setForm({ ...form, [e.target.name]: value });
     };
 
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!diaryEx) return;
@@ -54,7 +61,8 @@ const DiaryEditPage = () => {
         navigate("/diaryPage");
     };
 
-    if (!diaryEx) return <h2>Loading diary entry...</h2>;
+    if (!diaryEx) return <h2>{t("loadingDiary") || "Loading diary entry..."}</h2>;
+
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, checked } = e.target;
         setForm(prevForm => {
@@ -64,7 +72,8 @@ const DiaryEditPage = () => {
             return { ...prevForm, type: updatedTypes };
         });
     };
-  const { tags } = useContext(TagsContext);
+
+    const { tags } = useContext(TagsContext);
 
     return (
         <div className="editForm">
@@ -89,17 +98,23 @@ const DiaryEditPage = () => {
                 <div className='diary_data'>
                     <div className="check">
                         {tags.map(m => (
-                            <label className="checkbox-label">
+                            <label key={m} className="checkbox-label">
                                 <input type="checkbox" value={m} onChange={handleCheckboxChange} />
                                 <span className={form.type.includes(m) ? "checked_span" : ""}>
-                                    {m}
+                                    {t(m)}
                                 </span>
                             </label>))
                         }
                     </div>
                     <br />
-                    <input type="text" placeholder='Title...' name='title' value={form.title} onChange={handleFormChange} />
-                    <input type="submit" value="Submit" />
+                    <input
+                        type="text"
+                        placeholder={t("titlePlaceholder")}
+                        name='title'
+                        value={form.title}
+                        onChange={handleFormChange}
+                    />
+                    <input type="submit" value={t("submit")} />
                 </div>
             </form>
         </div>

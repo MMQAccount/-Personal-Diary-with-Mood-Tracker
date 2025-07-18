@@ -26,9 +26,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  useEffect(() => {
-    document.body.classList.toggle("rtl", i18n.language === "ar");
-  }, [i18n.language]);
+
 
   const onSubmit = (data: FormValues) => {
     if (

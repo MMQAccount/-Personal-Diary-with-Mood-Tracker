@@ -4,9 +4,12 @@ import { DiaryContext } from "../../providers/diary-provider";
 import ReactMarkdown from "react-markdown";
 import { DeleteOutlined } from "@ant-design/icons";
 import './EditPages.css';
+import { useTranslation } from "react-i18next";
+
 type IParams = { day: string; noteId: string };
 
 const EditNote = () => {
+    const { t } = useTranslation("diary");
     const { diary, updateDiary } = useContext(DiaryContext);
     const { day, noteId } = useParams<IParams>();
     const navigate = useNavigate();
@@ -61,7 +64,7 @@ const EditNote = () => {
         navigate("/diaryPage");
     };
 
-    if (!diaryEx) return <h2>Loading diary entry...</h2>;
+    if (!diaryEx) return <h2>{t("loadingDiary") || "Loading diary entry..."}</h2>;
 
     return (
         <div className="editForm">
@@ -72,9 +75,10 @@ const EditNote = () => {
                     onChange={handleFormChange}
                     rows={10}
                     cols={50}
+                    placeholder={t("add_notes_placeholder")}
                 />
                 <div className="btns">
-                    <button type="submit">Save</button>
+                    <button type="submit">{t("save_button") || "Save"}</button>
                     <DeleteOutlined className="del_icon" onClick={handleDelete} />
                 </div>
             </form>

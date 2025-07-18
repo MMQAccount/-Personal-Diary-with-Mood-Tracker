@@ -2,8 +2,10 @@ import React, { useContext, useState } from 'react';
 import '../DiaryForm/DiaryForm.css';
 import { DiaryContext } from '../../../providers/diary-provider';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const DiaryImage = () => {
+    const { t } = useTranslation("diary");
     const INITIAL_FORM: Store.IImageForm = { image: '' };
     const [form, setForm] = useState<Store.IImageForm>(INITIAL_FORM);
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
@@ -55,12 +57,12 @@ const DiaryImage = () => {
                     <input
                         type="text"
                         name='image'
-                        placeholder='Image url...'
+                        placeholder={t("imageUrlPlaceholder")}
                         value={form.image}
                         onChange={handleFormChange}
                         required
                     />
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value={t("submit")} />
                 </div>
             </form>
         </div>

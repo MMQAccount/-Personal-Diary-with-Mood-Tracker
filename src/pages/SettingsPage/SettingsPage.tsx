@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useTransition } from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +26,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { TagsContext } from "../../providers/tag-providor";
+import { useTranslation } from "react-i18next";
 
 type Theme = "light" | "dark";
 
@@ -51,7 +52,7 @@ const colorOptions: ColorOption[] = [
 
 const SettingsPage = () => {
   const { tags, updateTags } = useContext(TagsContext);
-
+  const { t, i18n } = useTranslation("diary");
   const {
     theme,
     toggleTheme,
@@ -100,6 +101,10 @@ const SettingsPage = () => {
     alert("✅ Saved! (Just fake for now Hhh)");
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "en" ? "ar" : "en";
+    i18n.changeLanguage(newLang);
+  };
   return (
     <div className="settings-page">
       <h2 className="settings-title">Settings</h2>
@@ -108,7 +113,6 @@ const SettingsPage = () => {
         <button className="theme-toggle" onClick={toggleTheme}>
           {theme === "light" ? "Dark Mode" : "Light Mode"}
         </button>
-
         <p className="color-label">Choose a primary theme color:</p>
         <div className="color-options">
           {colorOptions.map((color: ColorOption) => {
@@ -200,7 +204,9 @@ const SettingsPage = () => {
             </button>
           </div>
         </div>
-
+        <button className="lang" onClick={toggleLanguage}>
+          {t("toggleLang")}
+        </button>
         {/* Mood Customization Section */}
         <div className="mood-customization">
           <h3>Customize Mood Icons</h3>

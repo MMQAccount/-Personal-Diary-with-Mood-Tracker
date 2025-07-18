@@ -5,7 +5,9 @@
     color: #c2c9d4;
     direction: inherit;
 }
-
+html[dir="rtl"] .diary_container{
+    padding-right: 3%;
+} 
 .diary_type {
     outline: none;
     position: absolute;
@@ -124,10 +126,6 @@ html[dir="rtl"] .select-options {
     flex-direction: row;
     gap: 2%;
     align-items: center;
-}
-
-html[dir="rtl"] .check {
-    flex-direction: row-reverse;
 }
 
 .checkbox-label {

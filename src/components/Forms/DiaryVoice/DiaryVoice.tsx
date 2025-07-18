@@ -3,8 +3,10 @@ import '../DiaryForm/DiaryForm.css';
 import { DiaryContext } from "../../../providers/diary-provider";
 import { useNavigate } from "react-router-dom";
 import { useReactMediaRecorder } from "react-media-recorder";
+import { useTranslation } from "react-i18next";
 
 const DiaryVoice = () => {
+    const { t } = useTranslation("diary");
     const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
@@ -16,7 +18,6 @@ const DiaryVoice = () => {
             setForm(prev => ({ ...prev, voice: mediaBlobUrl }));
         }
     }, [mediaBlobUrl]);
-
 
     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -62,24 +63,26 @@ const DiaryVoice = () => {
                 <div className='diary_data'>
                     <div className="record_buttons">
                         {status === "recording" ? (
-                            <button type="button" onClick={() => {
-                                stopRecording();
-                            }}>Stop Recording</button>
+                            <button type="button" onClick={() => stopRecording()}>
+                                {t("stop_recording")}
+                            </button>
                         ) : (
-                            <button type="button" onClick={() => {
-                                startRecording();
-                            }}>Start Recording</button>
+                            <button type="button" onClick={() => startRecording()}>
+                                {t("start_recording")}
+                            </button>
                         )}
-                        <span>Status: {status === "recording" ? "🟢 Recording" : "🔴 Not Recording"}</span>
+                        <span>
+                            {status === "recording" ? t("status_recording") : t("status_not_recording")}
+                        </span>
                     </div>
 
                     {mediaBlobUrl && (
                         <div>
-                            <h4>Playback:</h4>
+                            <h4>{t("playback")}</h4>
                             <audio src={mediaBlobUrl} controls />
                         </div>
                     )}
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value={t("submit")} />
                 </div>
             </form>
         </div>
