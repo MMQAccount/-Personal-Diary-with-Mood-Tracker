@@ -5,6 +5,9 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./SignupPage.css";
+import { signup } from "../../services/authService";
+import { toast, ToastContainer } from "react-toastify";
+
 
 interface FormValues {
   name: string;
@@ -33,11 +36,26 @@ const SignupPage = () => {
     document.body.classList.toggle("rtl", i18n.language === "ar");
   }, [i18n.language]);
 
-  const onSubmit = (data: FormValues) => {
-    console.log("Form submitted:", data);
-    alert(t("success"));
-    reset();
-  };
+const onSubmit = async (data: FormValues) => {
+  const { name, email, password, avatar } = data;  
+  console.log("Data being sent:", { name, email, password, imageURL: avatar });
+
+  try {
+  await signup({ name, email, password, imageURL: avatar }); 
+  toast.success(t("success")); 
+  reset();
+  
+  setTimeout(() => {
+    window.location.href = "/login";
+  }, 2000); 
+} catch (error: any) {
+
+  const message =
+  error?.response?.data?.message ||
+  error?.message || "Signup failed. Please try again.";
+  toast.error(message);
+}
+};
 
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === "en" ? "ar" : "en");
@@ -75,8 +93,7 @@ const SignupPage = () => {
             placeholder={t("avatarUrl")}
             {...register("avatar", {
               pattern: {
-                value:
-                  /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp|ico))/i,
+                value: /^https?:\/\/.+/i,
                 message: t("invalidAvatarUrl"),
               },
             })}
@@ -163,6 +180,18 @@ const SignupPage = () => {
             {t("login")}
           </Link>
         </p>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={i18n.language === "ar"}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     </div>
   );

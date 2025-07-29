@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../utils/UserContext";
 import "./LoginPage.css";
+import { login as loginRequest  } from "../../services/authService";
+import { toast, ToastContainer } from "react-toastify";
 
 interface FormValues {
   email: string;
@@ -27,22 +29,24 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
 
-
-  const onSubmit = (data: FormValues) => {
-    if (
-      data.email === "237510@ppu.edu.ps" &&
-      data.password === "Mariam@123456789"
-    ) {
-      login({
-        name: "Mariam",
-        avatar: "https://i.pravatar.cc/150?u=mariam",
+const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await loginRequest({
         email: data.email,
+        password: data.password,
       });
+
+      console.log("Logged in user response:", response);
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("userId", response.data._id);
+
+      login(response.data);
       reset();
       navigate("/");
-    } else {
-      alert(t("incorrectAlert"));
-      reset();
+    } catch (error: any) {
+      console.error("Login error:", error);
+      toast.error(error.message || t("loginFailed"));
     }
   };
 
@@ -118,6 +122,18 @@ const LoginPage = () => {
             {t("signUp")}
           </Link>
         </p>
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={i18n.language === "ar"}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
     </div>
   );

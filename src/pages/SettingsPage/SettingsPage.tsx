@@ -1,8 +1,13 @@
-import { useContext, useState, useTransition } from "react";
+import { useEffect,useContext, useState} from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faEdit, } from "@fortawesome/free-solid-svg-icons";
+import { updateUser } from "../../services/userService";
+import { getUserById } from "../../services/userService";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 import {
   faGrinStars,
@@ -60,12 +65,44 @@ const SettingsPage = () => {
     setSelectedColor,
   }: ThemeContextType = useTheme();
 
-  const [name, setName] = useState<string>("Mariam");
-  const [avatar, setAvatar] = useState<string>(
-    "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
-  );
-  const [email, setEmail] = useState<string>("237510@ppu.edu.ps");
-  const [password, setPassword] = useState<string>("Mariam@123456789");
+const [name, setName] = useState<string>("");
+const [avatar, setAvatar] = useState<string>("");
+const [email, setEmail] = useState<string>("");
+const [password, setPassword] = useState<string>(""); 
+const [currentPassword, setCurrentPassword] = useState<string>("");
+
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      if (!userId || !token) {
+        toast.error("User not authenticated. Please login again.");
+        return;
+      }
+
+      const data = await getUserById(userId, token);
+      console.log("User data from API:", data);
+
+      setName(data.data.name || "");
+      setEmail(data.data.email || "");
+      setAvatar(
+        data.data.imageURL ||
+          "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
+      );
+
+      setPassword("");
+    } catch (error: any) {
+      toast.error(`Failed to load user data: ${error.message}`, {
+  toastId: "loadUserError",
+});
+
+    }
+  };
+
+  fetchUserData();
+}, []);
 
   const availableMoodIcons: Record<string, IconDefinition[]> = {
     Delighted: [faGrinStars, faLaughBeam, faGrinHearts],
@@ -97,9 +134,33 @@ const SettingsPage = () => {
   };
 
 
-  const handleSave = (): void => {
-    alert("✅ Saved! (Just fake for now Hhh)");
-  };
+const handleSave = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    if (!userId || !token) {
+      toast.error("User not authenticated. Please login again.");
+      return;
+    }
+
+    const updatedData: any = { name, email, imageURL: avatar };
+
+    if (password) {
+      if (!currentPassword) {
+        toast.error("Please enter your current password to change the password.");
+        return;
+      }
+      updatedData.password = password;
+      updatedData.currentPassword = currentPassword;
+    }
+
+    await updateUser(userId!, updatedData);
+    toast.success("User updated successfully!");
+  } catch (error: any) {
+    toast.error(`Error: ${error.message}`);
+  }
+};
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
@@ -159,6 +220,20 @@ const SettingsPage = () => {
             </button>
           </div>
         </div>
+          <div className="input-group">
+  <label>Current Password</label>
+  <div className="input-edit-wrapper">
+    <input
+      type="password"
+      value={currentPassword}
+      onChange={(e) => setCurrentPassword(e.target.value)}
+      placeholder="Current Password"
+    />
+    <button className="edit-btn" title="Edit">
+      <FontAwesomeIcon icon={faEdit} />
+    </button>
+  </div>
+</div>
 
         <div className="input-group">
           <label>Full Name</label>
@@ -243,6 +318,16 @@ const SettingsPage = () => {
           <FontAwesomeIcon icon={faSave} className="save-icon" />
           Save Changes
         </button>
+    <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        rtl={i18n.language === "ar"}
+        theme="colored"
+    />
       </div>
     </div>
   );
