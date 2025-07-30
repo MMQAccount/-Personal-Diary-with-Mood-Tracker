@@ -59,3 +59,11 @@ interface IDiary {
   images?: string[];
   notes?: string[];
 }
+
+interface ITag {
+  _id: string;
+  name: string;
+  emoji: string;
+  type: "global" | "custom";
+  user?: string;
+}
