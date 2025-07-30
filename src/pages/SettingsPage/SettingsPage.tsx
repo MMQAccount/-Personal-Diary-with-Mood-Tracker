@@ -3,8 +3,8 @@ import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faEdit, } from "@fortawesome/free-solid-svg-icons";
-import { updateUser } from "../../services/userService";
-import { getUserById } from "../../services/userService";
+import { updateUser } from "../../services/user.service";
+import { getUserById } from "../../services/user.service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

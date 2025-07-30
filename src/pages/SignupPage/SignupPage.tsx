@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./SignupPage.css";
-import { signup } from "../../services/authService";
+import { signup } from "../../services/auth.service";
 import { toast, ToastContainer } from "react-toastify";
 
 

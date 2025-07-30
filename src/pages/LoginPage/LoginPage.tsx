@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../utils/UserContext";
 import "./LoginPage.css";
-import { login as loginRequest  } from "../../services/authService";
+import { login as loginRequest  } from "../../services/auth.service";
 import { toast, ToastContainer } from "react-toastify";
 
 interface FormValues {
