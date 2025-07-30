@@ -47,3 +47,15 @@ declare namespace Store {
     type: string[];
   }
 }
+
+interface IDiary {
+  _id: string;
+  date: Date;
+  title?: string;
+  user: string;
+  tags?: string[];
+  mood?: number;
+  audios?: string[];
+  images?: string[];
+  notes?: string[];
+}
