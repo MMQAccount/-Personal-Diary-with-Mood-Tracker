@@ -47,11 +47,16 @@ const getMonthData = (entries: Array<{ date: string; mood: string }>, year: numb
     );
 };
 
-const getWeekDaysData = (entries: Array<{ date: string; mood: string }>, weekStart: Date,map: Record<string, IMood>) =>
+const getWeekDaysData = (entries: Array<{ date: string; mood: string }>, weekStart: Date, map: Record<string, IMood>) =>
     dayLabels.map((lbl, i) => {
         const day = addDays(weekStart, i);
         const iso = day.toISOString().slice(0, 10);
-        const sameDay = entries.filter(e => e.date === iso);
+        // const sameDay = entries.filter(e => e.date === iso);
+        const sameDay = entries.filter(e => {
+            const entryDate = new Date(e.date).toISOString().slice(0, 10);
+            return entryDate === iso;
+        });
+
 
         const avg = sameDay.reduce((a, b) => a + (map[b.mood]?.score ?? 0), 0) / (sameDay.length || 1);
 

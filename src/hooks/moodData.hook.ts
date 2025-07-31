@@ -7,10 +7,10 @@ import {
 } from "../utils/dateHelpers";
 import { moodMap } from "../constants/moodMap";
 
-interface IMoodEntry {
+export interface IMoodEntry {
   date: string | Date;
   mood: string;
-  type: string;
+  tags: string[];
 }
 
 interface IProps {
@@ -19,7 +19,11 @@ interface IProps {
   weekStart: Date;
 }
 
-const useMoodData = (entries: IMoodEntry[], viewMode: "weekly" | "monthly" | "yearly", moodData: IProps) => {
+const useMoodData = (
+  entries: IMoodEntry[],
+  viewMode: "weekly" | "monthly" | "yearly",
+  moodData: IProps
+) => {
   const { selectedYear, selectedMonth, weekStart } = moodData;
 
   const lineData = useMemo(() => {
@@ -50,12 +54,16 @@ const useMoodData = (entries: IMoodEntry[], viewMode: "weekly" | "monthly" | "ye
     return entries.filter(({ date }) => {
       const d = new Date(date);
       if (viewMode === "weekly") {
-        return d.getTime() >= addDays(weekStart, -1).getTime() && d.getTime() <= addDays(weekStart, 6).getTime();
+        return (
+          d.getTime() >= addDays(weekStart, -1).getTime() &&
+          d.getTime() <= addDays(weekStart, 6).getTime()
+        );
       }
 
       if (viewMode === "monthly") {
         return (
-          d.getFullYear() === selectedYear && d.getMonth() === selectedMonth
+          d.getFullYear() === selectedYear &&
+          d.getMonth() === selectedMonth
         );
       }
       return d.getFullYear() === selectedYear;
@@ -88,23 +96,27 @@ const useMoodData = (entries: IMoodEntry[], viewMode: "weekly" | "monthly" | "ye
 
   const typeData = useMemo(() => {
     const counts: Record<string, number> = {};
-    entriesInRange.forEach(({ type }) => {
-      counts[type] = (counts[type] || 0) + 1;
+    entriesInRange.forEach(({ tags }) => {
+      tags.forEach((tag) => {
+        counts[tag] = (counts[tag] || 0) + 1;
+      });
     });
 
-    const total = entriesInRange.length || 1;
+    const totalTags = Object.values(counts).reduce((sum, c) => sum + c, 0) || 1;
     return Object.entries(counts)
       .filter(([, v]) => v)
       .map(([name, count]) => ({
         name,
-        value: Number(((count / total) * 100).toFixed(1)),
+        value: Number(((count / totalTags) * 100).toFixed(1)),
       }));
   }, [entriesInRange]);
 
   const typeCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    entriesInRange.forEach(({ type }) => {
-      counts[type] = (counts[type] || 0) + 1;
+    entriesInRange.forEach(({ tags }) => {
+      tags.forEach((tag) => {
+        counts[tag] = (counts[tag] || 0) + 1;
+      });
     });
 
     const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
@@ -125,13 +137,18 @@ const useMoodData = (entries: IMoodEntry[], viewMode: "weekly" | "monthly" | "ye
       if (mood === "delighted" || mood === "happy") good++;
       if (mood === "sad" || mood === "miserable") bad++;
     });
-    return { counts1: good, counts2: bad, counts1Label: "Good", counts2Label: "Bad" };
+    return {
+      counts1: good,
+      counts2: bad,
+      counts1Label: "Good",
+      counts2Label: "Bad",
+    };
   }, [entriesInRange]);
 
   return {
     lineData,
-    pieData,       
-    typeCounts,      
+    pieData,
+    typeCounts,
     goodBadCounts,
     xKey,
     typeData,

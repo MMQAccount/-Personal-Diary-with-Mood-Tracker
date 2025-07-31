@@ -11,8 +11,6 @@ const fetchTagsForUser = (userId: string): Promise<ITag[]> => {
         const diaries = await res.json();
         return diaries;
     }).catch(error => {
-        console.log(error);
-        
         console.error(`Error fetching user tags: ${error}`);
         return [];
     });
