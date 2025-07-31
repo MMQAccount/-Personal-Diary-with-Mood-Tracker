@@ -3,19 +3,19 @@ import { getUserById } from "../services/user.service";
 import { toast } from "react-toastify";
 import { fetchDiariesForUser } from "../services/diary.service";
 
-export interface IUser {
-  name: string;
-  email: string;
-  imageURL?: string;
-  customMoodEmojis: {
-    delighted: string;
-    happy: string;
-    neutral: string;
-    sad: string;
-    miserable: string;
-  };
-  diaries: IDiary[];
-}
+  export interface IUser {
+    name: string;
+    email: string;
+    imageURL?: string;
+    customMoodEmojis: {
+      delighted: string;
+      happy: string;
+      neutral: string;
+      sad: string;
+      miserable: string;
+    };
+    diaries: IDiary[];
+  }
 
 interface UserContextType {
   user: IUser | null;

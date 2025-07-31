@@ -7,8 +7,7 @@ import MoodPieChart from "../../components/MoodPieChart/MoodPieChart";
 import MoodLineChart from "../../components/MoodLineChart/MoodLineChart";
 import YearPixelChart from "../../components/YearPixelChart/YearPixelChart";
 import { useUserData } from "../../providers/user-provider";
-
-
+import { useMoods } from "../../providers/mood-provider";
 
 const typeColorMap: Record<string, { color: string }> = {
   friends: { color: "#a3c8f4" },
@@ -17,7 +16,6 @@ const typeColorMap: Record<string, { color: string }> = {
   health: { color: "#f5ccb3" },
   none: { color: "#d3c1f7" },
 };
-
 
 function getClosestMonday(date: Date): Date {
   const day = date.getDay();
@@ -50,6 +48,12 @@ const StatisticsPage = () => {
     mood: mood !== undefined ? MOOD_NAME[mood] : "neutral",
     tags: tags ?? [],
   })) ?? [];
+
+  let { moods } = useMoods();
+  moods = moods.map(m => ({
+    ...m,
+    emoji: user?.customMoodEmojis[m.name as keyof typeof user.customMoodEmojis] || m.emoji
+  }));
 
   const now = new Date();
 
@@ -89,7 +93,8 @@ const StatisticsPage = () => {
 
       <div className={classes.chartContainer}>
         <h2 className={classes.chartLabel} >Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}</h2>
-        <MoodLineChart data={lineData} xKey={xKey} />
+        <MoodLineChart data={lineData} xKey={xKey} moods={moods} />
+
       </div>
 
       <div className={classes.sideBySideCharts}>
@@ -99,6 +104,7 @@ const StatisticsPage = () => {
             pieData={pieData}
             counts={goodBadCounts}
             colorMap={typeColorMap}
+            moods={moods}
           />
         </div>
 

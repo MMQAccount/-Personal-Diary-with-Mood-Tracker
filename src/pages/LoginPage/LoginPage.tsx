@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { user, refreshUser } = useUserData();
+  const { refreshUser } = useUserData();
 
   const onSubmit = async (data: FormValues) => {
     try {

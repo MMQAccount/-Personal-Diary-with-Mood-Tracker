@@ -67,3 +67,11 @@ interface ITag {
   type: "global" | "custom";
   user?: string;
 }
+
+interface IMood {
+  _id: string;
+  name: string;
+  emoji: string;
+  color: string;
+  score: number;
+}

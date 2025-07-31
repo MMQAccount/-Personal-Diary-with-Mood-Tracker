@@ -1,6 +1,15 @@
-import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip } from "recharts";
+import {
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+} from "recharts";
 import classes from "./MoodPieChart.module.css";
-import { moodMap } from "../../constants/moodMap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { faFaceSmile } from "@fortawesome/free-regular-svg-icons";
+import { nameToIcon } from "../MoodLineChart/MoodLineChart";
 
 interface IPieDataItem {
   name: string;
@@ -15,13 +24,14 @@ interface ICounts {
 }
 
 interface IColorMap {
-  [key: string]: { color: string; emoji?: string };
+  [key: string]: { color: string; icon?: IconDefinition };
 }
 
 interface IProps {
   pieData: IPieDataItem[];
   counts: ICounts;
   colorMap: IColorMap;
+  moods?:IMood[];
 }
 
 interface ICustomLabelProps {
@@ -31,65 +41,96 @@ interface ICustomLabelProps {
   outerRadius: number;
   percent: number;
   name: string;
+  index: number;
 }
-
-const renderCustomLabel = ({cx,cy,midAngle,outerRadius,percent,name,}: ICustomLabelProps) => {
-  const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 20; // Push label 20px outside the outer radius
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text
-      x={x}
-      y={y}
-      fill="#8e8e8e"
-      textAnchor={x > cx ? "start" : "end"}
-      dominantBaseline="central"
-      fontSize={20}
-    >
-      {`${moodMap[name]?.emoji ?? ""} ${name} ${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-};
 
 const DEFAULT_COLORS = ["#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7"];
 
-const MoodPieChart = ({ pieData, /*counts,*/ colorMap }: IProps) => {
+const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
+  const renderCustomLabel = ({
+    cx,
+    cy,
+    midAngle,
+    outerRadius,
+    percent,
+    name,
+  }: ICustomLabelProps) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius + 50;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    const mood = moods?.find(m => m.name === name);
+      if (!mood || !mood.emoji) {
+        return <g />;
+      }
+      const icon = nameToIcon[mood.emoji]; 
+      if (!icon) return <g />;
+
+    return (
+      <foreignObject x={x - 60} y={y - 80} width={120} height={150}>
+        <div
+          xmlns="http://www.w3.org/1999/xhtml"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            fontSize: "20px",
+            color: "#555",
+            gap: "6px",
+            width: "100%",
+            height: "100%",
+
+          }}
+        >
+          {icon && <FontAwesomeIcon icon={icon} style={{ fontSize: "24px" }} />}
+          <span>{`${name} ${(percent * 100).toFixed(0)}%`}</span>
+        </div>
+      </foreignObject>
+    );
+  };
 
   return (
     <div className={classes.pieWrapper}>
       <div className={classes.pieRow}>
-        <ResponsiveContainer width="100%" height={350}>
-          <PieChart>
+        <ResponsiveContainer width="120%" height={350}>
+          <PieChart
+            margin={{ top: 40, bottom: 20 }}
+           >
             <Pie
               data={pieData}
               dataKey="value"
               nameKey="name"
-              fill="black"
               cx="50%"
               cy="50%"
               outerRadius={100}
               label={renderCustomLabel}
-              labelLine={true} 
+              labelLine={true}
             >
               {pieData.map(({ name }, i) => {
                 const entry = colorMap[name];
-                const fill = entry?.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length];
+                const fill =
+                  entry?.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length];
                 return <Cell key={name} fill={fill} />;
               })}
             </Pie>
+
             <Tooltip
-              formatter={(v, name) => {
-                const entry = colorMap[name];
-                const label = entry?.emoji ? `${entry.emoji} ${name}` : name;
-                return [`${v}%`, label];
+              formatter={(value, name: string) => {
+                const mood = colorMap[name];
+                return [
+                  `${value}%`,
+                  <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    {mood?.icon && (
+                      <FontAwesomeIcon icon={mood.icon} style={{ fontSize: "14px" }} />
+                    )}
+                    {name}
+                  </span>,
+                ];
               }}
             />
           </PieChart>
         </ResponsiveContainer>
-
-        {/* {<GoodBadStats {...counts} />} */}
       </div>
     </div>
   );
