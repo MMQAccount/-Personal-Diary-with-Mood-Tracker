@@ -7,7 +7,7 @@ import { updateUser } from "../../services/userService";
 import { getUserById } from "../../services/userService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
 
 import {
   faGrinStars,
@@ -56,6 +56,7 @@ const colorOptions: ColorOption[] = [
 
 
 const SettingsPage = () => {
+  const navigate = useNavigate();
   const { tags, updateTags } = useContext(TagsContext);
   const { t, i18n } = useTranslation("diary");
   const {
@@ -79,6 +80,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
       if (!userId || !token) {
         toast.error("User not authenticated. Please login again.");
+        setTimeout(() => navigate("/login"), 3000);
         return;
       }
 
@@ -97,6 +99,11 @@ useEffect(() => {
       toast.error(`Failed to load user data: ${error.message}`, {
   toastId: "loadUserError",
 });
+localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+      setTimeout(() => {
+      navigate("/login");
+    }, 3000);
 
     }
   };
@@ -140,11 +147,12 @@ const handleSave = async () => {
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      toast.error("User not authenticated. Please login again.");
-      return;
-    }
+  toast.error("User not authenticated. Please login again.");
+  setTimeout(() => navigate("/login"),3000);
+  return;
+  }
 
-    const updatedData: any = { name, email, imageURL: avatar };
+  const updatedData: any = { name, email, imageURL: avatar };
 
     if (password) {
       if (!currentPassword) {
@@ -156,7 +164,16 @@ const handleSave = async () => {
     }
 
     await updateUser(userId!, updatedData);
-    toast.success("User updated successfully!");
+
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+
+    toast.success("User updated successfully! Please login again.");
+
+    setTimeout(() => {
+      navigate("/login");
+    }, 3000);
+
   } catch (error: any) {
     toast.error(`Error: ${error.message}`);
   }

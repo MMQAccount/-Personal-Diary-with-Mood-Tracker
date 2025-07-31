@@ -57,6 +57,7 @@ const onSubmit = async (data: FormValues) => {
 }
 };
 
+
   const toggleLanguage = () => {
     i18n.changeLanguage(i18n.language === "en" ? "ar" : "en");
   };
@@ -117,15 +118,29 @@ const onSubmit = async (data: FormValues) => {
             <span className="error">{errors.email.message}</span>
           )}
 
-          <div className="password-input-wrapper">
+                <div className="password-input-wrapper">
             <input
               type={showPassword ? "text" : "password"}
               placeholder={t("passwordPlaceholder")}
               {...register("password", {
                 required: t("required"),
-                minLength: {
-                  value: 6,
-                  message: t("shortPassword"),
+                validate: (value) => {
+                  if (value.length < 10) {
+                    return t("shortPassword"); 
+                  }
+                  if (!/[A-Z]/.test(value)) {
+                    return "Password must contain at least one uppercase letter";
+                  }
+                  if (!/[a-z]/.test(value)) {
+                    return "Password must contain at least one lowercase letter";
+                  }
+                  if (!/[0-9]/.test(value)) {
+                    return "Password must contain at least one number";
+                  }
+                  if (!/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(value)) {
+                    return "Password must contain at least one special character";
+                  }
+                  return true;
                 },
               })}
             />

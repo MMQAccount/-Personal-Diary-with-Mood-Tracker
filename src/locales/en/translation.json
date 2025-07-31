@@ -10,7 +10,7 @@
   "toggleLang": "Arabic",
   "required": "This field is required",
   "invalidEmail": "Invalid email address",
-  "shortPassword": "Password must be at least 6 characters",
+  "shortPassword": "Password must be at least 10 characters",
   "createAccount": "Create Account",
   "confirmPasswordPlaceholder": "Confirm Password",
   "alreadyHave": "Already have an account?",
