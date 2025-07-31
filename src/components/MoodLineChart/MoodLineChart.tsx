@@ -62,7 +62,7 @@ const ICON_COLOR = "#374151";
 
 const MoodYAxisTick = ({ x, y, payload, moods }: MoodYAxisTickProps) => {
 
-  const mood = moods.find(m => m.score-2  === payload.value);
+  const mood = moods.find(m => m.score - 2 === payload.value);
   if (!mood || !mood.emoji) {
     return <g />;
   }
@@ -109,13 +109,18 @@ const MoodLineChart = ({ data, xKey, moods }: IProps) => {
         />
         <ReferenceLine y={0} stroke="#aaa" strokeWidth={1.5} strokeDasharray="4 2" />
         <Tooltip
-          content={({ payload, label, active }) =>
-            active && payload?.length ? (
+          content={({ payload, label, active }) => {
+            if (!active || !payload || !payload.length) return null;
+
+            const score = payload[0].payload.score as number;
+            const mood = moods.find(m => m.score - 2 === score);
+
+            return (
               <div className={classes.tooltip}>
-                {label}: {scoreToMood(payload[0].payload.score)?.emoji ?? "-"}
+                {label}: {mood?.name ?? "Unknown mood"}
               </div>
-            ) : null
-          }
+            );
+          }}
         />
         <Line
           type="monotone"

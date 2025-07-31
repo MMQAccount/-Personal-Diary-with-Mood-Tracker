@@ -8,7 +8,6 @@ import {
 import classes from "./MoodPieChart.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faFaceSmile } from "@fortawesome/free-regular-svg-icons";
 import { nameToIcon } from "../MoodLineChart/MoodLineChart";
 
 interface IPieDataItem {
@@ -31,7 +30,7 @@ interface IProps {
   pieData: IPieDataItem[];
   counts: ICounts;
   colorMap: IColorMap;
-  moods?:IMood[];
+  moods?: IMood[];
 }
 
 interface ICustomLabelProps {
@@ -46,7 +45,7 @@ interface ICustomLabelProps {
 
 const DEFAULT_COLORS = ["#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7"];
 
-const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
+const MoodPieChart = ({ pieData, moods }: IProps) => {
   const renderCustomLabel = ({
     cx,
     cy,
@@ -61,11 +60,7 @@ const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     const mood = moods?.find(m => m.name === name);
-      if (!mood || !mood.emoji) {
-        return <g />;
-      }
-      const icon = nameToIcon[mood.emoji]; 
-      if (!icon) return <g />;
+    const icon = mood?.emoji ? nameToIcon[mood.emoji] : undefined;
 
     return (
       <foreignObject x={x - 60} y={y - 80} width={120} height={150}>
@@ -80,7 +75,6 @@ const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
             gap: "6px",
             width: "100%",
             height: "100%",
-
           }}
         >
           {icon && <FontAwesomeIcon icon={icon} style={{ fontSize: "24px" }} />}
@@ -94,9 +88,7 @@ const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
     <div className={classes.pieWrapper}>
       <div className={classes.pieRow}>
         <ResponsiveContainer width="120%" height={350}>
-          <PieChart
-            margin={{ top: 40, bottom: 20 }}
-           >
+          <PieChart margin={{ top: 40, bottom: 20 }}>
             <Pie
               data={pieData}
               dataKey="value"
@@ -108,26 +100,14 @@ const MoodPieChart = ({ pieData, colorMap, moods }: IProps) => {
               labelLine={true}
             >
               {pieData.map(({ name }, i) => {
-                const entry = colorMap[name];
-                const fill =
-                  entry?.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length];
+                const mood = moods?.find(m => m.name === name);
+                const fill = mood?.color ?? DEFAULT_COLORS[i % DEFAULT_COLORS.length];
                 return <Cell key={name} fill={fill} />;
               })}
             </Pie>
 
             <Tooltip
-              formatter={(value, name: string) => {
-                const mood = colorMap[name];
-                return [
-                  `${value}%`,
-                  <span style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                    {mood?.icon && (
-                      <FontAwesomeIcon icon={mood.icon} style={{ fontSize: "14px" }} />
-                    )}
-                    {name}
-                  </span>,
-                ];
-              }}
+              formatter={(value, name: string) => [`${value}% ${name}`]}
             />
           </PieChart>
         </ResponsiveContainer>
