@@ -44,7 +44,11 @@ const LoginPage = () => {
       localStorage.setItem("userId", response.data.user._id);
 
       login(response.data);
-      await refreshUser();
+      await refreshUser({
+        diariesChanged: true,
+        tagsChanged: true,
+        userChanged: true,
+      });
 
       reset();
       navigate("/");

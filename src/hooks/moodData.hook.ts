@@ -10,7 +10,7 @@ import { moodMap } from "../constants/moodMap";
 export interface IMoodEntry {
   date: string | Date;
   mood: string;
-  tags: string[];
+  tags: IDiaryTagContent[];
 }
 
 interface IProps {
@@ -94,11 +94,11 @@ const useMoodData = (
       }));
   }, [entriesInRange]);
 
-  const typeData = useMemo(() => {
+  const tagsData = useMemo(() => {
     const counts: Record<string, number> = {};
     entriesInRange.forEach(({ tags }) => {
       tags.forEach((tag) => {
-        counts[tag] = (counts[tag] || 0) + 1;
+        counts[tag.name] = (counts[tag.name] || 0) + 1;
       });
     });
 
@@ -115,7 +115,7 @@ const useMoodData = (
     const counts: Record<string, number> = {};
     entriesInRange.forEach(({ tags }) => {
       tags.forEach((tag) => {
-        counts[tag] = (counts[tag] || 0) + 1;
+        counts[tag.name] = (counts[tag.name] || 0) + 1;
       });
     });
 
@@ -151,7 +151,7 @@ const useMoodData = (
     typeCounts,
     goodBadCounts,
     xKey,
-    typeData,
+    tagsData,
   };
 };
 

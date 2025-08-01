@@ -2,25 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { getUserById } from "../services/user.service";
 import { toast } from "react-toastify";
 import { fetchDiariesForUser } from "../services/diary.service";
+import { fetchTagsForUser } from "../services/tag.service";
 
-  export interface IUser {
-    name: string;
-    email: string;
-    imageURL?: string;
-    customMoodEmojis: {
-      delighted: string;
-      happy: string;
-      neutral: string;
-      sad: string;
-      miserable: string;
-    };
-    diaries: IDiary[];
-  }
+interface IDataChanged {
+  diariesChanged?: boolean;
+  tagsChanged?: boolean;
+  userChanged?: boolean;
+}
 
 interface UserContextType {
   user: IUser | null;
   setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
-  refreshUser: () => Promise<void>;
+  refreshUser: (changes: IDataChanged) => Promise<void>;
 }
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -28,37 +21,48 @@ export const UserContext = createContext<UserContextType | undefined>(undefined)
 export const UserProvider2: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
 
-  const refreshUser = async () => {
-    
+  const refreshUser = async ({
+    diariesChanged = false,
+    tagsChanged = false,
+    userChanged = false,
+  }: Partial<IDataChanged> = {}) => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
 
       if (!userId || !token) return;
 
-      const data = await getUserById(userId, token);
-      const user: IUser = data.data;
+      // Use current user if no need to refetch
+      let currentUser = user;
+      if (userChanged) {
+        const response = await getUserById(userId, token);
+        currentUser = response.data;
+      }
 
-      const diaries = await fetchDiariesForUser(userId);
+      if (!currentUser) return;
+
+      const diaries = diariesChanged ? await fetchDiariesForUser(userId) : currentUser.diaries || [];
+
+      const tags = tagsChanged ? await fetchTagsForUser(userId) : currentUser.tags || [];
 
       setUser({
-        name: data.data.name || "",
-        email: data.data.email || "",
+        name: currentUser.name || "",
+        email: currentUser.email || "",
         imageURL:
-          data.data.imageURL ||
+          currentUser.imageURL ||
           "https://api.dicebear.com/6.x/adventurer/svg?seed=girl",
         customMoodEmojis: {
-          delighted: user.customMoodEmojis.delighted,
-          happy: user.customMoodEmojis.happy,
-          neutral: user.customMoodEmojis.neutral,
-          sad: user.customMoodEmojis.sad,
-          miserable: user.customMoodEmojis.miserable,
+          delighted: currentUser.customMoodEmojis?.delighted || "",
+          happy: currentUser.customMoodEmojis?.happy || "",
+          neutral: currentUser.customMoodEmojis?.neutral || "",
+          sad: currentUser.customMoodEmojis?.sad || "",
+          miserable: currentUser.customMoodEmojis?.miserable || "",
         },
-        diaries: diaries,
+        diaries,
+        tags,
       });
-      
+
     } catch (error) {
-      
       toast.error(`Failed to fetch user data: ${error}`, {
         toastId: "refreshUserError",
       });
@@ -66,7 +70,11 @@ export const UserProvider2: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   useEffect(() => {
-    refreshUser();
+    refreshUser({
+      diariesChanged: true,
+      tagsChanged: true,
+      userChanged: true,
+    });
   }, []);
 
   return (

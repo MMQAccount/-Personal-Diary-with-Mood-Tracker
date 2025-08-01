@@ -46,7 +46,7 @@ const StatisticsPage = () => {
   const entries: IMoodEntry[] = user?.diaries?.map(({ date, mood, tags }) => ({
     date,
     mood: mood !== undefined ? MOOD_NAME[mood] : "neutral",
-    tags: tags ?? [],
+    tags: tags as IDiaryTagContent[] ?? [],
   })) ?? [];
 
   let { moods } = useMoods();
@@ -62,7 +62,7 @@ const StatisticsPage = () => {
   const [viewMode, setViewMode] = useState<"weekly" | "monthly" | "yearly">("monthly");
   const [weekStart, setWeekStart] = useState(getClosestMonday(now));
 
-  const { lineData, pieData, goodBadCounts, xKey, typeData, typeCounts } = useMoodData(entries, viewMode, {
+  const { lineData, pieData, goodBadCounts, xKey, tagsData, typeCounts } = useMoodData(entries, viewMode, {
     selectedYear,
     selectedMonth,
     weekStart,
@@ -111,7 +111,7 @@ const StatisticsPage = () => {
         <div className={classes.pieChartWrapper}>
           <h4 className={classes.chartLabel}>Sources that influenced your mood</h4>
           <MoodPieChart
-            pieData={typeData}
+            pieData={tagsData}
             counts={typeCounts}
             colorMap={typeColorMap}
           />

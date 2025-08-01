@@ -48,12 +48,32 @@ declare namespace Store {
   }
 }
 
+interface IUser {
+  name: string;
+  email: string;
+  imageURL?: string;
+  customMoodEmojis: {
+    delighted: string;
+    happy: string;
+    neutral: string;
+    sad: string;
+    miserable: string;
+  };
+  diaries: IDiary[];
+  tags: ITag[];
+}
+
+interface IDiaryTagContent {
+  _id: string;
+  name: string;
+}
+
 interface IDiary {
   _id: string;
   date: Date;
   title?: string;
   user: string;
-  tags?: string[];
+  tags?: IDiaryTagContent[] | string[];
   mood?: number;
   audios?: string[];
   images?: string[];
