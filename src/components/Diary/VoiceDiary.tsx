@@ -29,7 +29,7 @@ const VoiceDiary = ({ voice, id, day }: IProps) => {
         ? existingDiary.voices.filter((_, index) => index !== id)
         : [];
 
-      updateDiary(existingDiary.id, {
+      updateDiary(existingDiary._id, {
         ...existingDiary,
         voices: updatedNotes,
       });

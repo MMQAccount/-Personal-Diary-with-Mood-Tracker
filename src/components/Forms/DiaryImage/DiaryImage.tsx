@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../DiaryForm/DiaryForm.css';
 import { DiaryContext } from '../../../providers/diary-provider';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,15 @@ const DiaryImage = () => {
     const [form, setForm] = useState<Store.IImageForm>(INITIAL_FORM);
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
 
+        if (!token || !userId) {
+            alert("You have to login");
+            navigate("/login");
+        }
+    }, [navigate]);
     const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
@@ -29,12 +37,12 @@ const DiaryImage = () => {
         });
 
         if (existingDiary) {
-            updateDiary(existingDiary.id, {
+            updateDiary(existingDiary._id, {
                 ...existingDiary,
                 images: [...(existingDiary.images || []), form.image],
             });
         } else {
-            const newDiary: Store.IDayDiary = {
+            const newDiary: Store.IDayDiaryInput = {
                 id: todayTimestamp,
                 images: [form.image],
                 notes: [],

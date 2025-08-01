@@ -9,6 +9,7 @@ interface IQuote {
 }
 declare namespace Store {
   interface IDayDiary {
+    _id: string;
     id: number;
     state?: number;
     title?: string;
@@ -17,7 +18,44 @@ declare namespace Store {
     voices?: string[];
     images?: string[];
   }
+  interface IDayDiaryBECreateUpdate {
+    date: string;
+    title?: string;
+    notes?: string[];
+    images?: string[];
+    audios?: string[];
+    mood?: number;
+    tags?: string[];
+  }
+  import { Types } from "mongoose";
 
+  export interface ITag {
+    name: string;
+    emoji: string;
+    type: 'global' | 'custom';
+    user?: Types.ObjectId;
+  }
+
+  interface IDayDiaryBE {
+    _id: string;
+    date?: string;
+    title?: string;
+    notes?: string[];
+    images?: string[];
+    audios?: string[];
+    mood?: number;
+    tags?: Types.ObjectId[];
+    user?: Types.ObjectId;
+  }
+  interface IDayDiaryInput {
+    id: number;
+    state?: number;
+    title?: string;
+    type?: string[];
+    notes?: string[];
+    voices?: string[];
+    images?: string[];
+  }
   interface IDiaryMood {
     state: number;
     title: string;

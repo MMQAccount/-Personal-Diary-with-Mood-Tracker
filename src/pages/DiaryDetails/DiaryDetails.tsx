@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { DiaryContext } from "../../providers/diary-provider";
-import ReactMarkdown from "react-markdown";
 import './DiaryDetails.css';
 
 type IParams = { id: string; };
@@ -13,7 +12,7 @@ const DiaryDetailsPage = () => {
   const [diaryEx, setDiaryEx] = useState<Store.IDayDiary>();
 
   useEffect(() => {
-    const p = diary?.find(d => d.id === Number(params.id));
+    const p = diary?.find(d => d._id === params.id);
     setDiaryEx(p);
   }, [params, diary]);
 
@@ -38,7 +37,6 @@ const DiaryDetailsPage = () => {
           </p>
         </div>
       </div>
-
     </div>
   );
 };
