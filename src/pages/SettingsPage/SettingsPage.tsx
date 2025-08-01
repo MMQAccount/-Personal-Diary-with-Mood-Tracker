@@ -1,4 +1,4 @@
-import { useEffect,useContext, useState} from "react";
+import { useEffect, useContext, useState } from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -32,6 +32,9 @@ import {
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { TagsContext } from "../../providers/tag-providor";
 import { useTranslation } from "react-i18next";
+import { useUserData } from "../../providers/user-provider";
+import { useNavigate } from "react-router";
+import { nameToIcon } from "../../components/MoodLineChart/MoodLineChart";
 
 type Theme = "light" | "dark";
 
@@ -56,6 +59,9 @@ const colorOptions: ColorOption[] = [
 
 
 const SettingsPage = () => {
+
+  const navigate = useNavigate();
+
   const { tags, updateTags } = useContext(TagsContext);
   const { t, i18n } = useTranslation("diary");
   const {
@@ -65,44 +71,45 @@ const SettingsPage = () => {
     setSelectedColor,
   }: ThemeContextType = useTheme();
 
-const [name, setName] = useState<string>("");
-const [avatar, setAvatar] = useState<string>("");
-const [email, setEmail] = useState<string>("");
-const [password, setPassword] = useState<string>(""); 
-const [currentPassword, setCurrentPassword] = useState<string>("");
+  const { refreshUser, user } = useUserData();
+
+  const [name, setName] = useState<string>("");
+  const [avatar, setAvatar] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [currentPassword, setCurrentPassword] = useState<string>("");
 
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-      if (!userId || !token) {
-        toast.error("User not authenticated. Please login again.");
-        return;
-      }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+        const token = localStorage.getItem("token");
+        if (!userId || !token) {
+          toast.error("User not authenticated. Please login again.");
+          return;
+        }
 
-      const data = await getUserById(userId, token);
-      console.log("User data from API:", data);
+        const data = await getUserById(userId, token);
 
-      setName(data.data.name || "");
-      setEmail(data.data.email || "");
-      setAvatar(
-        data.data.imageURL ||
+        setName(data.data.name || "");
+        setEmail(data.data.email || "");
+        setAvatar(
+          data.data.imageURL ||
           "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
-      );
+        );
 
-      setPassword("");
-    } catch (error: any) {
-      toast.error(`Failed to load user data: ${error.message}`, {
-  toastId: "loadUserError",
-});
+        setPassword("");
+      } catch (error: any) {
+        toast.error(`Failed to load user data: ${error.message}`, {
+          toastId: "loadUserError",
+        });
 
-    }
-  };
+      }
+    };
 
-  fetchUserData();
-}, []);
+    fetchUserData();
+  }, []);
 
   const availableMoodIcons: Record<string, IconDefinition[]> = {
     Delighted: [faGrinStars, faLaughBeam, faGrinHearts],
@@ -113,14 +120,30 @@ useEffect(() => {
   };
 
   const [moodIcons, setMoodIcons] = useState<Record<string, IconDefinition>>({
-    Delighted: faGrinHearts,
-    Happy: faSmileBeam,
-    Neutral: faSmile,
-    Sad: faFrown,
-    Miserable: faSadCry,
+    Delighted: nameToIcon[user?.customMoodEmojis.delighted || "face-grin-stars"],
+    Happy: nameToIcon[user?.customMoodEmojis.happy || "face-smile-beam"],
+    Neutral: nameToIcon[user?.customMoodEmojis.neutral || "face-smile"],
+    Sad: nameToIcon[user?.customMoodEmojis.sad || "face-frown"] ,
+    Miserable: nameToIcon[user?.customMoodEmojis.miserable || "face-sad-cry"] ,
   });
 
-  const handleMoodChange = (mood: string, newIconName: string) => {
+  const handleMoodChange = async (mood: string, newIconName: string) => {
+
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+
+    if (!userId || !token) {
+      toast.error("User not authenticated. Please login again.");
+      navigate("/login");
+      return;
+    }
+    await updateUser(userId, {
+      moods: {
+        [mood.toLocaleLowerCase()]: newIconName,
+      }
+    })
+
+    await refreshUser({ userChanged: true });
     const icon = availableMoodIcons[mood].find(
       (icon) => icon.iconName === newIconName
     );
@@ -133,34 +156,33 @@ useEffect(() => {
     updateTags(index, e.target.value);
   };
 
+  const handleSave = async () => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
 
-const handleSave = async () => {
-  try {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-
-    if (!userId || !token) {
-      toast.error("User not authenticated. Please login again.");
-      return;
-    }
-
-    const updatedData: any = { name, email, imageURL: avatar };
-
-    if (password) {
-      if (!currentPassword) {
-        toast.error("Please enter your current password to change the password.");
+      if (!userId || !token) {
+        toast.error("User not authenticated. Please login again.");
         return;
       }
-      updatedData.password = password;
-      updatedData.currentPassword = currentPassword;
-    }
 
-    await updateUser(userId!, updatedData);
-    toast.success("User updated successfully!");
-  } catch (error: any) {
-    toast.error(`Error: ${error.message}`);
-  }
-};
+      const updatedData: any = { name, email, imageURL: avatar };
+
+      if (password) {
+        if (!currentPassword) {
+          toast.error("Please enter your current password to change the password.");
+          return;
+        }
+        updatedData.password = password;
+        updatedData.currentPassword = currentPassword;
+      }
+
+      await updateUser(userId!, updatedData);
+      toast.success("User updated successfully!");
+    } catch (error: any) {
+      toast.error(`Error: ${error.message}`);
+    }
+  };
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
@@ -220,20 +242,20 @@ const handleSave = async () => {
             </button>
           </div>
         </div>
-          <div className="input-group">
-  <label>Current Password</label>
-  <div className="input-edit-wrapper">
-    <input
-      type="password"
-      value={currentPassword}
-      onChange={(e) => setCurrentPassword(e.target.value)}
-      placeholder="Current Password"
-    />
-    <button className="edit-btn" title="Edit">
-      <FontAwesomeIcon icon={faEdit} />
-    </button>
-  </div>
-</div>
+        <div className="input-group">
+          <label>Current Password</label>
+          <div className="input-edit-wrapper">
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Current Password"
+            />
+            <button className="edit-btn" title="Edit">
+              <FontAwesomeIcon icon={faEdit} />
+            </button>
+          </div>
+        </div>
 
         <div className="input-group">
           <label>Full Name</label>
@@ -318,16 +340,16 @@ const handleSave = async () => {
           <FontAwesomeIcon icon={faSave} className="save-icon" />
           Save Changes
         </button>
-    <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        rtl={i18n.language === "ar"}
-        theme="colored"
-    />
+        <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          rtl={i18n.language === "ar"}
+          theme="colored"
+        />
       </div>
     </div>
   );

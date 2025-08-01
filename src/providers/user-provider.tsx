@@ -37,13 +37,17 @@ export const UserProvider2: React.FC<{ children: React.ReactNode }> = ({ childre
       if (userChanged) {
         const response = await getUserById(userId, token);
         currentUser = response.data;
+        if (currentUser) {
+          currentUser.diaries = user?.diaries || currentUser.diaries;
+          currentUser.tags = user?.tags || currentUser.tags;
+        }
       }
 
       if (!currentUser) return;
 
-      const diaries = diariesChanged ? await fetchDiariesForUser(userId) : currentUser.diaries || [];
+      const diaries = diariesChanged ? await fetchDiariesForUser(userId) : currentUser.diaries;
+      const tags = tagsChanged ? await fetchTagsForUser(userId) : currentUser.tags;
 
-      const tags = tagsChanged ? await fetchTagsForUser(userId) : currentUser.tags || [];
 
       setUser({
         name: currentUser.name || "",
