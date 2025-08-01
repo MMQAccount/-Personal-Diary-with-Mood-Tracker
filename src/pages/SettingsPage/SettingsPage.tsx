@@ -203,14 +203,14 @@ const SettingsPage = () => {
 
       await updateUser(userId!, updatedData);
 
-      // localStorage.removeItem("userId");
-      // localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
 
       toast.success("User updated successfully! Please login.");
 
-      // setTimeout(() => {
-      //   navigate("/login");
-      // }, 3000);
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
 
     } catch (error: any) {
       toast.error(`Error: ${error.message}`);
