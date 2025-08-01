@@ -6,8 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "../../utils/UserContext";
 import "./LoginPage.css";
-import { login as loginRequest  } from "../../services/authService";
+import { login as loginRequest } from "../../services/auth.service";
 import { toast, ToastContainer } from "react-toastify";
+import { useUserData } from "../../providers/user-provider";
 
 interface FormValues {
   email: string;
@@ -28,8 +29,9 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
+  const { refreshUser } = useUserData();
 
-const onSubmit = async (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     try {
       const response = await loginRequest({
         email: data.email,
@@ -39,9 +41,15 @@ const onSubmit = async (data: FormValues) => {
       console.log("Logged in user response:", response);
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("userId", response.data._id);
+      localStorage.setItem("userId", response.data.user._id);
 
       login(response.data);
+      await refreshUser({
+        diariesChanged: true,
+        tagsChanged: true,
+        userChanged: true,
+      });
+
       reset();
       navigate("/");
     } catch (error: any) {
@@ -98,9 +106,8 @@ const onSubmit = async (data: FormValues) => {
             />
             <button
               type="button"
-              className={`eye-btn ${
-                i18n.language === "ar" ? "eye-left" : "eye-right"
-              }`}
+              className={`eye-btn ${i18n.language === "ar" ? "eye-left" : "eye-right"
+                }`}
               onClick={() => setShowPassword((prev) => !prev)}
               aria-label="toggle password visibility"
             >

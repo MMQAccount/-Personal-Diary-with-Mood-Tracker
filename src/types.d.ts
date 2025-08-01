@@ -47,3 +47,51 @@ declare namespace Store {
     type: string[];
   }
 }
+
+interface IUser {
+  name: string;
+  email: string;
+  imageURL?: string;
+  customMoodEmojis: {
+    delighted: string;
+    happy: string;
+    neutral: string;
+    sad: string;
+    miserable: string;
+  };
+  diaries: IDiary[];
+  tags: ITag[];
+}
+
+interface IDiaryTagContent {
+  _id: string;
+  name: string;
+}
+
+interface IDiary {
+  _id: string;
+  date: Date;
+  title?: string;
+  user: string;
+  tags?: IDiaryTagContent[] | string[];
+  mood?: number;
+  audios?: string[];
+  images?: string[];
+  notes?: string[];
+}
+
+interface ITag {
+  _id: string;
+  name: string;
+  emoji: string;
+  type: "global" | "custom";
+  user?: string;
+}
+
+interface IMood {
+  _id: string;
+  name: string;
+  emoji: string;
+  color: string;
+  score: number;
+}
