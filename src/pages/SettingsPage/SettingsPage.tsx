@@ -7,7 +7,6 @@ import { updateUser } from "../../services/user.service";
 import { getUserById } from "../../services/user.service";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 
 import {
   faGrinStars,
@@ -59,7 +58,7 @@ const colorOptions: ColorOption[] = [
 
 
 const SettingsPage = () => {
-  
+
   const navigate = useNavigate();
 
   const { tags, updateTags } = useContext(TagsContext);
@@ -80,16 +79,16 @@ const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
 
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-      if (!userId || !token) {
-        toast.error("User not authenticated. Please login again.");
-        setTimeout(() => navigate("/login"), 3000);
-        return;
-      }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userId = localStorage.getItem("userId");
+        const token = localStorage.getItem("token");
+        if (!userId || !token) {
+          toast.error("User not authenticated. Please login.");
+          setTimeout(() => navigate("/login"), 3000);
+          return;
+        }
 
         const data = await getUserById(userId, token);
 
@@ -100,16 +99,16 @@ useEffect(() => {
           "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
         );
 
-      setPassword("");
-    } catch (error: any) {
-      toast.error(`Failed to load user data: ${error.message}`, {
-  toastId: "loadUserError",
-});
-localStorage.removeItem("userId");
-    localStorage.removeItem("token");
-      setTimeout(() => {
-      navigate("/login");
-    }, 3000);
+        setPassword("");
+      } catch (error: any) {
+        toast.error(`Failed to load user data: ${error.message}`, {
+          toastId: "loadUserError",
+        });
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
 
       }
     };
@@ -129,8 +128,8 @@ localStorage.removeItem("userId");
     Delighted: nameToIcon[user?.customMoodEmojis.delighted || "face-grin-stars"],
     Happy: nameToIcon[user?.customMoodEmojis.happy || "face-smile-beam"],
     Neutral: nameToIcon[user?.customMoodEmojis.neutral || "face-smile"],
-    Sad: nameToIcon[user?.customMoodEmojis.sad || "face-frown"] ,
-    Miserable: nameToIcon[user?.customMoodEmojis.miserable || "face-sad-cry"] ,
+    Sad: nameToIcon[user?.customMoodEmojis.sad || "face-frown"],
+    Miserable: nameToIcon[user?.customMoodEmojis.miserable || "face-sad-cry"],
   });
 
   const handleMoodChange = async (mood: string, newIconName: string) => {
@@ -139,8 +138,8 @@ localStorage.removeItem("userId");
     const token = localStorage.getItem("token");
 
     if (!userId || !token) {
-      toast.error("User not authenticated. Please login again.");
-      navigate("/login");
+      toast.error("User not authenticated. Please login.");
+      setTimeout(() => navigate("/login"), 3000);
       return;
     }
     await updateUser(userId, {
@@ -162,24 +161,19 @@ localStorage.removeItem("userId");
     updateTags(index, e.target.value);
   };
 
+
   const handleSave = async () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
 
+      if (!userId || !token) {
+        toast.error("User not authenticated. Please login.");
+        setTimeout(() => navigate("/login"), 3000);
+        return;
+      }
 
-const handleSave = async () => {
-  try {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-
-    if (!userId || !token) {
-  toast.error("User not authenticated. Please login again.");
-  setTimeout(() => navigate("/login"),3000);
-  return;
-  }
-
-  const updatedData: any = { name, email, imageURL: avatar };
+      const updatedData: any = { name, email, imageURL: avatar };
 
       if (password) {
         if (!currentPassword) {
@@ -190,21 +184,21 @@ const handleSave = async () => {
         updatedData.currentPassword = currentPassword;
       }
 
-    await updateUser(userId!, updatedData);
+      await updateUser(userId!, updatedData);
 
-    localStorage.removeItem("userId");
-    localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
 
-    toast.success("User updated successfully! Please login again.");
+      toast.success("User updated successfully! Please login.");
 
-    setTimeout(() => {
-      navigate("/login");
-    }, 3000);
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
 
-  } catch (error: any) {
-    toast.error(`Error: ${error.message}`);
-  }
-};
+    } catch (error: any) {
+      toast.error(`Error: ${error.message}`);
+    }
+  };
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";

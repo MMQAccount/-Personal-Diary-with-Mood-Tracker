@@ -3,50 +3,44 @@ import { fetchTagById } from "./tag.service";
 const BASE_URL = "http://localhost:3000/diaries";
 
 const fetchDiariesForUser = async (userId: string): Promise<IDiary[]> => {
-    try {
-        const res = await fetch(`${BASE_URL}/user/${userId}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-        });
+    const res = await fetch(`${BASE_URL}/user/${userId}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials: "include",
+    });
 
-        // if (!res.ok) {
-        //     throw new Error(`HTTP error! status: ${res.status}`);
-        // }
+    const body = await res.json();
 
-        const { data }: { data: IDiary[] } = await res.json();
-
-        return await fetchTagsNamesForDiary(data);
-
-    } catch (error) {
-        console.error(`Error fetching user diaries: ${error}`);
-        return [];
+    if (!res.ok) {
+        throw new Error(`${res.status}: ${body.message}\n${body.error}`);
     }
+
+    const diaries: IDiary[] = body.data;
+    return await fetchTagsNamesForDiary(diaries);
 };
 
 const fetchTagsNamesForDiary = async (diaries: IDiary[]): Promise<IDiary[]> => {
-    try {
-        for (const diary of diaries) {
-            const tags = diary.tags;
-            if (tags && Array.isArray(tags)) {
-                for (let i = 0; i < tags.length; i++) {
+    for (const diary of diaries) {
+        const tags = diary.tags;
+        if (tags && Array.isArray(tags)) {
+            for (let i = 0; i < tags.length; i++) {
+                try {
+
                     const tagId = tags[i];
                     const fetchedTag = await fetchTagById(tagId as string);
                     if (fetchedTag) {
-                        // Replace string ID with full tag object
                         tags[i] = fetchedTag;
                     }
+                } catch (error: any) {
+                    throw new Error(`Error fetching tags: ${error.massage}`)
                 }
             }
         }
-
-        return diaries;
-    } catch (error) {
-        console.error(`Error fetching user diaries: ${error}`);
-        return [];
     }
+
+    return diaries;
 };
 
 export {

@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { fetchMoods } from "../services/mood.service";
+import { toast } from "react-toastify";
 
 interface MoodContextType {
     moods: IMood[];
@@ -15,8 +16,13 @@ export const MoodProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [moods, setMoods] = useState<IMood[]>([]);
 
     const refreshMoods = async () => {
-        const fetched: IMood[] = await fetchMoods();
-        setMoods(fetched);
+        try {
+
+            const fetched: IMood[] = await fetchMoods();
+            setMoods(fetched);
+        } catch (error: any) {
+            toast.error(error)
+        }
     };
 
     useEffect(() => {

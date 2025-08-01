@@ -45,9 +45,16 @@ export const UserProvider2: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (!currentUser) return;
 
-      const diaries = diariesChanged ? await fetchDiariesForUser(userId) : currentUser.diaries;
-      const tags = tagsChanged ? await fetchTagsForUser(userId) : currentUser.tags;
+      let diaries: IDiary[] = [], tags: ITag[] = [];
+      try {
+        diaries = diariesChanged ? await fetchDiariesForUser(userId) : currentUser.diaries;
+        tags = tagsChanged ? await fetchTagsForUser(userId) : currentUser.tags;
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : "Something went wrong";
 
+        toast.error(message);
+      }
 
       setUser({
         name: currentUser.name || "",

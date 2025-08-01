@@ -8,6 +8,7 @@ import MoodLineChart from "../../components/MoodLineChart/MoodLineChart";
 import YearPixelChart from "../../components/YearPixelChart/YearPixelChart";
 import { useUserData } from "../../providers/user-provider";
 import { useMoods } from "../../providers/mood-provider";
+import { ToastContainer } from "react-toastify";
 
 const typeColorMap: Record<string, { color: string }> = {
   friends: { color: "#a3c8f4" },
@@ -117,6 +118,17 @@ const StatisticsPage = () => {
           />
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 };

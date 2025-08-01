@@ -1,36 +1,41 @@
 const BASE_URL = "http://localhost:3000/tags";
 
-const fetchTagsForUser = (userId: string): Promise<ITag[]> => {
-    return fetch(`${BASE_URL}/user/${userId}`, {
+const fetchTagsForUser = async (userId: string): Promise<ITag[]> => {
+    const res = await fetch(`${BASE_URL}/user/${userId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-    }).then(async res => {
-        const { data }: { data: ITag[] } = await res.json();
-        return data;
-    }).catch(error => {
-        console.error(`Error fetching user tags: ${error}`);
-        return [];
     });
-}
 
-const fetchTagById = (tagId: string): Promise<ITag> => {
-    return fetch(`${BASE_URL}/${tagId}`, {
+    const body = await res.json();
+
+    if (!res.ok) {
+        throw new Error(`${res.status}: ${body.message}\n${body.error}`);
+    }
+
+    return body.data as ITag[];
+};
+
+const fetchTagById = async (tagId: string): Promise<ITag> => {
+    const res = await fetch(`${BASE_URL}/${tagId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
         credentials: "include",
-    }).then(async res => {
-        const { data }: { data: ITag } = await res.json();
-        return data;
-    }).catch(error => {
-        console.error(`Error fetching user tags: ${error}`);
-        throw new Error(error.massage || "Failed to fetch tag");
     });
-}
+
+    const body = await res.json();
+
+    if (!res.ok) {
+        throw new Error(`${res.status}: ${body.message}\n${body.error}`);
+    }
+
+    return body.data as ITag;
+};
+
 
 export {
     fetchTagsForUser,
