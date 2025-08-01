@@ -43,7 +43,12 @@ interface ICustomLabelProps {
   index: number;
 }
 
-const DEFAULT_COLORS = ["#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7"];
+const DEFAULT_COLORS = [
+  "#a3c8f4", "#d2e596", "#fee6a6", "#f5ccb3", "#d3c1f7",
+  "#f2e2ce", "#e8d8c3", "#f5e3da", "#ecd9c6", "#ffe8d6", "#f9dcc4", "#e0cfc1", "#fce5cd", "#f4d9c6", "#f1dfd1", "#e7cfc7", "#f8e1dc", "#f3e0d2",
+  "#eed3d7", "#e4d0c1", "#f5e7d3", "#dbc6b4", "#f7e6cf", "#e6d3c3", "#f2e1d9", "#fdebd3", "#e9d5c3", "#f6e4cc", "#f3ddc8", "#fbe8dd",
+];
+
 
 const MoodPieChart = ({ pieData, moods }: IProps) => {
   const renderCustomLabel = ({
