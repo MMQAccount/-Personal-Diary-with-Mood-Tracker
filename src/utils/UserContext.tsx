@@ -20,7 +20,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<User | null>(null);
 
   const login = (userData: User) => setUser(userData);
-  const logout = () => setUser(null);
+  const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userId");
+  setUser(null);
+};
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>
