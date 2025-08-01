@@ -116,10 +116,10 @@ const DiaryMood = () => {
 
                 <div className="check">
                     {tags.map(m => (
-                        <label key={m} className="checkbox-label">
-                            <input type="checkbox" value={m} onChange={handleCheckboxChange} />
-                            <span className={form.type.includes(m) ? "checked_span" : ""}>
-                                {t(m)}
+                        <label key={m._id} className="checkbox-label">
+                            <input type="checkbox" value={m._id} onChange={handleCheckboxChange} />
+                            <span className={form.type.includes(m._id) ? "checked_span" : ""}>
+                                {t(m.name)}
                             </span>
                         </label>
                     ))}

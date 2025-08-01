@@ -14,11 +14,11 @@ const DiaryEditPage = () => {
 
     const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
     const stateLabels = [
-      t("reallyTerrible"),
-      t("somewhatBad"),
-      t("completelyOkay"),
-      t("prettyGood"),
-      t("superAwesome")
+        t("reallyTerrible"),
+        t("somewhatBad"),
+        t("completelyOkay"),
+        t("prettyGood"),
+        t("superAwesome")
     ];
 
     const INITIAL_FORM: Store.IDiaryMood = { title: '', type: [], state: 2 };
@@ -97,14 +97,22 @@ const DiaryEditPage = () => {
                 </div>
                 <div className='diary_data'>
                     <div className="check">
-                        {tags.map(m => (
-                            <label key={m} className="checkbox-label">
-                                <input type="checkbox" value={m} onChange={handleCheckboxChange} />
-                                <span className={form.type.includes(m) ? "checked_span" : ""}>
-                                    {t(m)}
-                                </span>
-                            </label>))
-                        }
+                        <div className="check">
+                            {tags.map(m => (
+                                <label key={m._id} className="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        value={m._id}
+                                        onChange={handleCheckboxChange}
+                                        checked={form.type.includes(m._id)}
+                                    />
+                                    <span className={form.type.includes(m._id) ? "checked_span" : ""}>
+                                        {t(m.name)}
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+
                     </div>
                     <br />
                     <input

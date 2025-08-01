@@ -28,14 +28,6 @@ declare namespace Store {
     tags?: string[];
   }
   import { Types } from "mongoose";
-
-  export interface ITag {
-    name: string;
-    emoji: string;
-    type: 'global' | 'custom';
-    user?: Types.ObjectId;
-  }
-
   interface IDayDiaryBE {
     _id: string;
     date?: string;
