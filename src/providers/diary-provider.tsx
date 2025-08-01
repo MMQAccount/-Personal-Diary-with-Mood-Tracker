@@ -1,128 +1,119 @@
-import { createContext, type ReactNode, useState } from "react";
-
+import React, { createContext, type ReactNode, useState, useEffect } from "react";
+import { createDiary, fetchDiariesForUser, updateDiaryContent } from "../services/diaryService";
 
 interface IDiaryContext {
   diary: Store.IDayDiary[];
-  addToDiary: (item: Store.IDayDiary) => void;
-  updateDiary: (id: number, item: Store.IDayDiary) => void;
+  addToDiary: (item: Store.IDayDiaryInput) => void;
+  updateDiary: (id: string, item: Store.IDayDiary) => void;
 }
 
-const initialDiary: Store.IDayDiary[] = [
-  {
-    id: new Date("2025-06-27").getTime(),
-    title: "Family Reunion",
-    type: ["Family 👨‍👩‍👧‍👦"],
-    state: 0,
-    notes: [
-      "We had a big *family reunion* at grandma's house. It was:",
-      "1. Warm and loving",
-      "2. A bit chaotic",
-      "3. Full of laughter",
-      "I helped Grandma bake pies—**apple** and **cherry**—and it felt like *home* again."
-    ],
-    voices: [],
-  },
-  {
-    id: new Date("2025-06-28").getTime(),
-    title: "Grandma bake",
-    type: ["Family 👨‍👩‍👧‍👦", "School 🏫"],
-    state: 1,
-    notes: ["Note test"],
-    voices: [],
-    images: [
-      "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-    ],
-  },
-  {
-    id: new Date("2025-05-29").getTime(),
-    title: "Quiet Victory",
-    type: ["Work 🏢"],
-    state: 4,
-    notes: [
-      "Finally finished that stubborn article I've been working on. The words just *flowed* today.",
-      "Result:",
-      "- **2,500** words written",
-      "- Dozens of edits",
-      "Feeling proud and relieved!"
-    ],
-    voices: [],
-  },
-  {
-    id: new Date("2025-05-30").getTime(),
-    title: "Midterms Stress",
-    type: ["School 🏫"],
-    state: 2,
-    notes: [
-      "Studying for my midterms is **exhausting**. Notes are everywhere:",
-      "- Biology chapter 5",
-      "- Math integration problems",
-      "- Literature analysis 🤯",
-      "I scheduled breaks and made a *color-coded* timetable.",
-      "**Goal:** finish all review by Friday."
-    ],
-    voices: [],
-  },
-  {
-    id: new Date("2025-06-01").getTime(),
-    title: "Evening Walk",
-    type: ["School 🏫"],
-    state: 1,
-    notes: [
-      "Took a long walk as the sun set. The park was calm, birds chirping. I felt a sense of peace:",
-      "> _Walking clears the mind._",
-      "Returned with a fresh perspective and motivation to journal."
-    ],
-    voices: [],
-  },
-  {
-    id: new Date("2025-06-02").getTime(),
-    title: "Friendsgiving Prep",
-    type: ["Friends 👥"],
-    state: 3,
-    notes: [
-      "Planning a **Friendsgiving** dinner:",
-      "- 🥧 Pumpkin pie",
-      "- 🍗 Roast chicken",
-      "- 🥗 Green salad",
-      "- 🎶 Playlist is ready",
-      "Created an invite in the group chat and assigned tasks. So excited!"
-    ],
-    voices: [],
-    images: [
-      "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-    ],
-  },
-  {
-    id: new Date("2025-06-03").getTime(),
-    title: "On Top of the World",
-    type: ["Family 👨‍👩‍👧‍👦"],
-    state: 4,
-    notes: [
-      "Everything clicked today — energy, creativity, and happiness!"
-    ],
-    voices: [],
-    images: [
-      "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg"
-    ],
-  }
-];
+export const DiaryContext = createContext<IDiaryContext>({
+  diary: [],
+  addToDiary: () => {},
+  updateDiary: () => {},
+});
 
-
-export const DiaryContext = createContext<IDiaryContext>({ diary: [], addToDiary: () => { }, updateDiary: () => { } });
+const convertInputToBE = (item: Store.IDayDiaryInput): Store.IDayDiaryBECreateUpdate => {
+  return {
+    date: new Date(item.id).toISOString(),
+    title: item.title,
+    notes: item.notes,
+    images: item.images,
+    audios: item.voices,
+    mood: item.state,
+    tags: item.type,
+  };
+};
 
 const diaryProvider = ({ children }: { children: ReactNode }) => {
-  const [diary, setDiary] = useState<Store.IDayDiary[]>(initialDiary);
+  const [diary, setDiary] = useState<Store.IDayDiary[]>([]);
 
-  const addToDiary = (item: Store.IDayDiary) => {
-    setDiary((prev) => [...prev, item]);
-  }
-  const updateDiary = (id: number, item: Store.IDayDiary) => {
-    setDiary((prev) =>
-      prev.map((d) => (d.id === id ? { ...d, ...item } : d))
-    );
+  useEffect(() => {
+    const loadDiaries = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) {
+        console.warn("User ID not found");
+        return;
+      }
+      try {
+        const diariesFromDb = await fetchDiariesForUser(userId);
+        const transformedDiaries: Store.IDayDiary[] = diariesFromDb.map(diary => ({
+          _id: diary._id,
+          id: diary.date ? new Date(diary.date).getTime() : Date.now(),
+          title: diary.title || "",
+          notes: diary.notes || [],
+          images: diary.images || [],
+          voices: diary.audios || [],
+          state: diary.mood ?? 0,
+          type: diary.tags?.map((tag: any) => String(tag)) || [],
+        }));
+
+        setDiary(transformedDiaries);
+      } catch (error) {
+        console.error("Failed to load diaries", error);
+      }
+    };
+    loadDiaries();
+  }, []);
+
+  const addToDiary = async (item: Store.IDayDiaryInput) => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      if (!userId || !token) throw new Error("User not authenticated");
+
+      const dataToSend = convertInputToBE(item);
+
+      const response = await createDiary(userId, dataToSend, token);
+      const savedDiaryBE: Store.IDayDiaryBE = response.data;
+
+      const savedDiary: Store.IDayDiary = {
+        _id: savedDiaryBE._id,
+        id: savedDiaryBE.date ? new Date(savedDiaryBE.date).getTime() : Date.now(),
+        title: savedDiaryBE.title || "",
+        notes: savedDiaryBE.notes || [],
+        images: savedDiaryBE.images || [],
+        voices: savedDiaryBE.audios || [],
+        state: savedDiaryBE.mood ?? 0,
+        type: savedDiaryBE.tags?.map(tag => tag.toString()) || [],
+      };
+
+      setDiary(prev => [...prev, savedDiary]);
+    } catch (error) {
+      console.error("Error adding diary:", error);
+    }
   };
 
-  return <DiaryContext.Provider value={{ diary, addToDiary, updateDiary }}>{children}</DiaryContext.Provider>
-}
+const updateDiary = async (_id: string, item: Store.IDayDiary) => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+    if (!userId || !token) throw new Error("User not authenticated");
+
+    const dataToSend = convertInputToBE({
+      id: item.id,
+      title: item.title,
+      notes: item.notes,
+      images: item.images,
+      voices: item.voices,
+      state: item.state,
+      type: item.type,
+    });
+
+    await updateDiaryContent(_id, userId, dataToSend, token);
+
+    setDiary(prev => prev.map(d => (d._id === _id ? { ...d, ...item } : d)));
+  } catch (error) {
+    console.error("Error updating diary:", error);
+  }
+};
+
+
+  return (
+    <DiaryContext.Provider value={{ diary, addToDiary, updateDiary }}>
+      {children}
+    </DiaryContext.Provider>
+  );
+};
 
 export default diaryProvider;

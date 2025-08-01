@@ -30,7 +30,7 @@ const Diary = ({ note, id, day }: IProps) => {
         ? existingDiary.notes.filter((_, index) => index !== id)
         : [];
 
-      updateDiary(existingDiary.id, {
+      updateDiary(existingDiary._id, {
         ...existingDiary,
         notes: updatedNotes,
       });

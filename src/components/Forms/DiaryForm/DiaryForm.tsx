@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "./DiaryForm.css";
 import { useNavigate } from "react-router";
@@ -8,7 +8,15 @@ const DiaryForm = () => {
   const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
   const navigate = useNavigate();
   const { t } = useTranslation("diary");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
+    if (!token || !userId) {
+      alert("You have to login");
+      navigate("/login");
+    }
+  }, [navigate]);
   const INITIAL_FORM: Store.INoteForm = {
     notes: "",
   };
@@ -34,18 +42,19 @@ const DiaryForm = () => {
     });
 
     if (existingDiary) {
-      updateDiary(existingDiary.id, {
+      updateDiary(existingDiary._id, {
         ...existingDiary,
         notes: [...(existingDiary.notes || []), form.notes],
       });
     } else {
-      const newDiary: Store.IDayDiary = {
+      const newDiary: Store.IDayDiaryInput = {
         id: todayTimestamp,
         notes: [form.notes],
       };
-      addToDiary(newDiary);
-    }
 
+      addToDiary(newDiary);
+
+    }
     setForm(INITIAL_FORM);
     navigate("/diaryPage");
   };

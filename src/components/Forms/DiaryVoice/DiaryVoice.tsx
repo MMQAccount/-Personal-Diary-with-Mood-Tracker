@@ -10,7 +10,15 @@ const DiaryVoice = () => {
     const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
 
+        if (!token || !userId) {
+            alert("You have to login");
+            navigate("/login");
+        }
+    }, [navigate]);
     const [form, setForm] = useState<Store.IVoiceForm>({ voice: "" });
 
     useEffect(() => {
@@ -37,12 +45,12 @@ const DiaryVoice = () => {
         });
 
         if (existingDiary) {
-            updateDiary(existingDiary.id, {
+            updateDiary(existingDiary._id, {
                 ...existingDiary,
                 voices: [...(existingDiary.voices || []), form.voice],
             });
         } else {
-            const newDiary: Store.IDayDiary = {
+            const newDiary: Store.IDayDiaryInput = {
                 id: todayTimestamp,
                 notes: [],
                 images: [],

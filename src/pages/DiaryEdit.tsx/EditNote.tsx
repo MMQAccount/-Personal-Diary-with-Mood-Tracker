@@ -46,7 +46,7 @@ const EditNote = () => {
         const updatedNotes = [...(diaryEx.notes || [])];
         updatedNotes[Number(noteId)] = form.notes;
 
-        updateDiary(diaryEx.id, {
+        updateDiary(diaryEx._id, {
             ...diaryEx,
             notes: updatedNotes,
         });
@@ -57,7 +57,7 @@ const EditNote = () => {
     const handleDelete = () => {
         if (!diaryEx) return;
         const updatedNotes = diaryEx.notes?.filter((_, idx) => idx !== Number(noteId)) || [];
-        updateDiary(diaryEx.id, {
+        updateDiary(diaryEx._id, {
             ...diaryEx,
             notes: updatedNotes,
         });

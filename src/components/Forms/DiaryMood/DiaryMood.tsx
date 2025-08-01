@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "../DiaryForm/DiaryForm.css";
 import { useNavigate } from "react-router";
@@ -9,7 +9,15 @@ const DiaryMood = () => {
     const { t } = useTranslation("diary");
     const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
     const navigate = useNavigate();
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
 
+        if (!token || !userId) {
+            alert("You have to login");
+            navigate("/login");
+        }
+    }, [navigate]);
     const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
     const stateTexts = [
         t("reallyTerrible"),
@@ -60,9 +68,9 @@ const DiaryMood = () => {
                 title: form.title,
             };
 
-            updateDiary(existingDiary.id, updatedDiary);
+            updateDiary(existingDiary._id, updatedDiary);
         } else {
-            const newDiary: Store.IDayDiary = {
+            const newDiary: Store.IDayDiaryInput = {
                 id: todayTimestamp,
                 ...form,
             };

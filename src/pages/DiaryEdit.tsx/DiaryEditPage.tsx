@@ -51,7 +51,7 @@ const DiaryEditPage = () => {
         e.preventDefault();
         if (!diaryEx) return;
 
-        updateDiary(diaryEx.id, {
+        updateDiary(diaryEx._id, {
             ...diaryEx,
             title: form.title.trim(),
             type: [...form.type],

@@ -33,7 +33,7 @@ const DiaryImages = () => {
         ? existingDiary.images.filter((_, i) => i !== index)
         : [];
 
-      updateDiary(existingDiary.id, {
+      updateDiary(existingDiary._id, {
         ...existingDiary,
         images: updatedImages,
       });
