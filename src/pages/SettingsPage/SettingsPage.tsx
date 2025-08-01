@@ -156,10 +156,27 @@ const SettingsPage = () => {
       setMoodIcons((prev) => ({ ...prev, [mood]: icon }));
     }
   };
+  const [localTags, setLocalTags] = useState<ITag[]>([]);
+  useEffect(() => {
+    setLocalTags(tags);
+  }, [tags]);
 
-  const handleTagChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    updateTags(index, e.target.value);
+  const handleTagChange = async (id: string, e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+
+    setLocalTags((prev) =>
+      prev.map((tag) => (tag._id === id ? { ...tag, name: newName } : tag))
+    );
+
+    try {
+      await updateTags(id, newName);
+
+    } catch (error) {
+      console.error("Failed to update tag", error);
+    }
   };
+
+
 
 
   const handleSave = async () => {
@@ -186,14 +203,14 @@ const SettingsPage = () => {
 
       await updateUser(userId!, updatedData);
 
-      localStorage.removeItem("userId");
-      localStorage.removeItem("token");
+      // localStorage.removeItem("userId");
+      // localStorage.removeItem("token");
 
       toast.success("User updated successfully! Please login.");
 
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+      // setTimeout(() => {
+      //   navigate("/login");
+      // }, 3000);
 
     } catch (error: any) {
       toast.error(`Error: ${error.message}`);
@@ -342,14 +359,16 @@ const SettingsPage = () => {
         </div>
         <div className="mood-customization">
           <h3>Customize Tag Icons</h3>
-          {tags.map((t, index) => (
+          {localTags.map((t, index) => (
             <input
-              key={index}
+              key={t._id}
               type="text"
-              defaultValue={t}
-              onChange={(e) => handleTagChange(index, e)}
+              value={t.name}
+              onChange={(e) => handleTagChange(t._id, e)}
             />
           ))}
+
+
         </div>
 
         <button className="save-btn" onClick={handleSave}>

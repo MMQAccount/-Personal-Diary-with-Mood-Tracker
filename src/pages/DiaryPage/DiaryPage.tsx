@@ -128,11 +128,17 @@ const DiaryPage = () => {
         </div>
 
         <div className="filter_by_tag">
-          {tags.map((type: string) => (
-            <label key={type} className="checkbox-label">
-              <input type="checkbox" value={type} onChange={handleCheckboxChange} hidden />
-              <span className={form.type.includes(type) ? "checked_span" : ""}>
-                {t(type)}
+          {tags.map((tag: ITag) => (
+            <label key={tag._id} className="checkbox-label">
+              <input
+                type="checkbox"
+                value={tag._id}
+                onChange={handleCheckboxChange}
+                hidden
+                checked={form.type.includes(tag._id)}
+              />
+              <span className={form.type.includes(tag._id) ? "checked_span" : ""}>
+                {t(tag.name)}
               </span>
             </label>
           ))}
@@ -152,6 +158,7 @@ const DiaryPage = () => {
             ))}
           </select>
         </div>
+
       </div>
       <div className="diarys">
         {searchResults.length > 0 ? (
