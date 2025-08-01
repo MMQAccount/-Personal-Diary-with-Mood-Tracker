@@ -5,12 +5,14 @@ interface IDiaryContext {
   diary: Store.IDayDiary[];
   addToDiary: (item: Store.IDayDiaryInput) => void;
   updateDiary: (id: string, item: Store.IDayDiary) => void;
+  loadDiaries: () => void;
 }
 
 export const DiaryContext = createContext<IDiaryContext>({
   diary: [],
-  addToDiary: () => {},
-  updateDiary: () => {},
+  addToDiary: () => { },
+  updateDiary: () => { },
+  loadDiaries: () => {},
 });
 
 const convertInputToBE = (item: Store.IDayDiaryInput): Store.IDayDiaryBECreateUpdate => {
@@ -25,34 +27,34 @@ const convertInputToBE = (item: Store.IDayDiaryInput): Store.IDayDiaryBECreateUp
   };
 };
 
-const diaryProvider = ({ children }: { children: ReactNode }) => {
+export const diaryProvider = ({ children }: { children: ReactNode }) => {
   const [diary, setDiary] = useState<Store.IDayDiary[]>([]);
+  const loadDiaries = async () => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      console.warn("User ID not found");
+      return;
+    }
+    try {
+      const diariesFromDb = await fetchDiariesForUser(userId);
+      const transformedDiaries: Store.IDayDiary[] = diariesFromDb.map(diary => ({
+        _id: diary._id,
+        id: diary.date ? new Date(diary.date).getTime() : Date.now(),
+        title: diary.title || "",
+        notes: diary.notes || [],
+        images: diary.images || [],
+        voices: diary.audios || [],
+        state: diary.mood ?? 0,
+        type: diary.tags?.map((tag: any) => String(tag)) || [],
+      }));
 
+      setDiary(transformedDiaries);
+    } catch (error) {
+      console.error("Failed to load diaries", error);
+    }
+  };
   useEffect(() => {
-    const loadDiaries = async () => {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        console.warn("User ID not found");
-        return;
-      }
-      try {
-        const diariesFromDb = await fetchDiariesForUser(userId);
-        const transformedDiaries: Store.IDayDiary[] = diariesFromDb.map(diary => ({
-          _id: diary._id,
-          id: diary.date ? new Date(diary.date).getTime() : Date.now(),
-          title: diary.title || "",
-          notes: diary.notes || [],
-          images: diary.images || [],
-          voices: diary.audios || [],
-          state: diary.mood ?? 0,
-          type: diary.tags?.map((tag: any) => String(tag)) || [],
-        }));
 
-        setDiary(transformedDiaries);
-      } catch (error) {
-        console.error("Failed to load diaries", error);
-      }
-    };
     loadDiaries();
   }, []);
 
@@ -84,33 +86,33 @@ const diaryProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-const updateDiary = async (_id: string, item: Store.IDayDiary) => {
-  try {
-    const userId = localStorage.getItem("userId");
-    const token = localStorage.getItem("token");
-    if (!userId || !token) throw new Error("User not authenticated");
+  const updateDiary = async (_id: string, item: Store.IDayDiary) => {
+    try {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("token");
+      if (!userId || !token) throw new Error("User not authenticated");
 
-    const dataToSend = convertInputToBE({
-      id: item.id,
-      title: item.title,
-      notes: item.notes,
-      images: item.images,
-      voices: item.voices,
-      state: item.state,
-      type: item.type,
-    });
+      const dataToSend = convertInputToBE({
+        id: item.id,
+        title: item.title,
+        notes: item.notes,
+        images: item.images,
+        voices: item.voices,
+        state: item.state,
+        type: item.type,
+      });
 
-    await updateDiaryContent(_id, userId, dataToSend, token);
+      await updateDiaryContent(_id, userId, dataToSend, token);
 
-    setDiary(prev => prev.map(d => (d._id === _id ? { ...d, ...item } : d)));
-  } catch (error) {
-    console.error("Error updating diary:", error);
-  }
-};
+      setDiary(prev => prev.map(d => (d._id === _id ? { ...d, ...item } : d)));
+    } catch (error) {
+      console.error("Error updating diary:", error);
+    }
+  };
 
 
   return (
-    <DiaryContext.Provider value={{ diary, addToDiary, updateDiary }}>
+    <DiaryContext.Provider value={{ diary, addToDiary, updateDiary, loadDiaries }}>
       {children}
     </DiaryContext.Provider>
   );

@@ -26,7 +26,7 @@ const DiaryPage = () => {
   const { handleSearchByType, searchResultsByType } = useSearchType();
   const { handleSearch, searchResults } = useSearch();
   const navigate = useNavigate();
-  const { diary } = useContext(DiaryContext);
+  const { diary, loadDiaries} = useContext(DiaryContext);
   const [open, setOpen] = useState(false);
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
   const [form, setForm] = useState<ISearchForm>({ type: [] });
@@ -36,7 +36,17 @@ const DiaryPage = () => {
   useEffect(() => {
     document.body.classList.toggle("rtl", i18n.language === "ar");
   }, [i18n.language]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
+    if (!token || !userId) {
+      alert("You have to login");
+      navigate("/login");
+    }else{
+      loadDiaries();
+    }
+  }, [navigate]);
   useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
 
