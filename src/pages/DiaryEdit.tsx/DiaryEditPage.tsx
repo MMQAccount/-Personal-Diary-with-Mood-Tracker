@@ -3,6 +3,10 @@ import { useNavigate, useParams } from "react-router";
 import { DiaryContext } from "../../providers/diary-provider";
 import { TagsContext } from "../../providers/tag-providor";
 import { useTranslation } from "react-i18next";
+import { useUserData } from "../../providers/user-provider";
+import { customMoodEmojisMap } from "../../constants/mood-no";
+import { nameToIcon } from "../../components/MoodLineChart/MoodLineChart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type IParams = { id: string };
 
@@ -12,7 +16,9 @@ const DiaryEditPage = () => {
     const params = useParams() as IParams;
     const navigate = useNavigate();
 
-    const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
+    const { user } = useUserData();
+
+
     const stateLabels = [
         t("reallyTerrible"),
         t("somewhatBad"),
@@ -25,7 +31,9 @@ const DiaryEditPage = () => {
     const [form, setForm] = useState<Store.IMoodForm>(INITIAL_FORM);
     const [moodValue, setMoodValue] = useState<number>(2);
     const [diaryEx, setDiaryEx] = useState<Store.IDayDiary>();
-
+    const emojis = user?.customMoodEmojis; const moodKey = customMoodEmojisMap[moodValue ?? -1] as keyof typeof emojis;
+    const iconName = emojis?.[moodKey] ?? "";
+    const iconDef = nameToIcon[iconName];
     useEffect(() => {
         const d = diary?.find(d => d.id === Number(params.id));
         if (d) {
@@ -93,7 +101,11 @@ const DiaryEditPage = () => {
                             handleFormChange(e);
                         }}
                     />
-                    <h1>{emojis[moodValue]}</h1>
+                    <h1>{iconDef ? (
+                        <FontAwesomeIcon icon={iconDef} />
+                    ) : (
+                        ""
+                    )}</h1>
                 </div>
                 <div className='diary_data'>
                     <div className="check">

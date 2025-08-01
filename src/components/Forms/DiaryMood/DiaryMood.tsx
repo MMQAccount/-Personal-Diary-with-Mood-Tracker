@@ -4,6 +4,10 @@ import "../DiaryForm/DiaryForm.css";
 import { useNavigate } from "react-router";
 import { TagsContext } from "../../../providers/tag-providor";
 import { useTranslation } from "react-i18next";
+import { useUserData } from "../../../providers/user-provider";
+import { customMoodEmojisMap } from "../../../constants/mood-no";
+import { nameToIcon } from "../../MoodLineChart/MoodLineChart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const DiaryMood = () => {
     const { t } = useTranslation("diary");
@@ -18,7 +22,10 @@ const DiaryMood = () => {
             navigate("/login");
         }
     }, [navigate]);
-    const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
+    const { user } = useUserData();
+
+    const emojis = user?.customMoodEmojis;
+
     const stateTexts = [
         t("reallyTerrible"),
         t("somewhatBad"),
@@ -28,6 +35,10 @@ const DiaryMood = () => {
     ];
 
     const [moodValue, setMoodValue] = useState(2);
+    const moodKey = customMoodEmojisMap[moodValue ?? -1] as keyof typeof emojis;
+    const iconName = emojis?.[moodKey] ?? "";
+    const iconDef = nameToIcon[iconName];
+
     const INITIAL_FORM: Store.IMoodForm = {
         title: "",
         type: [],
@@ -111,7 +122,14 @@ const DiaryMood = () => {
                         }}
                         required
                     />
-                    <h1>{emojis[moodValue]}</h1>
+
+                    <h1>
+                        {iconDef ? (
+                            <FontAwesomeIcon icon={iconDef} />
+                        ) : (
+                            ""
+                        )}
+                    </h1>
                 </div>
 
                 <div className="check">

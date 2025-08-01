@@ -32,7 +32,6 @@ export const UserProvider2: React.FC<{ children: React.ReactNode }> = ({ childre
 
       if (!userId || !token) return;
 
-      // Use current user if no need to refetch
       let currentUser = user;
       if (userChanged) {
         const response = await getUserById(userId, token);

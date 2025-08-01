@@ -7,6 +7,10 @@ import ImageDiary from "../Diary/ImageDiary";
 import VoiceDiary from "../Diary/VoiceDiary";
 import { EditOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router";
+import { useUserData } from "../../providers/user-provider";
+import { customMoodEmojisMap } from "../../constants/mood-no";
+import { nameToIcon } from "../MoodLineChart/MoodLineChart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
   id: number;
@@ -33,7 +37,9 @@ const Day = ({ id }: IProps) => {
   };
 
   const todayEntries = filterToday(id, diary);
-  const emojis = ['😭', '🙁', '😐', '☺️', '😁'];
+  const { user } = useUserData();
+
+  const emojis = user?.customMoodEmojis;
 
   const goToEdit = (id: number) => {
     navigate(`/EditDay/${id}`);
@@ -54,7 +60,18 @@ const Day = ({ id }: IProps) => {
       <div className="diary_notes">
         <h2 className="title">
           {todayEntries.map(d => d.title).join(", ")}{" "}
-          {todayEntries.map(d => emojis[d.state ?? -1] ?? " ").join(" ")}
+          {todayEntries.map(d => {
+            const moodKey = customMoodEmojisMap[d.state ?? -1] as keyof typeof emojis;
+            const iconName = emojis![moodKey] ?? "";
+            const iconDef = nameToIcon[iconName];
+
+            return iconDef ? (
+              <FontAwesomeIcon key={d.state} icon={iconDef} />
+            ) : (
+              <span key={d.state}> </span>
+            );
+          })}
+
         </h2>
         <div className="header_mood_type">
           {todayEntries
