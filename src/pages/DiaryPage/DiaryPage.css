@@ -8,9 +8,9 @@
 html[dir="rtl"] .diary_container{
     padding-right: 3%;
 } 
-.display_mood_search{
+.display_mood_search {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 .diary_type {
     outline: none;
@@ -153,14 +153,15 @@ html[dir="rtl"] .checkbox-label {
 }
 
 .search_mood {
-    width: 80px;
+    width: 94px;
     background-color: inherit;
     padding: 3px;
     border-radius: 20px;
     border: none;
     outline: none;
     color: #8e8e8e;
-    font-size: 13px;
+    font-size: 16px;
+    margin-top: -2px;
 }
 
 .filter_by_tag {

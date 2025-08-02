@@ -108,7 +108,7 @@ const DiaryPage = () => {
   const moodKeys = Object.keys(emojis);
 
   const onMoodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const moodKey = e.target.value; 
+    const moodKey = e.target.value;
     setSelectedMood(moodKey);
 
     const moodNumber = customMoodNumbersMap[moodKey];
@@ -186,10 +186,12 @@ const DiaryPage = () => {
               ))}
             </select>
             {selectedMood && (
-              <FontAwesomeIcon
-                icon={nameToIcon[emojis[selectedMood]] ?? faQuestionCircle}
-                style={{ marginLeft: 8 }}
-              />
+              <span style={{fontSize:"23px", marginTop:"-4px"}}>
+                <FontAwesomeIcon
+                  icon={nameToIcon[emojis[selectedMood]] ?? faQuestionCircle}
+                  style={{ marginLeft: 8 }}
+                />
+              </span>
             )}
           </div>
         </div>
