@@ -16,9 +16,8 @@ import { TagsContext } from "../../providers/tag-providor";
 import { useUserData } from "../../providers/user-provider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { nameToIcon } from "../../components/MoodLineChart/MoodLineChart";
-import { Listbox } from "@headlessui/react";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
-
+import { customMoodNumbersMap } from "../../constants/mood-no";
 
 interface ISearchForm {
   type: string[];
@@ -35,12 +34,14 @@ const DiaryPage = () => {
   const [open, setOpen] = useState(false);
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
   const [form, setForm] = useState<ISearchForm>({ type: [] });
-  const [select, setSelected] = useState("");
+  const [selectedMood, setSelectedMood] = useState("");
+  const [selectedMoodNumber, setSelectedMoodNumber] = useState<number | null>(null);
   const { tags } = useContext(TagsContext);
 
   useEffect(() => {
     document.body.classList.toggle("rtl", i18n.language === "ar");
   }, [i18n.language]);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
@@ -52,6 +53,7 @@ const DiaryPage = () => {
       loadDiaries();
     }
   }, [navigate]);
+
   useEffect(() => {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
 
@@ -92,12 +94,6 @@ const DiaryPage = () => {
     });
   };
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelected(e.target.value);
-    const val = Number(e.target.value);
-    handleSearchByMood(val);
-  };
-
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleSearch(e);
   };
@@ -107,14 +103,20 @@ const DiaryPage = () => {
   }, [form]);
 
   const { user } = useUserData();
-  const emojiNames = user?.customMoodEmojis;
-  const moodOptions = Object.keys(emojiNames ?? {});
+  const emojis = user?.customMoodEmojis ?? {};
 
-  type MoodKey = "delighted" | "happy" | "neutral" | "sad" | "miserable";
-  const [selectedMood, setSelectedMood] = useState<MoodKey | "">("");
+  const moodKeys = Object.keys(emojis);
 
-  const handleMoodSelectChange = (value: string) => {
-    setSelectedMood(value as MoodKey);
+  const onMoodChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const moodKey = e.target.value; 
+    setSelectedMood(moodKey);
+
+    const moodNumber = customMoodNumbersMap[moodKey];
+    setSelectedMoodNumber(moodNumber ?? null);
+
+    if (moodNumber !== undefined) {
+      handleSearchByMood(moodNumber);
+    }
   };
 
   return (
@@ -169,56 +171,36 @@ const DiaryPage = () => {
             </label>
           ))}
 
+          <div className="display_mood_search">
+            <select
+              className="search_mood"
+              onChange={onMoodChange}
+              value={selectedMood}
 
-          <Listbox value={selectedMood} onChange={handleMoodSelectChange}>
-            <Listbox.Button className="search_mood">
-              {selectedMood ? (
-                <span style={{ fontSize: "24px" }}>
-                  <FontAwesomeIcon
-                    icon={
-                      selectedMood && emojiNames
-                        ? nameToIcon[emojiNames[selectedMood]]
-                        : faQuestionCircle
-                    }
-                  />
-                </span>
-              ) : (
-                "mood"
-              )}
-            </Listbox.Button>
-
-            <Listbox.Options>
-              <Listbox.Option key="default" value={null}>
-                {({ selected }) => (
-                  <span style={{ fontSize: "16px", fontWeight: selected ? 'bold' : 'normal' }}>
-                    mood
-                  </span>
-                )}
-              </Listbox.Option>
-
-              {moodOptions.map((emojiKey) => (
-                <Listbox.Option key={emojiKey} value={emojiKey as MoodKey}>
-                  {({ selected }) => (
-                    <span style={{ fontSize: "24px" }}>
-                      <FontAwesomeIcon
-                        icon={nameToIcon[emojiNames?.[emojiKey as MoodKey] ?? ""] ?? faQuestionCircle}
-                      />
-                    </span>
-                  )}
-                </Listbox.Option>
+            >
+              <option value="">{t("mood")}</option>
+              {moodKeys.map((moodKey, idx) => (
+                <option key={idx} value={moodKey}>
+                  {moodKey}
+                </option>
               ))}
-            </Listbox.Options>
-          </Listbox>
-
+            </select>
+            {selectedMood && (
+              <FontAwesomeIcon
+                icon={nameToIcon[emojis[selectedMood]] ?? faQuestionCircle}
+                style={{ marginLeft: 8 }}
+              />
+            )}
+          </div>
         </div>
-
       </div>
+
       <div className="diarys">
         {searchResults.length > 0 ? (
           searchResults.map((d) => <Day key={d.id} id={d.id} />)
-        ) : searchResultsByMood.length > 0 && select !== "" ? (
+        ) : searchResultsByMood.length > 0 && selectedMoodNumber !== null ? (
           searchResultsByMood.map((d) => <Day key={d.id} id={d.id} />)
-        ) : select !== "" ? (
+        ) : selectedMoodNumber !== null ? (
           <h2>{t("no_result")}</h2>
         ) : searchResultsByType.length > 0 ? (
           searchResultsByType.map((d) => <Day key={d.id} id={d.id} />)
