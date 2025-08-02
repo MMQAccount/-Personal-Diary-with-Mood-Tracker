@@ -13,6 +13,12 @@ import useSearchByMood from "../../hooks/useSearchByMood.hook";
 import { useTheme } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { TagsContext } from "../../providers/tag-providor";
+import { useUserData } from "../../providers/user-provider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { nameToIcon } from "../../components/MoodLineChart/MoodLineChart";
+import { Listbox } from "@headlessui/react";
+import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
+
 
 interface ISearchForm {
   type: string[];
@@ -21,12 +27,11 @@ interface ISearchForm {
 const DiaryPage = () => {
   const { t, i18n } = useTranslation("diary");
   const { theme, toggleTheme } = useTheme();
-  const emojis = ["😭", "🙁", "😐", "☺️", "😁"];
   const { DiaryDays } = useDays();
   const { handleSearchByType, searchResultsByType } = useSearchType();
   const { handleSearch, searchResults } = useSearch();
   const navigate = useNavigate();
-  const { diary, loadDiaries} = useContext(DiaryContext);
+  const { diary, loadDiaries } = useContext(DiaryContext);
   const [open, setOpen] = useState(false);
   const { handleSearchByMood, searchResultsByMood } = useSearchByMood();
   const [form, setForm] = useState<ISearchForm>({ type: [] });
@@ -43,7 +48,7 @@ const DiaryPage = () => {
     if (!token || !userId) {
       alert("You have to login");
       navigate("/login");
-    }else{
+    } else {
       loadDiaries();
     }
   }, [navigate]);
@@ -101,6 +106,17 @@ const DiaryPage = () => {
     handleSearchByType(form.type);
   }, [form]);
 
+  const { user } = useUserData();
+  const emojiNames = user?.customMoodEmojis;
+  const moodOptions = Object.keys(emojiNames ?? {});
+
+  type MoodKey = "delighted" | "happy" | "neutral" | "sad" | "miserable";
+  const [selectedMood, setSelectedMood] = useState<MoodKey | "">("");
+
+  const handleMoodSelectChange = (value: string) => {
+    setSelectedMood(value as MoodKey);
+  };
+
   return (
     <div className="diary_container">
       <button className="theme-icon-btn2" onClick={toggleTheme} title={t("toggle_theme")}>
@@ -153,20 +169,47 @@ const DiaryPage = () => {
             </label>
           ))}
 
-          <select
-            name="mood"
-            id="mood"
-            className="search_mood"
-            onChange={handleSelectChange}
-            defaultValue={""}
-          >
-            <option value="">{t("mood")}</option>
-            {emojis.map((emoji, index) => (
-              <option key={index} value={index}>
-                {emoji}
-              </option>
-            ))}
-          </select>
+
+          <Listbox value={selectedMood} onChange={handleMoodSelectChange}>
+            <Listbox.Button className="search_mood">
+              {selectedMood ? (
+                <span style={{ fontSize: "24px" }}>
+                  <FontAwesomeIcon
+                    icon={
+                      selectedMood && emojiNames
+                        ? nameToIcon[emojiNames[selectedMood]]
+                        : faQuestionCircle
+                    }
+                  />
+                </span>
+              ) : (
+                "mood"
+              )}
+            </Listbox.Button>
+
+            <Listbox.Options>
+              <Listbox.Option key="default" value={null}>
+                {({ selected }) => (
+                  <span style={{ fontSize: "16px", fontWeight: selected ? 'bold' : 'normal' }}>
+                    mood
+                  </span>
+                )}
+              </Listbox.Option>
+
+              {moodOptions.map((emojiKey) => (
+                <Listbox.Option key={emojiKey} value={emojiKey as MoodKey}>
+                  {({ selected }) => (
+                    <span style={{ fontSize: "24px" }}>
+                      <FontAwesomeIcon
+                        icon={nameToIcon[emojiNames?.[emojiKey as MoodKey] ?? ""] ?? faQuestionCircle}
+                      />
+                    </span>
+                  )}
+                </Listbox.Option>
+              ))}
+            </Listbox.Options>
+          </Listbox>
+
         </div>
 
       </div>
