@@ -13,7 +13,7 @@
 }
 
 .image_content {
-  width: fit-content;
+  width: 100%;
 }
 
 .span_note {
@@ -42,8 +42,8 @@
 
 .image_note {
   display: flex;
-  gap: 0.5%;
-  flex-wrap: wrap;
+  gap: 2%;
+  flex-wrap: nowrap;
 }
 
 .images {
@@ -52,7 +52,7 @@
 }
 
 .image_note img {
-  width: 24%;
+  width: 20%;
   height: auto;
   display: block;
   border-radius: 8px;
@@ -82,23 +82,13 @@ div.container {
   align-items: center;
 }
 
-.header_date {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 2%;
-  align-items: center;
-  margin-left: 0;
-}
-
 .header_date_day {
   width: 80%;
   display: flex;
   flex-direction: row;
   gap: 3%;
   align-items: center;
-  margin-left: 0%;
+  margin-left: -20%;
 }
 
 .header_mood_type {
@@ -171,13 +161,28 @@ h1 {
 }
 
 @media screen and (max-width: 754px) {
+  div.container {
+    margin-left: 5%;
+
+  }
+
+  .image_note img {
+    width: 50%;
+  }
+
+  .title {
+    font-size: large;
+    margin-left: -5%;
+  }
 
   .date_div {
-    width: 20%;
+    padding: 2% 8%;
   }
 
   .header_date_day {
-    margin-left: -5%;
+    width: 100%;
+    gap: 5%;
+    margin-left: -10%;
   }
 }
 

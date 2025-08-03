@@ -47,7 +47,6 @@ const Day = ({ id }: IProps) => {
 
   return (
     <div className="container">
-      <div className="header_date">
         <div className="header_date_day">
           <div className="date_div">
             <h3>{date.toLocaleDateString('en-US', { day: 'numeric' })}</h3>
@@ -55,7 +54,6 @@ const Day = ({ id }: IProps) => {
           </div>
           <h2>{date.toLocaleDateString('en-US', { weekday: 'long' })}</h2>
         </div>
-      </div>
 
       <div className="diary_notes">
         <h2 className="title">
@@ -95,7 +93,7 @@ const Day = ({ id }: IProps) => {
 
       {todayEntries.map(d =>
         d.images && d.images.length > 0 ? (
-          <div key={d.id} className="diary_content images">
+          <div key={d.id} className="diary_content images image_day">
             <ImageDiary images={d.images} id={d.id} />
           </div>
         ) : null

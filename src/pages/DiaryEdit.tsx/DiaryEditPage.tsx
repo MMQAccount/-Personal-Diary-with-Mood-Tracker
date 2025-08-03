@@ -109,23 +109,21 @@ const DiaryEditPage = () => {
                 </div>
                 <div className='diary_data'>
                     <div className="check">
-                        <div className="check">
-                            {tags.map(m => (
-                                <label key={m._id} className="checkbox-label">
-                                    <input
-                                        type="checkbox"
-                                        value={m._id}
-                                        onChange={handleCheckboxChange}
-                                        checked={form.type.includes(m._id)}
-                                    />
-                                    <span className={form.type.includes(m._id) ? "checked_span" : ""}>
-                                        {t(m.name)}
-                                    </span>
-                                </label>
-                            ))}
-                        </div>
-
+                        {tags.map(m => (
+                            <label key={m._id} className="checkbox-label">
+                                <input
+                                    type="checkbox"
+                                    value={m._id}
+                                    onChange={handleCheckboxChange}
+                                    checked={form.type.includes(m._id)}
+                                />
+                                <span className={form.type.includes(m._id) ? "checked_span" : ""}>
+                                    {t(m.name)}
+                                </span>
+                            </label>
+                        ))}
                     </div>
+
                     <br />
                     <input
                         type="text"
