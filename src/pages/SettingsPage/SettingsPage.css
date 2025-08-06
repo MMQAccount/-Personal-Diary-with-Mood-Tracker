@@ -157,7 +157,7 @@ body[data-theme="dark-default"] li:hover {
 }
 
 body[data-theme="dark-default"] .popupCloseBotton,
-body[data-theme="dark-default"] .fullScreenButton{
+body[data-theme="dark-default"] .fullScreenButton {
     background: transparent;
     border: none;
     box-shadow: none;
@@ -345,7 +345,7 @@ body[data-theme="light-purple"] .title,
 body[data-theme="light-purple"] .mood-row label,
 body[data-theme="light-purple"] .mood-customization h3,
 body[data-theme="light-purple"] [class*="title"],
-body[data-theme="light-purple"] [class*="title"]{
+body[data-theme="light-purple"] [class*="title"] {
     color: #5a3c7c;
 }
 
@@ -454,13 +454,13 @@ body[data-theme="light-purple"] .signup-button,
 body[data-theme="light-purple"] input[type="submit"],
 body[data-theme="light-purple"] .togglebt,
 body[data-theme="light-purple"] .lang,
-body[data-theme="light-purple"] .btns>button[type="submit"]  {
+body[data-theme="light-purple"] .btns>button[type="submit"] {
     background-color: #b38bd9;
     color: #5a3c7c;
     box-shadow: 0 0 10px #cba5e250;
 }
 
-body[data-theme="light-purple"] .anticon svg:hover{
+body[data-theme="light-purple"] .anticon svg:hover {
     color: #5a3c7c;
 }
 
@@ -547,7 +547,7 @@ body[data-theme="dark-purple"] .select-header {
     background-color: #251336;
 }
 
-body[data-theme="dark-purple"] .search_input{
+body[data-theme="dark-purple"] .search_input {
     background-color: #1a0e27;
 }
 
@@ -566,15 +566,15 @@ body[data-theme="dark-purple"] textarea::placeholder {
 
 body[data-theme="dark-purple"] .favQuoteButton,
 body[data-theme="dark-purple"] .settingsButton,
-body[data-theme="dark-purple"] .option.selected{
+body[data-theme="dark-purple"] .option.selected {
     background: #251336;
 }
 
 body[data-theme="dark-purple"] .login-button2,
 body[data-theme="dark-purple"] .toggle-theme-btn,
 body[data-theme="dark-purple"] input[type="submit"],
-body[data-theme="dark-purple"] .lang ,
-body[data-theme="dark-purple"] .btns>button[type="submit"]  {
+body[data-theme="dark-purple"] .lang,
+body[data-theme="dark-purple"] .btns>button[type="submit"] {
     background: linear-gradient(135deg, #d3c1f3, #855fbc);
     color: #12081b;
     border: none;
@@ -640,7 +640,7 @@ body[data-theme="dark-purple"] .edit-btn,
 body[data-theme="dark-purple"] ._controls_1qngu_17 label,
 body[data-theme="dark-purple"] .mood-row label,
 body[data-theme="dark-purple"] [class*="chartLabel"],
-body[data-theme="dark-purple"] .popup-content h2{
+body[data-theme="dark-purple"] .popup-content h2 {
     color: #e8def7;
 }
 
@@ -650,7 +650,7 @@ body[data-theme="dark-purple"] .checked_span {
     border: 1px solid #7e5fb7;
 }
 
-body[data-theme="dark-purple"] .popup-content{
+body[data-theme="dark-purple"] .popup-content {
     background: #09040d !important;
     border: none;
 }
@@ -699,7 +699,7 @@ body[data-theme="light-yellow"] .signup-container {
     box-shadow: 0px 5px 30px 13px rgba(190, 160, 60, 0.3);
 }
 
-body[data-theme="light-yellow"] .search_input{
+body[data-theme="light-yellow"] .search_input {
     box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
 }
 
@@ -878,7 +878,7 @@ body[data-theme="dark-yellow"] .select-header {
     color: #f0e0b7;
 }
 
-body[data-theme="dark-yellow"] .anticon svg:hover{
+body[data-theme="dark-yellow"] .anticon svg:hover {
     color: #1a1a0f;
 }
 
@@ -987,9 +987,10 @@ body[data-theme="dark-yellow"] .settingsButton,
 body[data-theme="dark-yellow"] .option.selected {
     background: #1a1a0f;
 }
-body[data-theme="dark-yellow"] .popup-content{
+
+body[data-theme="dark-yellow"] .popup-content {
     background: #000000 !important;
-    color:#f0e0b7;
+    color: #f0e0b7;
     padding: 60px !important;
     border: none;
 }
@@ -1074,7 +1075,7 @@ body[data-theme="dark-yellow"] .active>* {
     background-color: #1a1a0f;
 }
 
-body[data-theme="dark-yellow"] button.togglebt{
+body[data-theme="dark-yellow"] button.togglebt {
     background: #2b2b12;
     color: #f0e0b7;
     border-radius: 10px;
@@ -1087,7 +1088,7 @@ body[data-theme="dark-yellow"] .signup-button {
     box-shadow: none;
 }
 
-body[data-theme="dark-yellow"] .option{
+body[data-theme="dark-yellow"] .option {
     background-color: #ffffff;
 }
 
@@ -1356,12 +1357,16 @@ body[data-theme="dark-yellow"] .error {
     margin-top: 2rem;
     padding-top: 1.5rem;
     border-top: 1px solid #ddd;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
 }
 
 .mood-customization h3 {
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 1rem;
+    margin-bottom: 40px;
 }
 
 .mood-row {
@@ -1374,7 +1379,7 @@ body[data-theme="dark-yellow"] .error {
 
 .mood-row label {
     width: 80px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .mood-row select {
