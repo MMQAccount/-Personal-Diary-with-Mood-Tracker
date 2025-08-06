@@ -88,7 +88,7 @@ const StatisticsPage = () => {
 
       {viewMode === "yearly" && entriesCount > 0 && (
         <div className={classes.chartContainer}>
-          <YearPixelChart entries={entries} year={selectedYear} />
+          <YearPixelChart entries={entries} moodsData={moods} year={selectedYear} />
         </div>
       )}
 

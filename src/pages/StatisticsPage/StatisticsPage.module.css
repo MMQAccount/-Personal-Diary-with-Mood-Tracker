@@ -98,12 +98,12 @@
   margin-bottom: 20px;
 }
 
-
-/* -------------- Calendar‑heatmap swatches -------------- */
-.bgGreen   { background:#22c55e; }
-.bgEmerald { background:#10b981; }
-.bgGray    { background:#9ca3af; }
-.bgYellow  { background:#facc15; }
-.bgRed     { background:#ef4444; }
-.colorEmpty{ background:#e5e7eb; opacity:0.45; }
-.colorEmpty:hover{ opacity:0.7; }
+@media screen and (max-width: 754px) {
+  .legendItem {
+    font-size: 14px;
+  }
+  
+  .title{
+    margin-left: 1px;
+  }
+}
