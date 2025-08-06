@@ -4,31 +4,33 @@ import CalendarHeatmap, {
   type ReactCalendarHeatmapValue,
 } from "react-calendar-heatmap";
 import "react-calendar-heatmap/dist/styles.css";
-import { moodMap } from "../../constants/moodMap";
+import { type IMood } from "../../constants/moodMap";
 import classes from "./YearPixelChart.module.css";
 import useYearPixels from "../../hooks/yearPixels.hook";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { nameToIcon } from "../MoodLineChart/MoodLineChart";
 
 interface IMoodEntry {
   date: string | Date;
-  mood: keyof typeof moodMap;
+  mood: string;
 }
 
 interface IProps {
   entries: IMoodEntry[];
   year: number;
+  moodsData: IMood[];
 }
 
-const YearPixelChart: React.FC<IProps> = ({ entries, year }) => {
-  const { EMPTY_COLOR, moods, values } = useYearPixels({ entries, year });
+const YearPixelChart: React.FC<IProps> = ({ entries, year, moodsData }) => {
+  const { EMPTY_COLOR, values } = useYearPixels({ entries, year });
 
   const moodColorEmojiMap = Object.fromEntries(
-    moods.map(([mood, moodObj]) =>
-      typeof moodObj === "object" && moodObj !== null && "color" in moodObj && "emoji" in moodObj
-        ? [mood, { color: moodObj.color, emoji: moodObj.emoji }]
-        : [mood, { color: EMPTY_COLOR, emoji: "" }]
-    )
+    moodsData.map((mood) => [
+      mood.name.toLowerCase(),
+      { color: mood.color, emoji: mood.emoji }, // emoji is the icon name string
+    ])
   ) as Record<string, { color: string; emoji: string }>;
 
   return (
@@ -42,23 +44,21 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year }) => {
           <span>Empty</span>
         </div>
 
-        {moods.map(([mood, moodObj]) => {
-          if (typeof moodObj === "object" && moodObj !== null && "color" in moodObj && "emoji" in moodObj) {
-            const { color, emoji } = moodObj;
-            return (
-              <div key={String(mood)} className={classes.legendItem}>
-                <div
-                  className={classes.legendColorBox}
-                  style={{ backgroundColor: color }}
-                  aria-label={`${mood} mood color`}
-                />
-                <span>
-                  {emoji} {typeof mood === "string" ? mood.charAt(0).toUpperCase() + mood.slice(1) : ""}
-                </span>
-              </div>
-            );
-          }
-          return null;
+        {moodsData.map((mood) => {
+          const iconDef = nameToIcon[mood.emoji];
+          return (
+            <div key={mood.name} className={classes.legendItem}>
+              <div
+                className={classes.legendColorBox}
+                style={{ backgroundColor: mood.color }}
+                aria-label={`${mood.name} mood color`}
+              />
+              <span>
+                {iconDef && <FontAwesomeIcon icon={iconDef} />}{" "}
+                {mood.name.charAt(0).toUpperCase() + mood.name.slice(1)}
+              </span>
+            </div>
+          );
         })}
       </div>
 
@@ -74,37 +74,41 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year }) => {
         transformDayElement={(element, value, index) => {
           let color = EMPTY_COLOR;
 
-          if (value && value.count && moodColorEmojiMap[value.count]) {
-            color = moodColorEmojiMap[value.count].color;
+          if (value && value.count) {
+            const moodKey = value.count.toLowerCase();
+            color = moodColorEmojiMap[moodKey]?.color ?? EMPTY_COLOR;
           }
 
           return React.isValidElement(element)
             ? React.cloneElement<React.SVGProps<SVGRectElement>>(
-              element as React.ReactElement<React.SVGProps<SVGRectElement>>,
-              {
-                key: index,
-                style: { fill: color, stroke: color },
-              }
-            )
+                element as React.ReactElement<React.SVGProps<SVGRectElement>>,
+                {
+                  key: index,
+                  style: { fill: color, stroke: color },
+                }
+              )
             : null;
         }}
         tooltipDataAttrs={(
           value: ReactCalendarHeatmapValue<string> | undefined
         ): TooltipDataAttrs => {
           if (!value || !value.date || !value.count) {
-            return {} as unknown as TooltipDataAttrs;
+            return {} as TooltipDataAttrs;
           }
-          const mood = value.count;
-          const emoji = moodColorEmojiMap[mood]?.emoji ?? "";
+
+          const formattedDate = new Date(value.date).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
 
           return {
             "data-tooltip-id": "heatmap-tooltip",
-            "data-tooltip-content": `${value.date}: ${emoji} ${mood}`,
-          } as unknown as TooltipDataAttrs;
+            "data-tooltip-content": `${formattedDate}: ${value.count}`,
+          };
         }}
       />
 
-      {/* Enable tooltip rendering */}
       <Tooltip id="heatmap-tooltip" />
     </div>
   );

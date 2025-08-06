@@ -12,6 +12,24 @@
   flex-direction: column;
 }
 
+.noDataMessage {
+  color: #555;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 2rem;
+}
+
+.centerMessage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; 
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .container {
   position: relative;
   padding: 32px 40px;
@@ -80,12 +98,12 @@
   margin-bottom: 20px;
 }
 
-
-/* -------------- Calendar‑heatmap swatches -------------- */
-.bgGreen   { background:#22c55e; }
-.bgEmerald { background:#10b981; }
-.bgGray    { background:#9ca3af; }
-.bgYellow  { background:#facc15; }
-.bgRed     { background:#ef4444; }
-.colorEmpty{ background:#e5e7eb; opacity:0.45; }
-.colorEmpty:hover{ opacity:0.7; }
+@media screen and (max-width: 754px) {
+  .legendItem {
+    font-size: 14px;
+  }
+  
+  .title{
+    margin-left: 1px;
+  }
+}

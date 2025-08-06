@@ -63,7 +63,7 @@ const StatisticsPage = () => {
   const [viewMode, setViewMode] = useState<"weekly" | "monthly" | "yearly">("monthly");
   const [weekStart, setWeekStart] = useState(getClosestMonday(now));
 
-  const { lineData, pieData, goodBadCounts, xKey, tagsData, typeCounts } = useMoodData(entries, viewMode, {
+  const { lineData, pieData, goodBadCounts, xKey, tagsData, typeCounts, entriesCount, daysWithTagsCount } = useMoodData(entries, viewMode, {
     selectedYear,
     selectedMonth,
     weekStart,
@@ -86,38 +86,57 @@ const StatisticsPage = () => {
         addDays={addDays}
       />
 
-      {viewMode === "yearly" && (
+      {viewMode === "yearly" && entriesCount > 0 && (
         <div className={classes.chartContainer}>
-          <YearPixelChart entries={entries} year={selectedYear} />
+          <YearPixelChart entries={entries} moodsData={moods} year={selectedYear} />
         </div>
       )}
 
       <div className={classes.chartContainer}>
-        <h2 className={classes.chartLabel} >Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}</h2>
-        <MoodLineChart data={lineData} xKey={xKey} moods={moods} />
+        <h2 className={classes.chartLabel}>
+          Your mood over the {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}
+        </h2>
 
+        {
+          entriesCount > 0 ? (
+            <div>
+              <MoodLineChart data={lineData} xKey={xKey} moods={moods} />
+
+              <div className={classes.sideBySideCharts}>
+                <div className={classes.pieChartWrapper}>
+                  <h4 className={classes.chartLabel}>Mood distribution</h4>
+                  <MoodPieChart
+                    pieData={pieData}
+                    counts={goodBadCounts}
+                    colorMap={typeColorMap}
+                    moods={moods}
+                  />
+                </div>
+
+
+                <div className={classes.pieChartWrapper}>
+                  <h4 className={classes.chartLabel}>Sources that influenced your mood</h4>
+                  {daysWithTagsCount > 0 ? (
+                    <MoodPieChart
+                      pieData={tagsData}
+                      counts={typeCounts}
+                      colorMap={typeColorMap}
+                    />) :
+                    <p className={`${classes.noDataMessage} ${classes.centerMessage}`}>
+                      No tags found
+                    </p>}
+                </div>
+
+              </div>
+            </div>
+          ) : (
+            <p className={classes.noDataMessage}>
+              No mood data found for the selected {viewMode === "yearly" ? "year" : viewMode === "monthly" ? "month" : "week"}
+            </p>
+          )
+        }
       </div>
 
-      <div className={classes.sideBySideCharts}>
-        <div className={classes.pieChartWrapper}>
-          <h4 className={classes.chartLabel}>Mood distribution</h4>
-          <MoodPieChart
-            pieData={pieData}
-            counts={goodBadCounts}
-            colorMap={typeColorMap}
-            moods={moods}
-          />
-        </div>
-
-        <div className={classes.pieChartWrapper}>
-          <h4 className={classes.chartLabel}>Sources that influenced your mood</h4>
-          <MoodPieChart
-            pieData={tagsData}
-            counts={typeCounts}
-            colorMap={typeColorMap}
-          />
-        </div>
-      </div>
       <ToastContainer
         position="top-center"
         autoClose={3000}

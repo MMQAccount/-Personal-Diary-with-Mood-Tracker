@@ -145,6 +145,18 @@ const useMoodData = (
     };
   }, [entriesInRange]);
 
+  const daysWithTagsCount = useMemo(() => {
+    const taggedDays = new Set<string>();
+    entriesInRange.forEach(({ date, tags }) => {
+      if (tags.length > 0) {
+        const day = new Date(date).toISOString().slice(0, 10); // YYYY-MM-DD
+        taggedDays.add(day);
+      }
+    });
+    return taggedDays.size;
+  }, [entriesInRange]);
+
+
   return {
     lineData,
     pieData,
@@ -152,6 +164,8 @@ const useMoodData = (
     goodBadCounts,
     xKey,
     tagsData,
+    entriesCount: entriesInRange.length,
+    daysWithTagsCount
   };
 };
 
