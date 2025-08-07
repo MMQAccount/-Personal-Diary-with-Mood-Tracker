@@ -90,20 +90,6 @@ const onSubmit = async (data: FormValues) => {
           {errors.name && <span className="error">{errors.name.message}</span>}
 
           <input
-            type="text"
-            placeholder={t("avatarUrl")}
-            {...register("avatar", {
-              pattern: {
-                value: /^https?:\/\/.+/i,
-                message: t("invalidAvatarUrl"),
-              },
-            })}
-          />
-          {errors.avatar && (
-            <span className="error">{errors.avatar.message}</span>
-          )}
-
-          <input
             type="email"
             placeholder={t("emailPlaceholder")}
             {...register("email", {
@@ -114,6 +100,11 @@ const onSubmit = async (data: FormValues) => {
               },
             })}
           />
+
+          {errors.avatar && (
+            <span className="error">{errors.avatar.message}</span>
+          )}
+
           {errors.email && (
             <span className="error">{errors.email.message}</span>
           )}
@@ -183,6 +174,16 @@ const onSubmit = async (data: FormValues) => {
           {errors.confirmPassword && (
             <span className="error">{errors.confirmPassword.message}</span>
           )}
+          <input
+            type="text"
+            placeholder={t("avatarUrl")}
+            {...register("avatar", {
+              pattern: {
+                value: /^https?:\/\/.+/i,
+                message: t("invalidAvatarUrl"),
+              },
+            })}
+          />
 
           <button type="submit" className="signup-button">
             {t("signUp")}

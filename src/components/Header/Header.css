@@ -45,6 +45,8 @@ img {
 .homePage>img {
     padding: 0;
     border-radius: 0;
+    width: 55px;
+    height: auto;
 }
 
 @media screen and (max-width: 754px) {

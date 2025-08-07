@@ -61,5 +61,5 @@ h1 {
 }
 
 audio {
-    filter: invert(22%) sepia(23%) saturate(336%) hue-rotate(70deg);
+    filter: invert(-1%) sepia(23%) saturate(336%) hue-rotate(70deg);
 }

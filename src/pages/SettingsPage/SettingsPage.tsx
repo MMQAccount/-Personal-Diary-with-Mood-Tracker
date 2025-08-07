@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import "./SettingsPage.css";
 import { useTheme } from "../../utils/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faEdit, } from "@fortawesome/free-solid-svg-icons";
+import { faSave} from "@fortawesome/free-solid-svg-icons";
 import { updateUser } from "../../services/user.service";
 import { getUserById } from "../../services/user.service";
 import { toast, ToastContainer } from "react-toastify";
@@ -79,42 +79,45 @@ const SettingsPage = () => {
   const [currentPassword, setCurrentPassword] = useState<string>("");
 
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userId = localStorage.getItem("userId");
-        const token = localStorage.getItem("token");
-        if (!userId || !token) {
-          toast.error("User not authenticated. Please login.");
-          setTimeout(() => navigate("/login"), 3000);
-          return;
-        }
+useEffect(() => {
+  const fetchUserData = async () => {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
-        const data = await getUserById(userId, token);
+    if (!userId || !token) {
+      toast.error("User not authenticated. Please login.");
+      setTimeout(() => navigate("/login"), 3000);
+      return;
+    }
 
-        setName(data.data.name || "");
-        setEmail(data.data.email || "");
-        setAvatar(
-          data.data.imageURL ||
-          "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
-        );
+    try {
+      const data = await getUserById(userId); 
 
-        setPassword("");
-      } catch (error: any) {
-        toast.error(`Failed to load user data: ${error.message}`, {
-          toastId: "loadUserError",
-        });
-        localStorage.removeItem("userId");
-        localStorage.removeItem("token");
-        setTimeout(() => {
-          navigate("/login");
-        }, 3000);
+      setName(data.data.name || "");
+      setEmail(data.data.email || "");
+      setAvatar(
+        data.data.imageURL ||
+        "https://api.dicebear.com/6.x/adventurer/svg?seed=girl"
+      );
 
-      }
-    };
+      setPassword(""); 
+    } catch (error: any) {
+      toast.error(`⚠️ Failed to load user data: ${error.message}`, {
+        toastId: "loadUserError",
+      });
 
-    fetchUserData();
-  }, []);
+      localStorage.removeItem("userId");
+      localStorage.removeItem("token");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
+    }
+  };
+
+  fetchUserData();
+}, []);
+
 
   const availableMoodIcons: Record<string, IconDefinition[]> = {
     Delighted: [faGrinStars, faLaughBeam, faGrinHearts],
@@ -176,46 +179,40 @@ const SettingsPage = () => {
     }
   };
 
+ const handleSave = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
+    if (!userId || !token) {
+      toast.error("User not authenticated. Please login.");
+      return;
+    }
 
+    const updatedData: any = { name, email, imageURL: avatar };
 
-  const handleSave = async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-      const token = localStorage.getItem("token");
-
-      if (!userId || !token) {
-        toast.error("User not authenticated. Please login.");
-        setTimeout(() => navigate("/login"), 3000);
+    if (password) {
+      if (!currentPassword) {
+        toast.error("Please enter your current password to change the password.");
         return;
       }
-
-      const updatedData: any = { name, email, imageURL: avatar };
-
-      if (password) {
-        if (!currentPassword) {
-          toast.error("Please enter your current password to change the password.");
-          return;
-        }
-        updatedData.password = password;
-        updatedData.currentPassword = currentPassword;
-      }
-
-      await updateUser(userId!, updatedData);
-
-      localStorage.removeItem("userId");
-      localStorage.removeItem("token");
-
-      toast.success("User updated successfully! Please login.");
-
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-
-    } catch (error: any) {
-      toast.error(`Error: ${error.message}`);
+      updatedData.password = password;
+      updatedData.currentPassword = currentPassword;
     }
-  };
+
+    await updateUser(userId!, updatedData);
+    await refreshUser({ userChanged: true });
+
+    toast.success("User updated successfully!");
+
+    setPassword("");
+    setCurrentPassword("");
+
+  } catch (error: any) {
+    toast.error(`Error: ${error.message}`);
+  }
+};
+
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "en" ? "ar" : "en";
@@ -262,35 +259,6 @@ const SettingsPage = () => {
         />
 
         <div className="input-group">
-          <label>Avatar URL</label>
-          <div className="input-edit-wrapper">
-            <input
-              type="text"
-              value={avatar}
-              onChange={(e) => setAvatar(e.target.value)}
-              placeholder="https://your-image-url.com"
-            />
-            <button className="edit-btn" title="Edit">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-          </div>
-        </div>
-        <div className="input-group">
-          <label>Current Password</label>
-          <div className="input-edit-wrapper">
-            <input
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Current Password"
-            />
-            <button className="edit-btn" title="Edit">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
-          </div>
-        </div>
-
-        <div className="input-group">
           <label>Full Name</label>
           <div className="input-edit-wrapper">
             <input
@@ -299,9 +267,6 @@ const SettingsPage = () => {
               onChange={(e) => setName(e.target.value)}
               placeholder="Your Name"
             />
-            <button className="edit-btn" title="Edit">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
           </div>
         </div>
 
@@ -314,29 +279,52 @@ const SettingsPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
             />
-            <button className="edit-btn" title="Edit">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
           </div>
         </div>
 
         <div className="input-group">
-          <label>Password</label>
+          <label>Avatar URL</label>
+          <div className="input-edit-wrapper">
+            <input
+              type="text"
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
+              placeholder="https://your-image-url.com"
+            />
+          </div>
+        </div>
+
+        <hr className="separator" />
+        <p className="password-note">If you want to change your password, please enter your current and new password below:</p>
+        <div className="input-group">
+          <label>Current Password</label>
+          <div className="input-edit-wrapper">
+            <input
+              type="password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Current Password"
+            />
+            
+          </div>
+        </div>
+
+        <div className="input-group">
+          <label>New Password</label>
           <div className="input-edit-wrapper">
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
+              placeholder="New Password"
             />
-            <button className="edit-btn" title="Edit">
-              <FontAwesomeIcon icon={faEdit} />
-            </button>
           </div>
         </div>
+
         <button className="lang" onClick={toggleLanguage}>
           {t("toggleLang")}
         </button>
+        <hr className="separator" />
         {/* Mood Customization Section */}
         <div className="mood-customization">
           <h3>Customize Mood Icons</h3>
@@ -357,6 +345,7 @@ const SettingsPage = () => {
             </div>
           ))}
         </div>
+        <hr className="separator" />
         <div className="mood-customization">
           <h3>Customize Tag Icons</h3>
           {localTags.map((t, index) => (
@@ -367,8 +356,6 @@ const SettingsPage = () => {
               onChange={(e) => handleTagChange(t._id, e)}
             />
           ))}
-
-
         </div>
 
         <button className="save-btn" onClick={handleSave}>

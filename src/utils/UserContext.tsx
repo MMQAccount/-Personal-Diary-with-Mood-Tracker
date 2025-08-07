@@ -17,14 +17,24 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+  const storedUser = localStorage.getItem("user");
+  return storedUser ? JSON.parse(storedUser) : null;
+});
 
-  const login = (userData: User) => setUser(userData);
-  const logout = () => {
+
+ const login = (userData: User) => {
+  setUser(userData);
+  localStorage.setItem("user", JSON.stringify(userData));
+};
+
+ const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
+  localStorage.removeItem("user"); 
   setUser(null);
 };
+
 
   return (
     <UserContext.Provider value={{ user, login, logout }}>

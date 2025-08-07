@@ -19,14 +19,16 @@ export const updateUser = async (userId: string, data: any) => {
 };
 
 
-export const getUserById = async (userId: string, token?: string) => {
+export const getUserById = async (userId: string) => {
+  const token = localStorage.getItem("token");
+
   const response = await fetch(`${API_BASE_URL}/${userId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       ...(token && { Authorization: `Bearer ${token}` }),
     },
-    credentials: "include",
+    credentials: "include", 
   });
 
   if (!response.ok) {
