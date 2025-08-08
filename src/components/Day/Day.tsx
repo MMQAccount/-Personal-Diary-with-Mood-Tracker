@@ -23,15 +23,15 @@ const Day = ({ id }: IProps) => {
 
   const date = new Date(id);
 
-  const filterToday = (id: number, diary: Store.IDayDiary[]): Store.IDayDiary[] => {
-    if (!diary.length) return [];
+  const filterToday = (id: number, diary: Store.IDayDiary[] = []): Store.IDayDiary[] => {
+    if (!Array.isArray(diary) || diary.length === 0) return [];
     return diary.filter(d => id === d.id);
   };
 
   const getTagNamesFromIds = (tagIds?: string[]): string[] => {
-    if (!tagIds) return [];
+    if (!tagIds || !Array.isArray(tagIds)) return [];
     return tagIds.map(id => {
-      const tag = tags.find(t => t._id === id);
+      const tag = tags?.find(t => t._id === id);
       return tag ? tag.name : id;
     });
   };
@@ -39,7 +39,7 @@ const Day = ({ id }: IProps) => {
   const todayEntries = filterToday(id, diary);
   const { user } = useUserData();
 
-  const emojis = user?.customMoodEmojis;
+  const emojis = user?.customMoodEmojis ?? {};
 
   const goToEdit = (id: number) => {
     navigate(`/EditDay/${id}`);
@@ -59,21 +59,22 @@ const Day = ({ id }: IProps) => {
         <h2 className="title">
           {todayEntries.map(d => {
             const moodKey = customMoodEmojisMap[d.state ?? -1] as keyof typeof emojis;
-            const iconName = emojis![moodKey] ?? "";
-            const iconDef = nameToIcon[iconName];
+            const iconName = emojis?.[moodKey] ?? "";
+            const iconDef = iconName ? nameToIcon[iconName] : undefined;
 
             return iconDef ? (
-              <FontAwesomeIcon key={d.state} icon={iconDef} />
+              <FontAwesomeIcon key={`${d.id}-${d.state}`} icon={iconDef} />
             ) : (
-              <span key={d.state}> </span>
+              <span key={`${d.id}-${d.state}`}> </span>
             );
           })}{" "}
-          {todayEntries.map(d => d.title).join(", ")}
+          {todayEntries.map(d => d.title || "").join(", ")}
         </h2>
+
         <div className="header_mood_type">
           {todayEntries.flatMap(d =>
             getTagNamesFromIds(d.type).map(t => (
-              <span key={t} className="diary_tag">{t}</span>
+              <span key={`${d.id}-${t}`} className="diary_tag">{t}</span>
             ))
           )}
 
@@ -83,19 +84,19 @@ const Day = ({ id }: IProps) => {
 
       {todayEntries.flatMap(d =>
         d.notes?.map((n, i) => (
-          <Diary key={`${d.id}-${i}`} id={i} note={n} day={d.id} />
+          <Diary key={`${d.id}-note-${i}`} id={i} note={n} day={d.id} />
         )) || []
       )}
 
       {todayEntries.flatMap(d =>
         d.voices?.map((n, i) => (
-          <VoiceDiary key={`${d.id}-${i}`} voice={n} id={i} day={d.id} />
+          <VoiceDiary key={`${d.id}-voice-${i}`} voice={n} id={i} day={d.id} />
         )) || []
       )}
 
       {todayEntries.map(d =>
         d.images && d.images.length > 0 ? (
-          <div key={d.id} className="diary_content images">
+          <div key={`${d.id}-images`} className="diary_content images">
             <ImageDiary images={d.images} id={d.id} />
           </div>
         ) : null
