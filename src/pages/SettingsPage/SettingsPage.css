@@ -14,12 +14,12 @@ body[data-theme="dark-default"] .diary_container {
 
 body[data-theme="dark-default"] .container_diary,
 body[data-theme="dark-default"] .right_div {
-    background-color: #182525;
+    background-color: #719b76;
     color: #f1f1f1;
 }
 
 body[data-theme="dark-default"] .nav_container {
-    background-color: #182525;
+    background-color: #719b76;
 }
 
 body[data-theme="dark-default"] .diary_content {
@@ -35,7 +35,8 @@ body[data-theme="dark-default"] .theme-icon-btn {
 
 body[data-theme="dark-default"] .logout-button {
     box-shadow: none;
-    background: #050b14;
+    background: #f1f1f1;
+    color: #050b14;
 }
 
 body[data-theme="dark-default"] .theme-icon-btn2 {
@@ -44,17 +45,20 @@ body[data-theme="dark-default"] .theme-icon-btn2 {
 }
 
 body[data-theme="dark-default"] .login-container,
-body[data-theme="dark-default"] .signup-container,
-body[data-theme="dark-default"] form {
+body[data-theme="dark-default"] .signup-container {
     background-color: #0e141c;
     color: #f1f1f1;
     box-shadow: none;
     border: 1px solid #719b76;
 }
 
-body[data-theme="dark-default"] form {
+body[data-theme="dark-default"] .modal-content-mood,
+body[data-theme="dark-default"] .modal-content,
+body[data-theme="dark-default"] form{
+    background-color: #0e141c;
+    color: #f1f1f1;
     box-shadow: none;
-    border: 1px solid #719b76;
+    border: none;
 }
 
 body[data-theme="dark-default"] input,
@@ -67,7 +71,13 @@ body[data-theme="dark-default"] select {
 }
 
 body[data-theme="dark-default"] .select-header {
-    background-color: #182525;
+    background-color: #719b76;
+}
+
+body[data-theme="dark-default"] .close-btn {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
 }
 
 body[data-theme="dark-default"] .eye-btn {
@@ -95,14 +105,14 @@ body[data-theme="dark-default"] textarea::placeholder {
     color: #cfcfcf;
 }
 
-body[data-theme="dark-default"] .homePage>img {
+body[data-theme="dark-default"] .homePage>img{
     width: 55px;
     height: auto;
 }
 
 body[data-theme="dark-default"] .login-button2 {
-    background-color: #050b14;
-    color: #f1f1f1;
+    background-color: #f1f1f1;
+    color: #050b14;
     border: none;
     font-weight: 700;
     text-transform: uppercase;
@@ -115,7 +125,7 @@ body[data-theme="dark-default"] .login-button2 {
 body[data-theme="dark-default"] button,
 body[data-theme="dark-default"] input[type="submit"] {
     color: #ffffff;
-    background-color: #182525;
+    background-color: #719b76;
     border: none;
     font-weight: bold;
     cursor: pointer;
@@ -131,7 +141,7 @@ body[data-theme="dark-default"] .edit-btn {
 body[data-theme="dark-default"] .theme-toggle,
 body[data-theme="dark-default"] .save-btn {
     color: #ffffff;
-    background: #182525;
+    background: #719b76;
     box-shadow: none;
 }
 
@@ -149,7 +159,7 @@ body[data-theme="dark-default"] path {
 }
 
 body[data-theme="dark-default"] .record_buttons button {
-    background-color: #182525;
+    background-color: #719b76;
 }
 
 body[data-theme="dark-default"] .select-options li {
@@ -162,7 +172,7 @@ body[data-theme="dark-default"] li:hover {
 }
 
 body[data-theme="dark-default"] .popupCloseBotton,
-body[data-theme="dark-default"] .fullScreenButton {
+body[data-theme="dark-default"] .fullScreenButton{
     background: transparent;
     border: none;
     box-shadow: none;
@@ -174,7 +184,7 @@ body[data-theme="dark-default"] .popup-content {
     border: none;
 }
 
-body[data-theme="dark-default"] .mood-preview {
+body[data-theme="dark-default"] .mood-preview{
     color: #f1f1f1;
 }
 
@@ -182,12 +192,12 @@ body[data-theme="dark-default"] .option {
     box-shadow: none;
 }
 
-body[data-theme="dark-default"] .option:hover {
-    background-color: #8eb292;
+body[data-theme="dark-default"] .option:focus {
+    background-color: #2f4d33;
 }
 
 body[data-theme="dark-default"] .active>* {
-    background-color: #182525;
+    background-color: #719b76;
     color: #ffffff;
 }
 
@@ -201,7 +211,8 @@ body[data-theme="dark-default"] .signup-link,
 body[data-theme="dark-default"] .input-group label,
 body[data-theme="dark-default"] span,
 body[data-theme="dark-default"] ._controls_1qngu_17 label,
-body[data-theme="dark-default"] .mood-row label {
+body[data-theme="dark-default"] .mood-row label,
+body[data-theme="dark-default"] label {
     color: #f1f1f1;
 }
 
@@ -221,11 +232,11 @@ body[data-theme="dark-default"] [class*="chartLabel"] {
     border: none;
 }
 
-body[data-theme="dark-default"] .Toastify__close-button {
+body[data-theme="dark-default"] .Toastify__close-button  {
     border: none;
     box-shadow: none;
     outline: none;
-    background-color: transparent;
+    background-color:transparent;
     font-weight: lighter;
 }
 
@@ -358,6 +369,7 @@ body[data-theme="light-purple"] .edit-btn,
 body[data-theme="light-purple"] .input-group label,
 body[data-theme="light-purple"] ._title_1pco4_56,
 body[data-theme="light-purple"] .title,
+body[data-theme="light-purple"] .clear,
 body[data-theme="light-purple"] .mood-row label,
 body[data-theme="light-purple"] h2,
 body[data-theme="light-purple"] .mood-customization h3,
@@ -546,12 +558,19 @@ body[data-theme="dark-purple"] .theme-icon-btn2 {
 }
 
 body[data-theme="dark-purple"] .login-container,
-body[data-theme="dark-purple"] .signup-container,
-body[data-theme="dark-purple"] form {
+body[data-theme="dark-purple"] .signup-container {
     background-color: #12081b;
     color: #f1f1f1;
     box-shadow: none;
     border: 1px solid #a67ee5;
+}
+
+body[data-theme="dark-purple"] .modal-content-mood,
+body[data-theme="dark-purple"] .modal-content,
+body[data-theme="dark-purple"] form{
+    background-color: #12081b;
+    color: #f1f1f1;
+    box-shadow: none;
 }
 
 body[data-theme="dark-purple"] input,
@@ -598,12 +617,20 @@ body[data-theme="dark-purple"] .option.selected {
     background: #251336;
 }
 
-body[data-theme="dark-purple"] .login-button2,
 body[data-theme="dark-purple"] .toggle-theme-btn,
 body[data-theme="dark-purple"] input[type="submit"],
 body[data-theme="dark-purple"] .lang,
 body[data-theme="dark-purple"] .btns>button[type="submit"] {
     background: linear-gradient(135deg, #d3c1f3, #855fbc);
+    color: #12081b;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+body[data-theme="dark-purple"] .login-button2{
+    background: #f1f1f1;
     color: #12081b;
     border: none;
     cursor: pointer;
@@ -666,6 +693,7 @@ body[data-theme="dark-purple"] h3,
 body[data-theme="dark-purple"] p,
 body[data-theme="dark-purple"] span,
 body[data-theme="dark-purple"] a,
+body[data-theme="dark-purple"] .clear,
 body[data-theme="dark-purple"] .login-link,
 body[data-theme="dark-purple"] .signup-link,
 body[data-theme="dark-purple"] .input-group label,
@@ -673,7 +701,8 @@ body[data-theme="dark-purple"] .edit-btn,
 body[data-theme="dark-purple"] ._controls_1qngu_17 label,
 body[data-theme="dark-purple"] .mood-row label,
 body[data-theme="dark-purple"] [class*="chartLabel"],
-body[data-theme="dark-purple"] .popup-content h2 {
+body[data-theme="dark-purple"] .popup-content h2,
+body[data-theme="dark-purple"] label {
     color: #e8def7;
 }
 
@@ -764,6 +793,8 @@ body[data-theme="light-yellow"] h2,
 body[data-theme="light-yellow"] ._controls_1qngu_17 label,
 body[data-theme="light-yellow"] .mood-customization h3,
 body[data-theme="light-yellow"] .popup-content h2,
+body[data-theme="light-yellow"] label,
+body[data-theme="light-yellow"] .clear,
 body[data-theme="light-yellow"] [class*="title"],
 body[data-theme="light-yellow"] [class*="chartLabel"] {
     color: #4a390f;
@@ -949,10 +980,12 @@ body[data-theme="dark-yellow"] .diary_content {
     color: #f0e0b7;
 }
 
-body[data-theme="dark-yellow"] form {
+body[data-theme="dark-yellow"] .modal-content-mood,
+body[data-theme="dark-yellow"] .modal-content,
+body[data-theme="dark-yellow"] form{
     background-color: #090907;
     color: #f0e0b7;
-    border: 1px solid #c8a73c;
+    box-shadow: none;
 }
 
 body[data-theme="dark-yellow"] .login-text,
@@ -966,6 +999,7 @@ body[data-theme="dark-yellow"] .right_div h3,
 body[data-theme="dark-yellow"] .login-link,
 body[data-theme="dark-yellow"] li,
 body[data-theme="dark-yellow"] p,
+body[data-theme="dark-yellow"] .clear,
 body[data-theme="dark-yellow"] .record_buttons button,
 body[data-theme="dark-yellow"] .color-label,
 body[data-theme="dark-yellow"] .settings-title,
@@ -974,6 +1008,7 @@ body[data-theme="dark-yellow"] .mood-customization h3,
 body[data-theme="dark-yellow"] .edit-btn,
 body[data-theme="dark-yellow"] ._controls_1qngu_17 label,
 body[data-theme="dark-yellow"] .mood-row label,
+body[data-theme="dark-yellow"] label,
 body[data-theme="dark-yellow"] [class*="title"],
 body[data-theme="dark-yellow"] [class*="chartLabel"] {
     color: #f0e0b7;
@@ -1052,14 +1087,20 @@ body[data-theme="dark-yellow"] .popup-content {
 }
 
 body[data-theme="dark-yellow"] .diary_container textarea,
-body[data-theme="dark-yellow"] .diary_container select,
 body[data-theme="dark-yellow"] input,
-body[data-theme="dark-yellow"] textarea,
-body[data-theme="dark-yellow"] select {
+body[data-theme="dark-yellow"] textarea{
     background-color: #000000;
     color: #f0e0b7;
-    border: 1px solid #c8a73c;
     box-shadow: none;
+    border: 1px solid #c8a73c;
+}
+
+body[data-theme="dark-yellow"] select,
+body[data-theme="dark-yellow"] .diary_container select{
+    background-color: #000000;
+    color: #f0e0b7;
+    box-shadow: none;
+    border: none;
 }
 
 body[data-theme="dark-yellow"] .theme-toggle,
@@ -1087,8 +1128,8 @@ body[data-theme="dark-yellow"] .date_div {
 }
 
 body[data-theme="dark-yellow"] .login-button2 {
-    background-color: #000000;
-    color: #f0e0b7;
+    background-color: #f1f1f1;
+    color: #000000;
     border: none;
     font-weight: 700;
     text-transform: uppercase;
