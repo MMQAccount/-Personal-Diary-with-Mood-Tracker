@@ -22,7 +22,7 @@
     "status_recording": "🟢 Recording",
     "status_not_recording": "🔴 Not Recording",
     "playback": "Playback",
-    "titlePlaceholder": "Title...",
+    "titlePlaceholder": "Discribe your day...",
     "start_recording": "Start Recording",
     "stop_recording": "Stop Recording",
     "loadingDiary": "Loading diary entry...",

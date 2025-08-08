@@ -18,7 +18,6 @@ const ImageDiary = ({ images, id }: IProps) => {
 
   return (
     <div onClick={displayImages} className="image_content">
-      <h2>{t("photos_title")}</h2>
       <div className="image_note">
         {images.map((src, i) => (
           <img key={i} src={src} alt={t("photo_alt") || "photo"} />

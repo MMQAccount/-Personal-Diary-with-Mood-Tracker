@@ -47,17 +47,16 @@ const Day = ({ id }: IProps) => {
 
   return (
     <div className="container">
-        <div className="header_date_day">
-          <div className="date_div">
-            <h3>{date.toLocaleDateString('en-US', { day: 'numeric' })}</h3>
-            <h3>{date.toLocaleDateString('en-US', { month: 'long' })}</h3>
-          </div>
-          <h2>{date.toLocaleDateString('en-US', { weekday: 'long' })}</h2>
+      <div className="header_date_day">
+        <div className="date_div">
+          <h3>{date.toLocaleDateString('en-US', { day: 'numeric' })}</h3>
+          <h3>{date.toLocaleDateString('en-US', { month: 'long' })}</h3>
         </div>
+        <h2>{date.toLocaleDateString('en-US', { weekday: 'long' })}</h2>
+      </div>
 
       <div className="diary_notes">
         <h2 className="title">
-          {todayEntries.map(d => d.title).join(", ")}{" "}
           {todayEntries.map(d => {
             const moodKey = customMoodEmojisMap[d.state ?? -1] as keyof typeof emojis;
             const iconName = emojis![moodKey] ?? "";
@@ -68,13 +67,16 @@ const Day = ({ id }: IProps) => {
             ) : (
               <span key={d.state}> </span>
             );
-          })}
-
+          })}{" "}
+          {todayEntries.map(d => d.title).join(", ")}
         </h2>
         <div className="header_mood_type">
-          {todayEntries
-            .flatMap(d => getTagNamesFromIds(d.type))
-            .join(" | ")}
+          {todayEntries.flatMap(d =>
+            getTagNamesFromIds(d.type).map(t => (
+              <span key={t} className="diary_tag">{t}</span>
+            ))
+          )}
+
           <EditOutlined className="edit_icon" onClick={() => goToEdit(id)} />
         </div>
       </div>
@@ -93,7 +95,7 @@ const Day = ({ id }: IProps) => {
 
       {todayEntries.map(d =>
         d.images && d.images.length > 0 ? (
-          <div key={d.id} className="diary_content images image_day">
+          <div key={d.id} className="diary_content images">
             <ImageDiary images={d.images} id={d.id} />
           </div>
         ) : null

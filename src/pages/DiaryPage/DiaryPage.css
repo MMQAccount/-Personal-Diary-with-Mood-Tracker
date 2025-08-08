@@ -1,17 +1,27 @@
 .diary_container {
-    width: 100%;
-    height: 100vh;
-    background-color: #edf2fa;
-    color: #c2c9d4;
-    direction: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 20px 10%;
+    box-sizing: border-box;
 }
-html[dir="rtl"] .diary_container{
+
+html[dir="rtl"] .diary_container {
     padding-right: 3%;
-} 
+}
+
 .display_mood_search {
     display: flex;
     align-items: flex-start;
 }
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 3%;
+}
+
 .diary_type {
     outline: none;
     position: absolute;
@@ -120,6 +130,11 @@ html[dir="rtl"] .select-options {
     background-color: #f1f1f1;
 }
 
+.clear {
+    color: #719b76;
+    cursor: pointer;
+}
+
 .arrow {
     font-size: 12px;
 }
@@ -152,11 +167,16 @@ html[dir="rtl"] .checkbox-label {
     color: white;
 }
 
+.unchecked_span {
+    border: 1px solid #719b76;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
 .search_mood {
     width: 94px;
     background-color: inherit;
     padding: 3px;
-    border-radius: 20px;
     border: none;
     outline: none;
     color: #8e8e8e;
@@ -165,7 +185,7 @@ html[dir="rtl"] .checkbox-label {
 }
 
 .filter_by_tag {
-    width: 60%;
+    width: 30%;
     display: flex;
     flex-direction: row;
     gap: 5%;
@@ -209,8 +229,7 @@ html[dir="rtl"] .checkbox-label {
 }
 
 @media (max-width: 769px) {
-    .check {
-        flex-direction: column;
+    .filter {
         flex-wrap: wrap;
     }
 
@@ -234,11 +253,6 @@ html[dir="rtl"] .checkbox-label {
         text-align: center;
         padding: 5px 10px;
         border-radius: 8px;
-    }
-
-    .diary_container {
-        width: 90%;
-        margin: 0 5%;
     }
 
     .checkbox-label {

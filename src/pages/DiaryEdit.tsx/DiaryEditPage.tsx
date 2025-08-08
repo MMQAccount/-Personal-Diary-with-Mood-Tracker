@@ -109,6 +109,7 @@ const DiaryEditPage = () => {
                 </div>
                 <div className='diary_data'>
                     <div className="check">
+                        <span className="tag_title">Tags : </span>
                         {tags.map(m => (
                             <label key={m._id} className="checkbox-label">
                                 <input
@@ -117,7 +118,7 @@ const DiaryEditPage = () => {
                                     onChange={handleCheckboxChange}
                                     checked={form.type.includes(m._id)}
                                 />
-                                <span className={form.type.includes(m._id) ? "checked_span" : ""}>
+                                <span className={form.type.includes(m._id) ? "checked_span" : "unchecked_span"}>
                                     {t(m.name)}
                                 </span>
                             </label>

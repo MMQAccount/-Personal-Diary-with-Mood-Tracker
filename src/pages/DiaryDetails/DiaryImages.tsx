@@ -49,7 +49,7 @@ const DiaryImages = () => {
               <div className="img_cont" key={index}>
                 <img src={img} alt={`Diary image ${index + 1}`} />
                 <DeleteOutlined
-                  className="del_icon"
+                  className="del_img_icon"
                   onClick={() => del_diary(index, Number(id))}
                 />
               </div>

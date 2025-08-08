@@ -5,96 +5,105 @@ import { useNavigate } from "react-router-dom";
 import { useReactMediaRecorder } from "react-media-recorder";
 import { useTranslation } from "react-i18next";
 
-const DiaryVoice = () => {
-    const { t } = useTranslation("diary");
-    const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
-    const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
-    const navigate = useNavigate();
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("userId");
+interface DiaryVoiceProps {
+  onClose: () => void;
+}
 
-        if (!token || !userId) {
-            alert("You have to login");
-            navigate("/login");
-        }
-    }, [navigate]);
-    const [form, setForm] = useState<Store.IVoiceForm>({ voice: "" });
+const DiaryVoice = ({ onClose }: DiaryVoiceProps) => {
+  const { t } = useTranslation("diary");
+  const { status, startRecording, stopRecording, mediaBlobUrl } = useReactMediaRecorder({ audio: true });
+  const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (mediaBlobUrl) {
-            setForm(prev => ({ ...prev, voice: mediaBlobUrl }));
-        }
-    }, [mediaBlobUrl]);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId");
 
-    const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setForm(prev => ({ ...prev, [name]: value }));
-    };
+    if (!token || !userId) {
+      alert("You have to login");
+      navigate("/login");
+    }
+  }, [navigate]);
 
-    const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const todayTimestamp = today.getTime();
+  const [form, setForm] = useState<Store.IVoiceForm>({ voice: "" });
 
-        const existingDiary = diary.find(d => {
-            const entryDate = new Date(d.id);
-            entryDate.setHours(0, 0, 0, 0);
-            return entryDate.getTime() === todayTimestamp;
-        });
+  useEffect(() => {
+    if (mediaBlobUrl) {
+      setForm(prev => ({ ...prev, voice: mediaBlobUrl }));
+    }
+  }, [mediaBlobUrl]);
 
-        if (existingDiary) {
-            updateDiary(existingDiary._id, {
-                ...existingDiary,
-                voices: [...(existingDiary.voices || []), form.voice],
-            });
-        } else {
-            const newDiary: Store.IDayDiaryInput = {
-                id: todayTimestamp,
-                notes: [],
-                images: [],
-                voices: [form.voice],
-                title: "",
-                type: [],
-                state: -1,
-            };
-            addToDiary(newDiary);
-        }
-        setForm({ voice: "" });
-        navigate("/diaryPage");
-    };
+  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!form.voice) return;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayTimestamp = today.getTime();
 
-    return (
-        <div className="form-wrapper">
-            <form onSubmit={handelSubmit}>
-                <div className='diary_data'>
-                    <div className="record_buttons">
-                        {status === "recording" ? (
-                            <button type="button" onClick={() => stopRecording()}>
-                                {t("stop_recording")}
-                            </button>
-                        ) : (
-                            <button type="button" onClick={() => startRecording()}>
-                                {t("start_recording")}
-                            </button>
-                        )}
-                        <span>
-                            {status === "recording" ? t("status_recording") : t("status_not_recording")}
-                        </span>
-                    </div>
+    const existingDiary = diary.find(d => {
+      const entryDate = new Date(d.id);
+      entryDate.setHours(0, 0, 0, 0);
+      return entryDate.getTime() === todayTimestamp;
+    });
 
-                    {mediaBlobUrl && (
-                        <div>
-                            <h4>{t("playback")}</h4>
-                            <audio src={mediaBlobUrl} controls />
-                        </div>
-                    )}
-                    <input type="submit" value={t("submit")} />
-                </div>
-            </form>
-        </div>
-    );
+    if (existingDiary) {
+      updateDiary(existingDiary._id, {
+        ...existingDiary,
+        voices: [...(existingDiary.voices || []), form.voice],
+      });
+    } else {
+      const newDiary: Store.IDayDiaryInput = {
+        id: todayTimestamp,
+        notes: [],
+        images: [],
+        voices: [form.voice],
+        title: "",
+        type: [],
+        state: -1,
+      };
+      addToDiary(newDiary);
+    }
+    setForm({ voice: "" });
+    onClose();
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button className="close-btn" onClick={onClose} aria-label="Close">
+          &times;
+        </button>
+        <form onSubmit={handelSubmit}>
+          <h1>{t("recordVoiceTitle")}</h1>
+          <div className="record_buttons">
+            {status === "recording" ? (
+              <button type="button" onClick={() => stopRecording()}>
+                {t("stop_recording")}
+              </button>
+            ) : (
+              <button type="button" onClick={() => startRecording()}>
+                {t("start_recording")}
+              </button>
+            )}
+            <span>
+              {status === "recording" ? t("status_recording") : t("status_not_recording")}
+            </span>
+          </div>
+          {mediaBlobUrl && (
+            <div>
+              <h4>{t("playback")}</h4>
+              <audio src={mediaBlobUrl} controls />
+            </div>
+          )}
+          <input
+            type="submit"
+            value={t("submit")}
+            disabled={status === "recording" || !form.voice}
+          />
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default DiaryVoice;

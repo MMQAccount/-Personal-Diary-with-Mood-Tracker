@@ -1,34 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { DiaryContext } from "../../../providers/diary-provider";
 import "./DiaryForm.css";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 
-const DiaryForm = () => {
-  const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
-  const navigate = useNavigate();
-  const { t } = useTranslation("diary");
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
+interface DiaryFormProps {
+  onClose: () => void;
+}
 
-    if (!token || !userId) {
-      alert("You have to login");
-      navigate("/login");
-    }
-  }, [navigate]);
+const DiaryForm = ({ onClose }: DiaryFormProps) => {
+  const { addToDiary, updateDiary, diary } = useContext(DiaryContext);
+  const { t } = useTranslation("diary");
   const INITIAL_FORM: Store.INoteForm = {
     notes: "",
   };
   const [form, setForm] = useState<Store.INoteForm>(INITIAL_FORM);
 
-  const handleFormChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
+  const handleFormChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const today = new Date();
@@ -51,29 +42,35 @@ const DiaryForm = () => {
         id: todayTimestamp,
         notes: [form.notes],
       };
-
       addToDiary(newDiary);
-
     }
     setForm(INITIAL_FORM);
-    navigate("/diaryPage");
+    onClose();
   };
 
   return (
-    <div className="form-wrapper">
-      <form onSubmit={handelSubmit}>
-        <div className="diary_data">
-          <textarea
-            name="notes"
-            id="data"
-            placeholder={t("add_notes_placeholder")}
-            value={form.notes}
-            onChange={handleFormChange}
-            required
-          ></textarea>
-          <input type="submit" value={t("submit_button")} />
-        </div>
-      </form>
+    <div className="modal-overlay" onClick={onClose}>
+      <div
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button className="close-btn" onClick={onClose} aria-label="Close">
+          &times;
+        </button>
+        <form onSubmit={handleSubmit}>
+          <div className="diary_data">
+            <textarea
+              name="notes"
+              id="data"
+              placeholder={t("add_notes_placeholder")}
+              value={form.notes}
+              onChange={handleFormChange}
+              required
+            ></textarea>
+            <input type="submit" value={t("submit_button")} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
