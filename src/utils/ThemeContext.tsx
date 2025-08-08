@@ -11,7 +11,6 @@ interface ThemeContextType {
 
 const colorOptions = [
   { name: "Default", light: "", dark: "" },
-  { name: "Yellow", light: "#f1c40f", dark: "#4d4600" },
   { name: "Purple", light: "#9b59b6", dark: "#2c145a" },
 ];
 
@@ -52,8 +51,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       return th === "light" ? "light-default" : "dark-default";
     }
     switch (color) {
-      case "Yellow":
-        return th === "light" ? "light-yellow" : "dark-yellow";
       case "Purple":
         return th === "light" ? "light-purple" : "dark-purple";
       default:

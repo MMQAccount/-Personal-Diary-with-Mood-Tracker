@@ -52,7 +52,6 @@ interface ColorOption {
 
 const colorOptions: ColorOption[] = [
   { name: "Default", light: "", dark: "" },
-  { name: "Yellow", light: "#f1c40f", dark: "#4d4600" },
   { name: "Purple", light: "#9b59b6", dark: "#2c145a" },
 ];
 
