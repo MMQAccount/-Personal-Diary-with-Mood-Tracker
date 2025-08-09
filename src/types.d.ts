@@ -1,4 +1,3 @@
-
 interface IQuote {
   id: number;
   quote: string;
@@ -7,6 +6,12 @@ interface IQuote {
   color: string;
   isFav: boolean;
 }
+interface IQuoteBgImage {
+  id: string;
+  backgroundImage: string;
+  theme: "green" | "purple";
+}
+
 declare namespace Store {
   interface IDayDiary {
     _id: string;
@@ -92,7 +97,6 @@ interface IUser {
   diaries: IDiary[];
   tags: ITag[];
 }
-
 
 interface IDiaryTagContent {
   _id: string;
