@@ -1,7 +1,12 @@
 import Quote from "../../components/Quote/Quote";
 import { useRef, useState, useEffect } from "react";
 import Popup from "reactjs-popup";
-import { BarsOutlined, CloseCircleOutlined } from "@ant-design/icons";
+import {
+  BarsOutlined,
+  CloseCircleOutlined,
+  UpOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import "reactjs-popup/dist/index.css";
 import "./quotesPage.css";
 import { useTheme } from "../../utils/ThemeContext";
@@ -123,6 +128,30 @@ const QuotesPage = () => {
         )}
         {!loading && !error && (
           <>
+            <div
+              className={`top-arrow ${fullScreen ? "light" : ""}`}
+              onClick={() =>
+                containerRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+              }
+            >
+              <UpOutlined />
+            </div>
+            <div
+              className={`bottom-arrow ${fullScreen ? "light" : ""}`}
+              onClick={() => {
+                const container = containerRef.current;
+                if (container) {
+                  container.scrollTo({
+                    top: container.scrollHeight,
+                    behavior: "smooth",
+                  });
+                }
+              }}
+            >
+              {" "}
+              <DownOutlined />
+            </div>
+
             <Popup
               trigger={
                 <button className="settingsButton">{<BarsOutlined />}</button>
