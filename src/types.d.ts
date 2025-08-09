@@ -2,9 +2,9 @@ interface IQuote {
   id: number;
   quote: string;
   author: string;
-  background: string;
-  color: string;
-  isFav: boolean;
+  background?: string;
+  color?: string;
+  isFav?: boolean;
 }
 interface IQuoteBgImage {
   id: string;
