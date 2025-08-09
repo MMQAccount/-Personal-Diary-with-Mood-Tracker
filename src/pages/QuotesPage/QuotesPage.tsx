@@ -20,7 +20,7 @@ const QuotesPage = () => {
   const websiteTheme = selectedColor === "Purple" ? "purple" : "green";
 
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const [showScrollHint, setShowScrollHint] = useState(true);
   const [quotes, setQuotes] = useState<IQuote[]>([]);
   const [originalQuotes, setOriginalQuotes] = useState<IQuote[]>([]);
   const [colors, setColors] = useState<IQuoteBgColor[]>([]);
@@ -31,6 +31,14 @@ const QuotesPage = () => {
   const [quoteFilter, setQuoteFilter] = useState<"all" | "fav">("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowScrollHint(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const loadQuotes = async () => {
@@ -109,6 +117,11 @@ const QuotesPage = () => {
 
   return (
     <>
+      {showScrollHint && (
+        <div className="scroll-hint-notification">
+          <span>💡Scroll to navigate between quotes</span>
+        </div>
+      )}
       <div
         className="quotesContainer"
         ref={containerRef}

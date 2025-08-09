@@ -33,7 +33,7 @@
   transition: 0.3s ease;
 }
 .settingsButton:hover {
-  background-color: rgba(123, 107, 136, 0.6);
+  background-color: rgba(107, 136, 108, 0.6);
 }
 
 /* start pop-up window */
@@ -153,4 +153,37 @@ hr {
 .is-popup-open .top-arrow,
 .is-popup-open .bottom-arrow {
   display: none;
+}
+
+.scroll-hint-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: rgba(217, 217, 217, 0.7);
+  color: rgb(0, 0, 0);
+  padding: 20px 15px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1001;
+  animation: fadeInOut 5s ease-in-out forwards;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
