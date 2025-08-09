@@ -12,6 +12,11 @@ interface IQuoteBgImage {
   theme: "green" | "purple";
 }
 
+interface IQuoteBgColor {
+  id: string;
+  backgroundColor: string;
+  theme: "green" | "purple";
+}
 declare namespace Store {
   interface IDayDiary {
     _id: string;
