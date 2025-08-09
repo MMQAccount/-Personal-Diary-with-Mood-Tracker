@@ -1,19 +1,19 @@
 interface IQuote {
-  id: number;
-  quote: string;
+  _id: number;
+  text: string;
   author: string;
   background?: string;
   color?: string;
   isFav?: boolean;
 }
 interface IQuoteBgImage {
-  id: string;
+  _id: string;
   backgroundImage: string;
   theme: "green" | "purple";
 }
 
 interface IQuoteBgColor {
-  id: string;
+  _id: string;
   backgroundColor: string;
   theme: "green" | "purple";
 }

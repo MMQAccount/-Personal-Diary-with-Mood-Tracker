@@ -1,61 +1,74 @@
 import Quote from "../../components/Quote/Quote";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Popup from "reactjs-popup";
 import { BarsOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import "reactjs-popup/dist/index.css";
 import "./quotesPage.css";
-
-const quotesData: IQuote[] = [
-  {
-    id: 1,
-    quote: "The only way to do great work is to love what you do.",
-    author: "Steve Jobs",
-    background: "src/assets/simona-sergi-b_9Nf_aLTyk-unsplash.jpg",
-    color: "#A290D1", // Lavender Purple
-    isFav: false,
-  },
-  {
-    id: 2,
-    quote: "Success is not in what you have, but who you are.",
-    author: "Bo Bennett",
-    background: "src/assets/joyce-toh-3PdHzNqMYbA-unsplash.jpg",
-    color: "#D5D9F1", // Soft Lilac
-    isFav: false,
-  },
-  {
-    id: 3,
-    quote:
-      "What you get by achieving your goals is not as important as what you become by achieving your goals.",
-    author: "Zig Ziglar",
-    background: "src/assets/micheile-henderson-Klq6refBGCg-unsplash.jpg",
-    color: "#8661C1", // Medium Purple
-    isFav: false,
-  },
-  {
-    id: 4,
-    quote: "Believe you can and you're halfway there.",
-    author: "Theodore Roosevelt",
-    background: "src/assets/rodion-kutsaiev-8P-uQaTd8rw-unsplash.jpg",
-    color: "#C6B9E3", // Pastel Purple
-    isFav: false,
-  },
-  {
-    id: 5,
-    quote: "Act as if what you do makes a difference. It does.",
-    author: "William James",
-    background: "src/assets/neon-wang-ij4YFs9ADQI-unsplash.jpg",
-    color: "#EDF0F8", // Warm Grey Blue
-    isFav: false,
-  },
-];
+import { useTheme } from "../../utils/ThemeContext";
+import { fetchQuotes } from "../../services/quote.service";
+import { fetchQuoteBgColors } from "../../services/quoteBgColor.service";
+import { fetchQuoteBgImages } from "../../services/quoteBgImage.service";
+import { Alert, Spin } from "antd";
 
 const QuotesPage = () => {
+  const { selectedColor } = useTheme();
+  const websiteTheme = selectedColor === "Purple" ? "purple" : "green";
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const [quotes, setQuotes] = useState<IQuote[]>(quotesData);
+
+  const [quotes, setQuotes] = useState<IQuote[]>([]);
+  const [originalQuotes, setOriginalQuotes] = useState<IQuote[]>([]);
+  const [colors, setColors] = useState<IQuoteBgColor[]>([]);
+  const [images, setImages] = useState<IQuoteBgImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [theme, setTheme] = useState<"nature" | "solid">("nature");
   const [quoteFilter, setQuoteFilter] = useState<"all" | "fav">("all");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
+
+  useEffect(() => {
+    const loadQuotes = async () => {
+      setLoading(true);
+      try {
+        const fetchedQuotes = await fetchQuotes();
+        setOriginalQuotes(fetchedQuotes);
+        const fetchedColors = await fetchQuoteBgColors();
+        setColors(fetchedColors);
+        const fetchedImages = await fetchQuoteBgImages();
+        setImages(fetchedImages);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch quotes");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadQuotes();
+  }, []);
+
+  useEffect(() => {
+    const themedImages = images.filter((img) => img.theme === websiteTheme);
+    const themedColors = colors.filter((color) => color.theme === websiteTheme);
+
+    setQuotes(() => {
+      return originalQuotes.map((quote, index) => {
+        const bgIndex = index % themedImages.length;
+        const colorIndex = index % themedColors.length;
+
+        const bg = themedImages[bgIndex];
+        const color = themedColors[colorIndex];
+
+        return {
+          ...quote,
+          background:
+            bg?.backgroundImage ||
+            "src/assets/wallpaperflare.com_wallpaper-5.jpg",
+          color: color?.backgroundColor || "#fff",
+        };
+      });
+    });
+  }, [originalQuotes, images, colors, websiteTheme]);
 
   const filteredQuotes =
     quoteFilter === "fav" ? quotes.filter((quote) => quote.isFav) : quotes;
@@ -84,7 +97,7 @@ const QuotesPage = () => {
   const toggleFavorite = (id: number) => {
     setQuotes((prevQuotes) =>
       prevQuotes.map((quote) =>
-        quote.id === id ? { ...quote, isFav: !quote.isFav } : quote
+        quote._id === id ? { ...quote, isFav: !quote.isFav } : quote
       )
     );
   };
@@ -98,86 +111,104 @@ const QuotesPage = () => {
           if (!isPopupOpen) handleClick();
         }}
       >
-        <Popup
-          trigger={
-            <button className="settingsButton">{<BarsOutlined />}</button>
-          }
-          modal
-          nested
-          onOpen={() => setIsPopupOpen(true)}
-          onClose={() => setIsPopupOpen(false)}
-        >
-          {
-            ((close: () => void) => (
-              <div>
-                <div>
-                  <h2>Themes</h2>
-                  <div className="optionGroup">
-                    <button
-                      className={
-                        theme === "nature" ? "option selected" : "option"
-                      }
-                      onClick={() => setTheme("nature")}
-                    >
-                      Nature
-                    </button>
-                    <button
-                      className={
-                        theme === "solid" ? "option selected" : "option"
-                      }
-                      onClick={() => setTheme("solid")}
-                    >
-                      Solid Color
-                    </button>
-                  </div>
-                  <hr />
+        {loading && (
+          <div className="loading-state">
+            <Spin size="large" />
+          </div>
+        )}
+        {error && (
+          <div className="error-state">
+            <Alert message={error} type="error" />
+          </div>
+        )}
+        {!loading && !error && (
+          <>
+            <Popup
+              trigger={
+                <button className="settingsButton">{<BarsOutlined />}</button>
+              }
+              modal
+              nested
+              onOpen={() => setIsPopupOpen(true)}
+              onClose={() => setIsPopupOpen(false)}
+            >
+              {
+                ((close: () => void) => (
                   <div>
-                    <h2>Quotes</h2>
-                    <div className="optionGroup">
-                      <button
-                        className={
-                          quoteFilter === "all" ? "option selected" : "option"
-                        }
-                        onClick={() => setQuoteFilter("all")}
-                      >
-                        All Quotes
-                      </button>
-                      <button
-                        className={
-                          quoteFilter === "fav" ? "option selected" : "option"
-                        }
-                        onClick={() => setQuoteFilter("fav")}
-                      >
-                        Favorite Only
+                    <div>
+                      <h2>Themes</h2>
+                      <div className="optionGroup">
+                        <button
+                          className={
+                            theme === "nature" ? "option selected" : "option"
+                          }
+                          onClick={() => setTheme("nature")}
+                        >
+                          Nature
+                        </button>
+                        <button
+                          className={
+                            theme === "solid" ? "option selected" : "option"
+                          }
+                          onClick={() => setTheme("solid")}
+                        >
+                          Solid Color
+                        </button>
+                      </div>
+                      <hr />
+                      <div>
+                        <h2>Quotes</h2>
+                        <div className="optionGroup">
+                          <button
+                            className={
+                              quoteFilter === "all"
+                                ? "option selected"
+                                : "option"
+                            }
+                            onClick={() => setQuoteFilter("all")}
+                          >
+                            All Quotes
+                          </button>
+                          <button
+                            className={
+                              quoteFilter === "fav"
+                                ? "option selected"
+                                : "option"
+                            }
+                            onClick={() => setQuoteFilter("fav")}
+                          >
+                            Favorite Only
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <button onClick={close} className="popupCloseBotton">
+                        <CloseCircleOutlined />
                       </button>
                     </div>
                   </div>
-                </div>
-                <div>
-                  <button onClick={close} className="popupCloseBotton">
-                    <CloseCircleOutlined />
-                  </button>
-                </div>
-              </div>
-            )) as unknown as React.ReactNode
-          }
-        </Popup>
+                )) as unknown as React.ReactNode
+              }
+            </Popup>
 
-        {Boolean(filteredQuotes.length) ? (
-          filteredQuotes.map((quote) => (
-            <Quote
-              key={quote.id}
-              quoteData={quote}
-              onToggleFav={toggleFavorite}
-              theme={theme}
-              fullScreen={fullScreen}
-              onToggleFullScreen={() => setFullScreen((prev) => !prev)}
-            />
-          ))
-        ) : (
-          <div className="noQuotes">
-            <h3>Can't Find Any Quotes</h3>
-          </div>
+            {Boolean(filteredQuotes.length) && !error && !loading ? (
+              filteredQuotes.map((quote) => (
+                <Quote
+                  key={quote._id}
+                  quoteData={quote}
+                  onToggleFav={toggleFavorite}
+                  theme={theme}
+                  fullScreen={fullScreen}
+                  onToggleFullScreen={() => setFullScreen((prev) => !prev)}
+                />
+              ))
+            ) : (
+              <div className="noQuotes">
+                <h3>Can't Find Any Quotes</h3>
+              </div>
+            )}
+          </>
         )}
       </div>
     </>

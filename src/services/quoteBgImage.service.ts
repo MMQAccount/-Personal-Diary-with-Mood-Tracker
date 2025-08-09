@@ -13,8 +13,6 @@ const fetchQuoteBgImages = async (): Promise<IQuoteBgImage[]> => {
 
   if (!res.ok) {
     throw new Error(`${res.status}: ${body.message}\n${body.error}`);
-  } else {
-    console.log(res);
   }
   return body.data as IQuoteBgImage[];
 };
