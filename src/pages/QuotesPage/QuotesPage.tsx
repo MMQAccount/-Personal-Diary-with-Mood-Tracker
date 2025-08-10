@@ -29,8 +29,8 @@ const QuotesPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [theme, setTheme] = useState<"nature" | "solid">("nature");
   const [quoteFilter, setQuoteFilter] = useState<"all" | "fav">("all");
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
+  const [showTopArrow, setShowTopArrow] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -81,30 +81,72 @@ const QuotesPage = () => {
         };
       });
     });
+    setTimeout(() => {
+      const container = containerRef.current;
+      if (container) {
+        setShowTopArrow(false);
+      }
+    }, 100);
   }, [originalQuotes, images, colors, websiteTheme]);
 
   const filteredQuotes =
     quoteFilter === "fav" ? quotes.filter((quote) => quote.isFav) : quotes;
 
-  const handleClick = () => {
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let lastScrollTime = Date.now();
+    const scrollThreshold = 100; // ms to detect natural scrolling
+
+    const handleScroll = () => {
+      const now = Date.now();
+      const isNaturalScroll = now - lastScrollTime > scrollThreshold;
+      lastScrollTime = now;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const atBottom = scrollHeight - (scrollTop + clientHeight) < 10;
+
+      // Auto-scroll to top when naturally scrolling past last quote
+      if (atBottom && isNaturalScroll) {
+        setTimeout(() => {
+          container.scrollTo({ top: 0, behavior: "smooth" });
+        }, 300);
+      }
+
+      // Update top arrow visibility
+      setShowTopArrow(scrollTop > 10);
+    };
+
+    container.addEventListener("scroll", handleScroll);
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollDownOneQuote = () => {
     const container = containerRef.current;
     if (!container) return;
 
     const scrollAmount = window.innerHeight;
-    const maxScroll = container.scrollHeight - container.clientHeight;
     const nextScrollTop = container.scrollTop + scrollAmount;
+    const maxScroll = container.scrollHeight - container.clientHeight;
 
     if (nextScrollTop > maxScroll) {
-      container.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      container.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      container.scrollBy({
-        top: scrollAmount,
-        behavior: "smooth",
-      });
+      container.scrollBy({ top: scrollAmount, behavior: "smooth" });
     }
+  };
+  const scrollUpOneQuote = () => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const scrollAmount = window.innerHeight;
+    const newScrollTop = container.scrollTop - scrollAmount;
+
+    container.scrollTo({
+      top: Math.max(0, newScrollTop),
+      behavior: "smooth",
+    });
   };
 
   const toggleFavorite = (id: number) => {
@@ -122,13 +164,7 @@ const QuotesPage = () => {
           <span>💡Scroll to navigate between quotes</span>
         </div>
       )}
-      <div
-        className="quotesContainer"
-        ref={containerRef}
-        onClick={() => {
-          if (!isPopupOpen) handleClick();
-        }}
-      >
+      <div className="quotesContainer" ref={containerRef}>
         {loading && (
           <div className="loading-state">
             <Spin size="large" />
@@ -141,27 +177,25 @@ const QuotesPage = () => {
         )}
         {!loading && !error && (
           <>
-            <div
-              className={`top-arrow ${fullScreen ? "light" : ""}`}
-              onClick={() =>
-                containerRef.current?.scrollTo({ top: 0, behavior: "smooth" })
-              }
-            >
-              <UpOutlined />
-            </div>
+            {showTopArrow && (
+              <div
+                className={`top-arrow ${fullScreen ? "light" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering the container click
+                  scrollUpOneQuote();
+                }}
+              >
+                <UpOutlined />
+              </div>
+            )}
+
             <div
               className={`bottom-arrow ${fullScreen ? "light" : ""}`}
-              onClick={() => {
-                const container = containerRef.current;
-                if (container) {
-                  container.scrollTo({
-                    top: container.scrollHeight,
-                    behavior: "smooth",
-                  });
-                }
+              onClick={(e) => {
+                e.stopPropagation();
+                scrollDownOneQuote();
               }}
             >
-              {" "}
               <DownOutlined />
             </div>
 
@@ -171,8 +205,6 @@ const QuotesPage = () => {
               }
               modal
               nested
-              onOpen={() => setIsPopupOpen(true)}
-              onClose={() => setIsPopupOpen(false)}
             >
               {
                 ((close: () => void) => (

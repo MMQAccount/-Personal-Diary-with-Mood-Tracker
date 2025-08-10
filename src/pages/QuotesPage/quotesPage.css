@@ -122,7 +122,7 @@ hr {
   left: 50%;
   transform: translateX(-50%);
   font-size: 24px;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(74, 74, 74, 0.8);
   cursor: pointer;
   z-index: 1000;
   transition: all 0.3s ease;
@@ -142,17 +142,15 @@ hr {
   bottom: 10px;
 }
 
-/* Lightened version when in fullscreen */
 .top-arrow.light,
 .bottom-arrow.light {
   color: rgba(0, 0, 0, 0.5);
   background: rgba(255, 255, 255, 0.4);
 }
 
-/* Hide arrows when popup is open */
-.is-popup-open .top-arrow,
-.is-popup-open .bottom-arrow {
-  display: none;
+.top-arrow:hover,
+.bottom-arrow:hover {
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .scroll-hint-notification {
