@@ -97,7 +97,7 @@ const QuotesPage = () => {
     if (!container) return;
 
     let lastScrollTime = Date.now();
-    const scrollThreshold = 100; // ms to detect natural scrolling
+    const scrollThreshold = 100;
 
     const handleScroll = () => {
       const now = Date.now();
@@ -107,14 +107,12 @@ const QuotesPage = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
       const atBottom = scrollHeight - (scrollTop + clientHeight) < 10;
 
-      // Auto-scroll to top when naturally scrolling past last quote
       if (atBottom && isNaturalScroll) {
         setTimeout(() => {
           container.scrollTo({ top: 0, behavior: "smooth" });
         }, 300);
       }
 
-      // Update top arrow visibility
       setShowTopArrow(scrollTop > 10);
     };
 
@@ -181,7 +179,7 @@ const QuotesPage = () => {
               <div
                 className={`top-arrow ${fullScreen ? "light" : ""}`}
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering the container click
+                  e.stopPropagation();
                   scrollUpOneQuote();
                 }}
               >

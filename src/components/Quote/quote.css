@@ -31,8 +31,16 @@
   position: relative;
   z-index: 1;
 }
+/* .quote h2[data-theme="dark-default"],.quote h2[data-theme="dark-default"],.quote h2[data-theme="dark-default"] {
+  color: black;
+} */
+
 .quote h2 {
   text-shadow: 3px 0px 10px rgba(216, 216, 216, 0.6);
+}
+.quote h2,
+p {
+  color: black !important;
 }
 .favQuoteButton {
   background-color: rgba(107, 136, 117, 0.4);
