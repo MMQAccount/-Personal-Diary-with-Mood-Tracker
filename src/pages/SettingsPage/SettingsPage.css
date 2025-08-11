@@ -39,6 +39,10 @@ body[data-theme="dark-default"] .logout-button {
     color: #050b14;
 }
 
+body[data-theme="dark-default"] .search_mood{
+    border: none;
+}
+
 body[data-theme="dark-default"] .theme-icon-btn2 {
     background: transparent;
     box-shadow: none;
