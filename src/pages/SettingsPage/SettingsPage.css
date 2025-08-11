@@ -604,6 +604,10 @@ body[data-theme="dark-purple"] .diary_tag{
     background-color:#704a99;
 }
 
+body[data-theme="dark-purple"] .anticon svg:hover{
+    color: #a67ee5;
+}
+
 body[data-theme="dark-purple"] .unchecked_span{
     border: 1px solid #5a3c7c;
 }
