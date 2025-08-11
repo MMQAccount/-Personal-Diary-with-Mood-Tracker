@@ -35,19 +35,19 @@ const HomePage = () => {
         {theme === "light" ? <FaMoon /> : <FaSun />}
       </button>
       <div className="left_div">
-        <h1>reflecty</h1>
+        <h1>Dino</h1>
         <div className="reflectly_container">
           <img src={logo} alt="" />
           <h2>Hello, beautiful mind.</h2>
-          <p>Take a deep breath and let's reflect together.</p>
+          <p>Take a deep breath and let's dino together.</p>
         </div>
       </div>
       <div className="right_div">
         <div className="greeting">
-          <h1>Reflectly-A Jornal for Happiness,</h1>
+          <h1>Dino-A Jornal for Happiness,</h1>
           <h3>
-            Reflectly is a journal utilizing artificial intelligence to help you
-            structure and reflect upon your daily thoughts and problems.
+            Dino is a journal utilizing artificial intelligence to help you
+            structure and dino upon your daily thoughts and problems.
           </h3>
         </div>
       </div>

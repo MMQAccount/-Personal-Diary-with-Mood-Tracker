@@ -37,7 +37,7 @@ const VoiceDiary = ({ voice, id, day }: IProps) => {
     navigate("/diaryPage");
   }
   return (
-    <div className="diary_content">
+    <div className="diary_voice_content">
       <div className="diary_notes">
         {voice ? <audio src={voice} controls /> : ""}
         <DeleteOutlined className="del_icon" onClick={() => del_diary(id, day)} />
