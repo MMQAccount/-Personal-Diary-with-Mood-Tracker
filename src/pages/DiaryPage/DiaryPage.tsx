@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { nameToIcon } from "../../components/MoodLineChart/MoodLineChart";
 import { faQuestionCircle } from "@fortawesome/free-regular-svg-icons";
 import { customMoodNumbersMap } from "../../constants/mood-no";
-import { faBroom } from '@fortawesome/free-solid-svg-icons';
+import { faEraser } from '@fortawesome/free-solid-svg-icons';
 
 import DiaryForm from "../../components/Forms/DiaryForm/DiaryForm";
 import DiaryVoice from "../../components/Forms/DiaryVoice/DiaryVoice";
@@ -197,7 +197,7 @@ const DiaryPage = () => {
                     />
                 </div>
                 <div className="filter_by_tag">
-                    <div className="check">
+                    <div className="check_diary">
                         {tags.map((tag: ITag) => (
                             <label key={tag._id} className="checkbox-label">
                                 <input
@@ -235,13 +235,11 @@ const DiaryPage = () => {
                             </span>
                         )}
                     </div>
-                    <FontAwesomeIcon
-                        icon={faBroom}
+                    <FontAwesomeIcon icon={faEraser}
                         className="clear"
                         onClick={handleClearFilters}
                         style={{ cursor: "pointer" }}
-                        title={t("clear_filters")}
-                    />
+                        title={t("clear_filters")} />
                 </div>
             </div>
 

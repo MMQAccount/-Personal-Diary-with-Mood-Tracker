@@ -120,6 +120,7 @@ const DiaryMood = ({ onClose }: DiaryMoodProps) => {
         </button>
         <form onSubmit={handleSubmit}>
           <h1>{stateTexts[moodValue]}</h1>
+          <h5 className="your_mood_msg">Select your mood today : )</h5>
           <div className="mood_input">
             <input
               type="range"
@@ -137,16 +138,18 @@ const DiaryMood = ({ onClose }: DiaryMoodProps) => {
             />
             <h1>{iconDef ? <FontAwesomeIcon icon={iconDef} /> : ""}</h1>
           </div>
-          <div className="check">
+          <div className="tag_container">
             <span className="tag_title">Tags : </span>
-            {tags.map((m) => (
-              <label key={m._id} className="checkbox-label">
-                <input type="checkbox" value={m._id} onChange={handleCheckboxChange} />
-                <span className={form.type.includes(m._id) ? "checked_span" : "unchecked_span"}>
-                  {t(m.name)}
-                </span>
-              </label>
-            ))}
+            <div className="check">
+              {tags.map((m) => (
+                <label key={m._id} className="checkbox-label">
+                  <input type="checkbox" value={m._id} onChange={handleCheckboxChange} />
+                  <span className={form.type.includes(m._id) ? "checked_span" : "unchecked_span"}>
+                    {t(m.name)}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
           <input
             type="text"

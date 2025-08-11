@@ -87,6 +87,7 @@ const DiaryEditPage = () => {
         <div className="editForm">
             <form onSubmit={handleSubmit}>
                 <h1>{stateLabels[moodValue]}</h1>
+                <h5 className="your_mood_msg">Select your mood today : )</h5>
                 <div className='mood_input'>
                     <input
                         type="range"
@@ -108,24 +109,24 @@ const DiaryEditPage = () => {
                     )}</h1>
                 </div>
                 <div className='diary_data'>
-                    <div className="check">
+                    <div className="tag_container">
                         <span className="tag_title">Tags : </span>
-                        {tags.map(m => (
-                            <label key={m._id} className="checkbox-label">
-                                <input
-                                    type="checkbox"
-                                    value={m._id}
-                                    onChange={handleCheckboxChange}
-                                    checked={form.type.includes(m._id)}
-                                />
-                                <span className={form.type.includes(m._id) ? "checked_span" : "unchecked_span"}>
-                                    {t(m.name)}
-                                </span>
-                            </label>
-                        ))}
+                        <div className="check">
+                            {tags.map(m => (
+                                <label key={m._id} className="checkbox-label">
+                                    <input
+                                        type="checkbox"
+                                        value={m._id}
+                                        onChange={handleCheckboxChange}
+                                        checked={form.type.includes(m._id)}
+                                    />
+                                    <span className={form.type.includes(m._id) ? "checked_span" : "unchecked_span"}>
+                                        {t(m.name)}
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
                     </div>
-
-                    <br />
                     <input
                         type="text"
                         placeholder={t("titlePlaceholder")}

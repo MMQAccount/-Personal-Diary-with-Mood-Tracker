@@ -19,7 +19,10 @@
 .editForm>form {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 5px;
+}
+form>h1{
+    font-size: 2.8rem;
 }
 
 .editForm>form {

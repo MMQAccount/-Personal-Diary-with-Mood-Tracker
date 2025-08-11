@@ -6,10 +6,8 @@
   width: 95%;
   height: fit-content;
   margin-top: 1%;
-  background-color: rgba(255, 255, 255, 0.55);
   border-radius: 15px;
   padding: 10px 40px;
-  box-shadow: 1px 1px 10px 1px rgba(174, 173, 173, 0.366);
 }
 
 .span_note {
