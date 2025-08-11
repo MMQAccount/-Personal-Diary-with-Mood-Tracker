@@ -462,6 +462,14 @@ body[data-theme="light-purple"] input::placeholder,
 body[data-theme="light-purple"] textarea::placeholder {
     color: #a58abe;
 }
+body[data-theme="light-purple"] .unchecked_span{
+    border: 1px solid #b296d0;
+}
+
+body[data-theme="light-purple"] .diary_tag{
+    border: 1px solid #5a3c7c;
+    background-color:#b296d0;
+}
 
 body[data-theme="light-purple"] button.togglebt {
     background: linear-gradient(135deg, #bca6df, #d0b1e8);
@@ -585,6 +593,15 @@ body[data-theme="dark-purple"] .select-header {
 
 body[data-theme="dark-purple"] .search_input {
     background-color: #080808;
+}
+
+body[data-theme="dark-purple"] .diary_tag{
+    border: 1px solid #5a3c7c;
+    background-color:#704a99;
+}
+
+body[data-theme="dark-purple"] .unchecked_span{
+    border: 1px solid #5a3c7c;
 }
 
 body[data-theme="dark-purple"] input:focus,
