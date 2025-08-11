@@ -37,7 +37,7 @@ const Quote = (props: IProps) => {
 
   const handleFavClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // prevent triggering the scroll
-    onToggleFav(quoteData.id);
+    onToggleFav(quoteData._id);
   };
 
   return (
@@ -61,7 +61,7 @@ const Quote = (props: IProps) => {
             )}
           </button>
           <div className="quote">
-            <h2>"{props.quoteData.quote}"</h2>
+            <h2>"{props.quoteData.text}"</h2>
             <p>
               <i>{props.quoteData.author}</i>{" "}
             </p>
