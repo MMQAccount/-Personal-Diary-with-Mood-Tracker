@@ -76,7 +76,7 @@ const QuotesPage = () => {
           ...quote,
           background:
             bg?.backgroundImage ||
-            "src/assets/wallpaperflare.com_wallpaper-5.jpg",
+            "src/assets/blank-white-background-xbsfzsltjksfompa.jpg",
           color: color?.backgroundColor || "#fff",
         };
       });
