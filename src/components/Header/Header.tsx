@@ -22,15 +22,17 @@ const Header = () => {
         </NavLink>
         <NavLink
           className={({ isActive }) => (isActive ? "active" : "")}
+          to={`/statisticsPage`}
+        >
+          <FontAwesomeIcon icon={faChartLine} className="navlink" />
+        </NavLink>
+        <NavLink
+          className={({ isActive }) => (isActive ? "active" : "")}
           to={`/quotesPage`}
         >
           <FontAwesomeIcon icon={faQuoteLeft} className="navlink" />
         </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? "active" : "")}
-          to={`/statisticsPage`}
-        >
-          <FontAwesomeIcon icon={faChartLine} className="navlink" />        </NavLink>
+
         <NavLink
           className={({ isActive }) => (isActive ? "active" : "")}
           to={`/settings`}
