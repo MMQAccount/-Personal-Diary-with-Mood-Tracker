@@ -33,16 +33,13 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year, moodsData }) => {
     ])
   ) as Record<string, { color: string; emoji: string }>;
 
+  // reverse the order of elements in moodsData
+  moodsData = [...moodsData].reverse();
+
   return (
     <div className={classes.heatmapWrapper}>
       <div className={classes.legendRow} aria-label="Mood legend">
-        <div className={classes.legendItem}>
-          <div
-            className={classes.legendColorBox}
-            style={{ backgroundColor: EMPTY_COLOR }}
-          />
-          <span>Empty</span>
-        </div>
+
 
         {moodsData.map((mood) => {
           const iconDef = nameToIcon[mood.emoji];
@@ -60,6 +57,13 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year, moodsData }) => {
             </div>
           );
         })}
+        <div className={classes.legendItem}>
+          <div
+            className={classes.legendColorBox}
+            style={{ backgroundColor: EMPTY_COLOR }}
+          />
+          <span>Empty</span>
+        </div>
       </div>
 
       <CalendarHeatmap
@@ -81,12 +85,12 @@ const YearPixelChart: React.FC<IProps> = ({ entries, year, moodsData }) => {
 
           return React.isValidElement(element)
             ? React.cloneElement<React.SVGProps<SVGRectElement>>(
-                element as React.ReactElement<React.SVGProps<SVGRectElement>>,
-                {
-                  key: index,
-                  style: { fill: color, stroke: color },
-                }
-              )
+              element as React.ReactElement<React.SVGProps<SVGRectElement>>,
+              {
+                key: index,
+                style: { fill: color, stroke: color },
+              }
+            )
             : null;
         }}
         tooltipDataAttrs={(
