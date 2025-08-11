@@ -346,7 +346,7 @@ useEffect(() => {
         </div>
         <hr className="separator" />
         <div className="mood-customization">
-          <h3>Customize Tag Icons</h3>
+          <h3>Customize Tag</h3>
           {localTags.map((t, index) => (
             <input
               key={t._id}
